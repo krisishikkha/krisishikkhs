@@ -1,27 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Secure PDF Viewer</title>
-<style>
-body { margin:0; background:#111; }
-#watermark {
- position: fixed;
- top: 40%;
- left: 10%;
- font-size: 30px;
- color: rgba(255,255,255,0.15);
- transform: rotate(-25deg);
- pointer-events: none;
-}
-canvas { display:block; margin:auto; }
-</style>
+  <meta charset="UTF-8">
+  <title>Secure PDF Viewer | krisishikkha</title>
+
+  <!-- Mobile friendly -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Disable caching (optional but helpful during testing) -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    /* Watermark */
+    .watermark {
+      position: fixed;
+      top: 45%;
+      left: 5%;
+      font-size: 28px;
+      font-family: Arial, sans-serif;
+      color: rgba(255, 255, 255, 0.18);
+      transform: rotate(-25deg);
+      pointer-events: none;
+      z-index: 9999;
+      white-space: nowrap;
+    }
+  </style>
 </head>
-<body>
 
-<div id="watermark">fb:@krisishikkha.com</div>
-<canvas id="pdfCanvas"></canvas>
+<body oncontextmenu="return false">
 
-<script src="../vendor/pdfjs/pdf.min.js"></script>
-<script src="viewer.js"></script>
+  <!-- Watermark -->
+  <div class="watermark">fb:@krisishikkha.com</div>
+
+  <!-- PDF Canvas -->
+  <canvas id="pdfCanvas"></canvas>
+
+  <!-- ✅ PDF.js (ABSOLUTE PATH – IMPORTANT) -->
+  <script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
+
+  <!-- Viewer Logic -->
+  <script src="viewer.js"></script>
+
 </body>
 </html>
