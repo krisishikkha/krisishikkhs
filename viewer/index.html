@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>PDF Viewer</title>
+
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #eee;
+html,body{
+  margin:0;
+  padding:0;
+  background:#e5e5e5;
 }
-#pdf-container {
-  position: relative;
+#pdf-canvas{
+  display:block;
+  margin:auto;
 }
-.watermark {
-  position: fixed;
-  top: 40%;
-  left: 20%;
-  font-size: 26px;
-  color: rgba(0,0,0,0.15);
-  transform: rotate(-30deg);
-  pointer-events: none;
-  z-index: 9999;
+.watermark{
+  position:fixed;
+  top:40%;
+  left:15%;
+  font-size:26px;
+  color:rgba(0,0,0,0.15);
+  transform:rotate(-30deg);
+  pointer-events:none;
 }
 </style>
 
