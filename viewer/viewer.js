@@ -1,13 +1,13 @@
-const urlParams = new URLSearchParams(window.location.search);
-let pdfPath = urlParams.get("pdf");
+const params = new URLSearchParams(window.location.search);
+let pdfPath = params.get("pdf");
 
 if (!pdfPath) {
   alert("PDF not specified");
   throw new Error("PDF missing");
 }
 
-/* 🔥 ABSOLUTE PATH FIX */
-pdfPath = "/krisishikkha/" + pdfPath.replace(/^(\.\.\/)+/, "");
+/* 🔥 FINAL FIX — এটা বদলাবেন না */
+pdfPath = "/krisishikkha/" + pdfPath;
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
 "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
@@ -19,8 +19,8 @@ pdfjsLib.getDocument(pdfPath).promise.then(pdf => {
   return pdf.getPage(1);
 }).then(page => {
   const viewport = page.getViewport({ scale: 1.4 });
-  canvas.height = viewport.height;
   canvas.width = viewport.width;
+  canvas.height = viewport.height;
 
   page.render({
     canvasContext: ctx,
