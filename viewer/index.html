@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>PDF Viewer</title>
+
 <style>
-body { margin:0; background:#eee; }
-#pdf-container { padding:15px; }
-.watermark {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  opacity: 0.15;
-  font-size: 34px;
-  pointer-events: none;
+body{
+  margin:0;
+  background:#e6e6e6;
+  font-family: Georgia, serif;
+}
+#pdf-container{
+  padding:10px;
+}
+.watermark{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-size:32px;
+  opacity:0.18;
+  pointer-events:none;
+  z-index:999;
 }
 </style>
 </head>
+
 <body>
 
 <div class="watermark">fb:@krisishikkha.com</div>
 <div id="pdf-container"></div>
 
-<script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
+<!-- ✅ RELATIVE PATH (MOST IMPORTANT FIX) -->
+<script src="../vendor/pdfjs/pdf.min.js"></script>
 <script src="viewer.js"></script>
 
 </body>
