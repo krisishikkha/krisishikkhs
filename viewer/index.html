@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Secure PDF Viewer</title>
+<style>
+body { margin:0; background:#111; }
+#watermark {
+ position: fixed;
+ top: 40%;
+ left: 10%;
+ font-size: 30px;
+ color: rgba(255,255,255,0.15);
+ transform: rotate(-25deg);
+ pointer-events: none;
+}
+canvas { display:block; margin:auto; }
+</style>
+</head>
+<body>
+
+<div id="watermark">fb:@krisishikkha.com</div>
+<canvas id="pdfCanvas"></canvas>
+
+<script src="../vendor/pdfjs/pdf.min.js"></script>
+<script src="viewer.js"></script>
+</body>
+</html>
