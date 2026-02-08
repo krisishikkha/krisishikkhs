@@ -1,36 +1,54 @@
+// ===== PDF.js worker (ABSOLUTE PATH) =====
 pdfjsLib.GlobalWorkerOptions.workerSrc =
-'/krisishikkha/vendor/pdfjs/pdf.worker.min.js';
+  "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
 
-const urlParams = new URLSearchParams(window.location.search);
-const pdfFile = urlParams.get('pdf');
+// ===== Get PDF file from URL =====
+const params = new URLSearchParams(window.location.search);
+const pdfFile = params.get("pdf");
 
-// ✅ Absolute path for GitHub Pages
-const pdfPath = '/krisishikkha/pdf/' + pdfFile;
+if (!pdfFile) {
+  alert("PDF file not specified!");
+  throw new Error("No PDF file provided");
+}
 
-const canvas = document.getElementById('pdfCanvas');
-const ctx = canvas.getContext('2d');
+// ===== Build absolute PDF path =====
+const pdfPath = "/krisishikkha/pdf/" + pdfFile;
+
+// ===== Canvas setup =====
+const canvas = document.getElementById("pdfCanvas");
+const ctx = canvas.getContext("2d");
 
 let pdfDoc = null;
 let pageNum = 1;
+let scale = 1.4;
 
-pdfjsLib.getDocument(pdfPath).promise.then(pdf => {
-  pdfDoc = pdf;
-  renderPage(pageNum);
-}).catch(err => {
-  alert("PDF load error: " + err.message);
-});
+// ===== Load PDF =====
+pdfjsLib.getDocument(pdfPath).promise
+  .then(pdf => {
+    pdfDoc = pdf;
+    renderPage(pageNum);
+  })
+  .catch(err => {
+    alert("Failed to load PDF. Check file path.");
+    console.error(err);
+  });
 
+// ===== Render page =====
 function renderPage(num) {
   pdfDoc.getPage(num).then(page => {
-    const viewport = page.getViewport({ scale: 1.4 });
+    const viewport = page.getViewport({ scale: scale });
+
     canvas.width = viewport.width;
     canvas.height = viewport.height;
 
-    page.render({
+    const renderContext = {
       canvasContext: ctx,
       viewport: viewport
-    });
+    };
+
+    page.render(renderContext);
   });
 }
 
-document.addEventListener('contextmenu', e => e.preventDefault());
+// ===== Disable right click =====
+document.addEventListener("contextmenu", e => e.preventDefault());
