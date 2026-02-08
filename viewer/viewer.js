@@ -1,34 +1,24 @@
-const urlParams = new URLSearchParams(window.location.search);
-const pdfUrl = urlParams.get('pdf');
+const params = new URLSearchParams(window.location.search);
+const pdfUrl = params.get("pdf");
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
+"/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
 
 const container = document.getElementById("pdf-container");
 
-if (!pdfUrl) {
-  container.innerHTML = "<p>PDF not found</p>";
-} else {
-  pdfjsLib.getDocument(pdfUrl).promise.then(function (pdf) {
-    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-      pdf.getPage(pageNum).then(function (page) {
-        const viewport = page.getViewport({ scale: 1.2 });
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
+pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+  for (let p = 1; p <= pdf.numPages; p++) {
+    pdf.getPage(p).then(page => {
+      const viewport = page.getViewport({ scale: 1.3 });
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
 
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        canvas.style.marginBottom = "20px";
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.marginBottom = "20px";
 
-        container.appendChild(canvas);
-
-        page.render({
-          canvasContext: context,
-          viewport: viewport,
-        });
-      });
-    }
-  }).catch(function (error) {
-    container.innerHTML = "PDF load error: " + error.message;
-  });
-}
+      container.appendChild(canvas);
+      page.render({ canvasContext: ctx, viewport });
+    });
+  }
+});
