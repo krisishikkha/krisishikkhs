@@ -1,3 +1,8 @@
+const urlParams = new URLSearchParams(window.location.search);
+const pdfUrl = urlParams.get('pdf');
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
 // ===== PDF.js worker (ABSOLUTE PATH) =====
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
