@@ -3,37 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <title>PDF Viewer</title>
-
 <style>
-body{
-  margin:0;
-  background:#e6e6e6;
-  font-family: Georgia, serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #eee;
 }
-#pdf-container{
-  padding:10px;
+#pdf-container {
+  position: relative;
 }
-.watermark{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) rotate(-30deg);
-  font-size:32px;
-  opacity:0.18;
-  pointer-events:none;
-  z-index:999;
+.watermark {
+  position: fixed;
+  top: 40%;
+  left: 20%;
+  font-size: 26px;
+  color: rgba(0,0,0,0.15);
+  transform: rotate(-30deg);
+  pointer-events: none;
+  z-index: 9999;
 }
 </style>
-</head>
 
+<script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
+</head>
 <body>
 
 <div class="watermark">fb:@krisishikkha.com</div>
-<div id="pdf-container"></div>
+<canvas id="pdf-canvas"></canvas>
 
-<!-- ✅ RELATIVE PATH (MOST IMPORTANT FIX) -->
-<script src="../vendor/pdfjs/pdf.min.js"></script>
 <script src="viewer.js"></script>
-
 </body>
 </html>
