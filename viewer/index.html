@@ -1,60 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Secure PDF Viewer | krisishikkha</title>
-
-  <!-- Mobile friendly -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Disable caching (optional but helpful during testing) -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDF Viewer | KrishiShikkha</title>
 
   <style>
     body {
       margin: 0;
       background: #111;
-      overflow-x: hidden;
-      user-select: none;
-      -webkit-user-select: none;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #pdf-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
     }
 
     canvas {
-      display: block;
-      margin: 0 auto;
+      max-width: 100%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
       background: #fff;
     }
 
-    /* Watermark */
     .watermark {
       position: fixed;
-      top: 45%;
-      left: 5%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
       font-size: 28px;
-      font-family: Arial, sans-serif;
-      color: rgba(255, 255, 255, 0.18);
-      transform: rotate(-25deg);
+      color: rgba(255,255,255,0.08);
       pointer-events: none;
+      user-select: none;
       z-index: 9999;
-      white-space: nowrap;
     }
   </style>
 </head>
 
-<body oncontextmenu="return false">
+<body>
 
-  <!-- Watermark -->
-  <div class="watermark">fb:@krisishikkha.com</div>
+  <div id="pdf-container"></div>
 
-  <!-- PDF Canvas -->
-  <canvas id="pdfCanvas"></canvas>
+  <div class="watermark">
+    fb:@krisishikkha.com
+  </div>
 
-  <!-- ✅ PDF.js (ABSOLUTE PATH – IMPORTANT) -->
+  <!-- 🔥 MUST BE ABSOLUTE PATH -->
   <script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
 
-  <!-- Viewer Logic -->
+  <!-- viewer.js is in same folder -->
   <script src="viewer.js"></script>
 
 </body>
