@@ -1,33 +1,46 @@
 pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-const urlParams = new URLSearchParams(location.search);
-const pdfUrl = urlParams.get("pdf");
+/* GET PDF */
+const params = new URLSearchParams(location.search);
+let pdfUrl = params.get("pdf");
 
+if(!pdfUrl){
+  document.getElementById("viewer").innerHTML =
+    "<p style='text-align:center'>PDF not found</p>";
+  throw "";
+}
+
+if(!pdfUrl.startsWith("/")){
+  pdfUrl = "/" + pdfUrl;
+}
+
+/* ELEMENTS */
 const viewer = document.getElementById("viewer");
 const progressBar = document.getElementById("progress");
 const searchInput = document.getElementById("search");
 
+/* STATE */
 let pdfDoc = null;
 let totalPages = 0;
 let renderedPages = 0;
 let pageText = [];
 
-if(!pdfUrl){
-  viewer.innerHTML="<p style='text-align:center'>PDF not found</p>";
-  throw "";
-}
+/* STORAGE KEY */
+const scrollKey = "scroll_" + pdfUrl;
 
-const storageKey = "scroll-"+pdfUrl;
-
-// 🔒 BLOCK COPY / SAVE / RIGHT CLICK
-document.addEventListener("contextmenu",e=>e.preventDefault());
-document.addEventListener("keydown",e=>{
-  if(e.ctrlKey && ["s","p","c","u"].includes(e.key.toLowerCase()))
+/* BLOCK COPY / SAVE / RIGHT CLICK */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e=>{
+  if(
+    (e.ctrlKey || e.metaKey) &&
+    ["s","p","u","c"].includes(e.key.toLowerCase())
+  ){
     e.preventDefault();
+  }
 });
 
-// LOAD PDF
+/* LOAD PDF */
 pdfjsLib.getDocument(pdfUrl).promise.then(pdf=>{
   pdfDoc = pdf;
   totalPages = pdf.numPages;
@@ -35,56 +48,59 @@ pdfjsLib.getDocument(pdfUrl).promise.then(pdf=>{
   for(let i=1;i<=totalPages;i++){
     renderPage(i);
   }
+
+  restoreScroll();
 });
 
-// RENDER PAGE
+/* RENDER PAGE */
 function renderPage(num){
   pdfDoc.getPage(num).then(page=>{
-    const viewport = page.getViewport({scale:1.4});
+    const viewport = page.getViewport({ scale:1.4 });
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.height = viewport.height;
     canvas.width = viewport.width;
+    canvas.height = viewport.height;
 
     viewer.appendChild(canvas);
 
-    page.render({canvasContext:ctx,viewport}).promise.then(()=>{
+    page.render({ canvasContext:ctx, viewport }).promise.then(()=>{
       renderedPages++;
       updateProgress();
     });
 
-    // TEXT FOR SEARCH
-    page.getTextContent().then(txt=>{
-      pageText[num]=txt.items.map(i=>i.str).join(" ");
+    page.getTextContent().then(tc=>{
+      pageText[num] = tc.items.map(i=>i.str).join(" ").toLowerCase();
     });
   });
 }
 
-// PROGRESS BAR
+/* PROGRESS */
 function updateProgress(){
   const percent = Math.floor((renderedPages/totalPages)*100);
-  progressBar.style.width = percent+"%";
+  progressBar.style.width = percent + "%";
 }
 
-// SEARCH
+/* SEARCH */
 searchInput.oninput = ()=>{
   const q = searchInput.value.toLowerCase();
   const canvases = viewer.querySelectorAll("canvas");
 
   canvases.forEach((c,i)=>{
-    const match = pageText[i+1]?.toLowerCase().includes(q);
-    c.style.display = (!q || match) ? "block" : "none";
+    const match = pageText[i+1]?.includes(q);
+    c.style.display = !q || match ? "block" : "none";
   });
 };
 
-// 💾 SCROLL POSITION SAVE
-window.addEventListener("scroll",()=>{
-  localStorage.setItem(storageKey,window.scrollY);
+/* SAVE SCROLL */
+window.addEventListener("scroll", ()=>{
+  localStorage.setItem(scrollKey, window.scrollY);
 });
 
-// 🔁 RESTORE LAST READ POSITION
-window.onload = ()=>{
-  const y = localStorage.getItem(storageKey);
-  if(y) setTimeout(()=>window.scrollTo(0,y),600);
-};
+/* RESTORE SCROLL */
+function restoreScroll(){
+  const y = localStorage.getItem(scrollKey);
+  if(y){
+    setTimeout(()=>window.scrollTo(0, parseInt(y)), 1200);
+  }
+}
