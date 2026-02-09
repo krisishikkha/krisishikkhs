@@ -8,72 +8,77 @@
 <style>
 body{
   font-family: Georgia, serif;
-  background:#e6e6e6;
-  padding:20px;
+  background:#eaeaea;
+  padding:14px;
+  margin:0;
 }
 
 h1{
-  font-size:34px;
-  margin-bottom:8px;
+  font-size:26px;
+  margin-bottom:6px;
 }
 
 #breadcrumb{
-  font-size:15px;
-  margin-bottom:15px;
+  font-size:13px;
+  margin-bottom:12px;
 }
 
 input{
   width:100%;
-  padding:10px;
-  font-size:16px;
-  margin-bottom:20px;
+  padding:7px;
+  font-size:14px;
+  margin-bottom:14px;
   display:none;
 }
 
+/* GRID — SMALL */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:12px;
 }
 
+/* CARD — SMALL */
 .card{
   background:#fff;
-  padding:25px 20px;
+  padding:12px 10px;
   border-radius:10px;
-  box-shadow:0 6px 12px rgba(0,0,0,.15);
+  box-shadow:0 3px 8px rgba(0,0,0,.15);
   text-align:center;
   cursor:pointer;
   transition:.2s;
 }
 
 .card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-3px);
 }
 
 .card h2{
-  font-size:22px;
+  font-size:15px;
+  margin:0;
 }
 
 .card h3{
-  font-size:18px;
+  font-size:13px;
+  margin:0;
 }
 
+/* READ LINK */
 .read{
   display:inline-block;
-  margin-top:10px;
-  font-size:16px;
+  margin-top:6px;
+  font-size:13px;
   color:#5a2a82;
   text-decoration:none;
-  border-bottom:2px solid #5a2a82;
 }
 
+/* BADGE — SMALL */
 .badge{
-  font-size:12px;
-  padding:4px 8px;
-  border-radius:6px;
-  margin-left:6px;
+  font-size:10px;
+  padding:2px 5px;
+  border-radius:4px;
+  margin-left:4px;
   background:#ccc;
-  color:#000;
 }
 
 .readed{
@@ -88,18 +93,18 @@ input{
 <h1>NTRCA Preparation Notes</h1>
 <div id="breadcrumb">NTRCA Notes</div>
 
-<input id="searchBox" placeholder="🔍 Search chapter...">
+<input id="searchBox" placeholder="🔍 Search PDF">
 
 <!-- LEVEL 1 -->
 <div id="level1" class="grid">
   <div class="card" onclick="openCategory('SSC Agriculture')">
-    <h2>📘 SSC Agriculture</h2>
+    <h2>SSC Agriculture</h2>
   </div>
   <div class="card" onclick="openCategory('HSC Agriculture 1st Paper')">
-    <h2>📗 HSC Agriculture 1st Paper</h2>
+    <h2>HSC Agri 1st</h2>
   </div>
   <div class="card" onclick="openCategory('HSC Agriculture 2nd Paper')">
-    <h2>📕 HSC Agriculture 2nd Paper</h2>
+    <h2>HSC Agri 2nd</h2>
   </div>
 </div>
 
@@ -136,72 +141,56 @@ const data = {
   ]
 };
 
-let currentCategory = "";
+let currentCategory="";
 
 function openCategory(cat){
-  currentCategory = cat;
+  currentCategory=cat;
   history.pushState({cat}, "");
-  document.getElementById("level1").style.display="none";
-  document.getElementById("level2").style.display="block";
-  document.getElementById("searchBox").style.display="block";
-
+  level1.style.display="none";
+  level2.style.display="block";
+  searchBox.style.display="block";
   updateBreadcrumb();
-  renderChapters("");
+  render("");
 }
 
 function updateBreadcrumb(){
-  document.getElementById("breadcrumb").innerHTML =
-    `<span style="cursor:pointer;color:#5a2a82"
-      onclick="goHome()">NTRCA Notes</span> > ${currentCategory}
-      (${data[currentCategory].length} PDFs)`;
+  breadcrumb.innerHTML =
+  `<span onclick="goHome()" style="cursor:pointer;color:#5a2a82">
+   NTRCA Notes</span> > ${currentCategory}
+   (${data[currentCategory].length})`;
 }
 
-function renderChapters(filter){
-  const grid = document.getElementById("chapterGrid");
-  grid.innerHTML="";
-
+function render(filter){
+  chapterGrid.innerHTML="";
   data[currentCategory].forEach(file=>{
     if(!file.includes(filter)) return;
-
-    const title = file.replace(".pdf","").replace(/-/g," ");
-    const key = currentCategory + file;
-    const read = localStorage.getItem(key);
-
-    grid.innerHTML += `
-      <div class="card">
-        <h3>${title}
-          <span class="badge ${read?'readed':''}">
-            ${read?'READ':'NEW'}
-          </span>
-        </h3>
-        <a class="read"
-          href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}"
-          onclick="markRead('${key}')">
-          📖 Read PDF
-        </a>
-      </div>
-    `;
+    const title=file.replace(".pdf","").replace(/-/g," ");
+    const key=currentCategory+file;
+    const read=localStorage.getItem(key);
+    chapterGrid.innerHTML+=`
+    <div class="card">
+      <h3>${title}
+      <span class="badge ${read?'readed':''}">
+      ${read?'READ':'NEW'}
+      </span></h3>
+      <a class="read"
+       href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}"
+       onclick="localStorage.setItem('${key}',true)">
+       Read
+      </a>
+    </div>`;
   });
 }
 
-function markRead(key){
-  localStorage.setItem(key,true);
-}
-
 function goHome(){
-  document.getElementById("level2").style.display="none";
-  document.getElementById("level1").style.display="grid";
-  document.getElementById("searchBox").style.display="none";
-  document.getElementById("breadcrumb").innerText="NTRCA Notes";
+  level2.style.display="none";
+  level1.style.display="grid";
+  searchBox.style.display="none";
+  breadcrumb.innerText="NTRCA Notes";
 }
 
-document.getElementById("searchBox").addEventListener("input",e=>{
-  renderChapters(e.target.value);
-});
-
-window.onpopstate = function(){
-  goHome();
-};
+searchBox.oninput=e=>render(e.target.value);
+onpopstate=goHome;
 </script>
 
 </body>
