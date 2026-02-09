@@ -1,72 +1,27 @@
-// worker path (LOCAL)
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-"/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
+const params = new URLSearchParams(window.location.search); let pdfPath = params.get("pdf");
 
-// get pdf param
-const params = new URLSearchParams(window.location.search);
-let pdfPath = params.get("pdf");
+if (!pdfPath) { alert("PDF not specified"); throw new Error("PDF missing"); }
 
-if(!pdfPath){
-  alert("PDF not found");
-  throw "";
-}
+pdfPath = "/krisishikkha/" + pdfPath;
 
-// IMPORTANT FIX for GitHub Pages
-pdfPath = decodeURIComponent(pdfPath);
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
 
-// pdf vars
-let pdfDoc = null;
-let pageNum = 1;
-let canvas = document.getElementById("pdfCanvas");
-let ctx = canvas.getContext("2d");
+const container = document.body;
 
-// restore last page
-const savedPage = localStorage.getItem(pdfPath);
-if(savedPage){
-  pageNum = parseInt(savedPage);
-}
+pdfjsLib.getDocument(pdfPath).promise.then(pdf => { for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) { pdf.getPage(pageNum).then(page => { const canvas = document.createElement("canvas"); const ctx = canvas.getContext("2d");
 
-// render page
-function renderPage(num){
-  pdfDoc.getPage(num).then(page=>{
-    const viewport = page.getViewport({ scale: 1.4 });
+const viewport = page.getViewport({ scale: 1.3 });
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  canvas.style.display = "block";
+  canvas.style.margin = "20px auto";
 
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
+  container.appendChild(canvas);
 
-    page.render({
-      canvasContext: ctx,
-      viewport: viewport
-    });
-
-    document.getElementById("pageInfo").innerText =
-      "Page " + num + " / " + pdfDoc.numPages;
-
-    localStorage.setItem(pdfPath, num);
+  page.render({
+    canvasContext: ctx,
+    viewport: viewport,
   });
-}
-
-// navigation
-function nextPage(){
-  if(pageNum < pdfDoc.numPages){
-    pageNum++;
-    renderPage(pageNum);
-  }
-}
-
-function prevPage(){
-  if(pageNum > 1){
-    pageNum--;
-    renderPage(pageNum);
-  }
-}
-
-function goBack(){
-  history.back();
-}
-
-// load pdf
-pdfjsLib.getDocument(pdfPath).promise.then(pdf=>{
-  pdfDoc = pdf;
-  renderPage(pageNum);
 });
+
+} }).catch(err => { alert("PDF load error: " + err.message); });
