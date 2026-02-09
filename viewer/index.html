@@ -8,89 +8,77 @@
 <style>
 body{
   margin:0;
-  background:#111;
-  color:#fff;
-  font-family:Arial, sans-serif;
-  user-select:none;
+  background:#f2f2f2;
+  font-family:Georgia, serif;
 }
 
-/* TOP BAR */
-#topbar{
+/* top bar */
+#toolbar{
   position:fixed;
-  top:0; left:0; right:0;
-  height:48px;
-  background:#1e1e1e;
+  top:0;
+  width:100%;
+  background:#fff;
+  padding:8px 10px;
   display:flex;
+  justify-content:space-between;
   align-items:center;
-  padding:0 10px;
-  z-index:100;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+  z-index:1000;
 }
 
-#search{
-  flex:1;
-  padding:6px 8px;
-  font-size:14px;
-  border:none;
-  border-radius:4px;
-  outline:none;
+button{
+  font-size:15px;
+  padding:6px 10px;
+  cursor:pointer;
 }
 
-/* PROGRESS */
-#progressBox{
-  position:fixed;
-  top:48px;
-  left:0; right:0;
-  height:4px;
-  background:#333;
-  z-index:100;
-}
-#progress{
-  height:100%;
-  width:0%;
-  background:#4caf50;
+#pageInfo{
+  font-size:15px;
 }
 
-/* VIEWER */
-#viewer{
+/* pdf area */
+#pdfContainer{
   margin-top:60px;
-  padding-bottom:40px;
+  text-align:center;
 }
 
 canvas{
-  display:block;
-  margin:14px auto;
-  max-width:100%;
-  box-shadow:0 4px 14px rgba(0,0,0,.6);
+  width:100%;
+  max-width:900px;
+  margin-bottom:16px;
 }
 
-/* WATERMARK */
-.watermark{
+/* watermark */
+#watermark{
   position:fixed;
-  bottom:8px;
-  right:10px;
-  font-size:11px;
-  opacity:.35;
+  bottom:20px;
+  right:20px;
+  font-size:12px;
+  color:rgba(0,0,0,.25);
   pointer-events:none;
+  user-select:none;
 }
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false">
 
-<div id="topbar">
-  <input id="search" placeholder="🔍 Search in PDF">
+<div id="toolbar">
+  <button onclick="goBack()">⬅ Back</button>
+  <div id="pageInfo">Loading…</div>
+  <div>
+    <button onclick="prevPage()">◀</button>
+    <button onclick="nextPage()">▶</button>
+  </div>
 </div>
 
-<div id="progressBox">
-  <div id="progress"></div>
+<div id="pdfContainer">
+  <canvas id="pdfCanvas"></canvas>
 </div>
 
-<div id="viewer"></div>
+<div id="watermark">© krisishikkha</div>
 
-<div class="watermark">© Krisishikkha</div>
-
-<!-- PDF.JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
 <script src="viewer.js"></script>
 
 </body>
