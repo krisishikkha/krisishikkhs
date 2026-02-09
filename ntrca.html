@@ -2,90 +2,73 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>NTRCA Notes | KrishiShikkha</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NTRCA Preparation Notes</title>
 
 <style>
 body{
-  font-family: "Georgia", serif;
-  background:#f4f6f8;
-  margin:0;
+  font-family: Georgia, serif;
+  background:#cfcfcf;
   padding:20px;
 }
 
 h1{
-  text-align:center;
+  font-size:36px;
+}
+
+.chapter{
   margin-bottom:30px;
-  color:#222;
 }
 
-.note{
-  background:#ffffff;
-  padding:18px;
-  margin-bottom:16px;
-  border-radius:8px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.12);
+.chapter h2{
+  font-size:26px;
+  margin-bottom:6px;
 }
 
-.note h2{
-  margin:0 0 10px 0;
-  font-size:19px;
-  color:#333;
-}
-
-.note a{
-  display:inline-block;
+.read{
+  font-size:18px;
+  color:#5a2a82;
   text-decoration:none;
-  background:#1a7f37;
-  color:#ffffff;
-  padding:8px 18px;
-  border-radius:5px;
-  font-size:14px;
-}
-.note a:hover{
-  background:#145c28;
+  border-bottom:2px solid #5a2a82;
 }
 </style>
-
 </head>
+
 <body>
 
 <h1>NTRCA Preparation Notes</h1>
 
-<div class="note">
-  <h2>SSC First Chapter</h2>
-  <a href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/ssc-first-chapter.pdf">📖 Read PDF</a>
-</div>
+<div id="pdfList"></div>
 
-<div class="note">
-  <h2>SSC Second Chapter</h2>
-  <a href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/ssc-second-chapter.pdf">📖 Read PDF</a>
-</div>
+<script>
+const files = [
+  "ssc-first-chapter.pdf",
+  "ssc-second-chapter.pdf",
+  "ssc-third-chapter.pdf",
+  "ssc-forth-chapter.pdf",
+  "ssc-fifth-chapter.pdf",
+  "ssc-sixth-chapter.pdf",
+  "ssc-seventh-chapter.pdf"
+];
 
-<div class="note">
-  <h2>SSC Third Chapter</h2>
-  <a href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/ssc-third-chapter.pdf">📖 Read PDF</a>
-</div>
+const list = document.getElementById("pdfList");
 
-<div class="note">
-  <h2>SSC Forth Chapter</h2>
-  <a href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/ssc-forth-chapter.pdf">📖 Read PDF</a>
-</div>
+files.forEach(file=>{
+  const title = file
+    .replace(".pdf","")
+    .replace(/-/g," ")
+    .replace(/\b\w/g,l=>l.toUpperCase());
 
-<div class="note">
-  <h2>SSC Fifth Chapter</h2>
-  <a href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/ssc-fifth-chapter.pdf">📖 Read PDF</a>
-</div>
-
-<div class="note">
-  <h2>SSC Sixth Chapter</h2>
-  <a href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/ssc-sixth-chapter.pdf">📖 Read PDF</a>
-</div>
-
-<div class="note">
-  <h2>SSC Seventh Chapter</h2>
-  <a href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/ssc-seventh-chapter.pdf">📖 Read PDF</a>
-</div>
+  list.innerHTML += `
+    <div class="chapter">
+      <h2>${title}</h2>
+      <a class="read"
+         href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}">
+         📖 Read PDF
+      </a>
+    </div>
+  `;
+});
+</script>
 
 </body>
 </html>
