@@ -1,80 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>PDF Viewer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+const params = new URLSearchParams(window.location.search);
+let pdfPath = params.get("pdf");
+pdfPath = "/krisishikkha/" + pdfPath;
 
-<style>
-body{
-  margin:0;
-  background:#f2f2f2;
-  font-family:Georgia, serif;
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
+
+const container = document.getElementById("pdfContainer");
+const pageInfo = document.getElementById("pageInfo");
+
+let pdfDoc = null;
+let scale = 1.3;
+
+// restore scroll position
+const savedScroll = localStorage.getItem(pdfPath + "_scroll");
+
+pdfjsLib.getDocument(pdfPath).promise.then(pdf=>{
+  pdfDoc = pdf;
+  pageInfo.innerText = `Total Pages: ${pdf.numPages}`;
+
+  for(let i=1;i<=pdf.numPages;i++){
+    renderPage(i);
+  }
+
+  // restore last position
+  setTimeout(()=>{
+    if(savedScroll){
+      window.scrollTo(0, parseInt(savedScroll));
+    }
+  }, 800);
+});
+
+function renderPage(num){
+  pdfDoc.getPage(num).then(page=>{
+    const viewport = page.getViewport({ scale });
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    container.appendChild(canvas);
+
+    page.render({
+      canvasContext: ctx,
+      viewport: viewport
+    });
+  });
 }
 
-/* top bar */
-#toolbar{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:#fff;
-  padding:8px 12px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
-  z-index:1000;
-}
-
-#toolbar button{
-  padding:6px 12px;
-  font-size:15px;
-  cursor:pointer;
-}
-
-/* pdf container */
-#pdfContainer{
-  margin-top:60px;
-  max-width:900px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-canvas{
-  width:100%;
-  display:block;
-  margin-bottom:18px;
-  background:#fff;
-}
-
-/* smaller watermark */
-#watermark{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) rotate(-25deg);
-  font-size:22px;
-  color:rgba(0,0,0,0.08);
-  pointer-events:none;
-  user-select:none;
-  z-index:9999;
-}
-</style>
-</head>
-
-<body>
-
-<div id="toolbar">
-  <button onclick="history.back()">⬅ Back</button>
-  <div id="pageInfo">Loading PDF…</div>
-</div>
-
-<div id="pdfContainer"></div>
-
-<div id="watermark">fb:@krisishikkha.com</div>
-
-<script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
-<script src="viewer.js"></script>
-
-</body>
-</html>
+// save scroll position
+window.addEventListener("scroll", ()=>{
+  localStorage.setItem(pdfPath + "_scroll", window.scrollY);
+});
