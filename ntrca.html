@@ -71,9 +71,11 @@ h1{
   <div class="card" onclick="openCategory('SSC Agriculture')">
     <h2>📘 SSC Agriculture</h2>
   </div>
+
   <div class="card" onclick="openCategory('HSC Agriculture 1st Paper')">
     <h2>📗 HSC Agriculture 1st Paper</h2>
   </div>
+
   <div class="card" onclick="openCategory('HSC Agriculture 2nd Paper')">
     <h2>📕 HSC Agriculture 2nd Paper</h2>
   </div>
@@ -88,7 +90,7 @@ h1{
 <script>
 /* 🔴 এখানেই শুধু PDF নাম add করবেন */
 const data = {
-    "SSC Agriculture": [
+  "SSC Agriculture": [
     "ssc-first-chapter.pdf",
     "ssc-second-chapter.pdf",
     "ssc-third-chapter.pdf",
@@ -96,29 +98,31 @@ const data = {
     "ssc-fifth-chapter.pdf",
     "ssc-sixth-chapter.pdf",
     "ssc-seventh-chapter.pdf"
-
   ],
 
   "HSC Agriculture 1st Paper": [
-  "hsc-first-paper-first-chapter.pdf",
-  "hsc-first-paper-second-chapter.pdf",
-  "hsc-first-paper-third-chapter.pdf",
-  "hsc-first-paper-forth-chapter.pdf",
-  "hsc-first-paper-fifth-chapter.pdf",
-  "hsc-first-paper-sixth-chapter.pdf"
+    "hsc-first-paper-first-chapter.pdf",
+    "hsc-first-paper-second-chapter.pdf",
+    "hsc-first-paper-third-chapter.pdf",
+    "hsc-first-paper-forth-chapter.pdf",
+    "hsc-first-paper-fifth-chapter.pdf",
+    "hsc-first-paper-sixth-chapter.pdf"
   ],
 
   "HSC Agriculture 2nd Paper": [
-  "hsc-second-paper-first-chapter.pdf",
-  "hsc-second-paper-second-chapter.pdf",
-  "hsc-second-paper-third-chapter.pdf",
-  "hsc-second-paper-forth-chapter.pdf",
-  "hsc-second-paper-fifth-chapter.pdf"
+    "hsc-second-paper-first-chapter.pdf",
+    "hsc-second-paper-second-chapter.pdf",
+    "hsc-second-paper-third-chapter.pdf",
+    "hsc-second-paper-forth-chapter.pdf",
+    "hsc-second-paper-fifth-chapter.pdf"
   ]
 };
 /* 🔴 শেষ */
 
+/* CATEGORY OPEN */
 function openCategory(cat){
+  history.pushState({page:"level2"}, "", "");
+
   document.getElementById("level1").style.display="none";
   document.getElementById("level2").style.display="block";
 
@@ -143,10 +147,16 @@ function openCategory(cat){
   });
 }
 
+/* BACK BUTTON */
 function goBack(){
-  document.getElementById("level2").style.display="none";
-  document.getElementById("level1").style.display="grid";
+  history.back();
 }
+
+/* PHONE / BROWSER BACK HANDLE */
+window.onpopstate = function(){
+  document.getElementById("level2").style.display = "none";
+  document.getElementById("level1").style.display = "grid";
+};
 </script>
 
 </body>
