@@ -1,115 +1,66 @@
-/* ===============================
-   PDF PATH & PDFJS CONFIG
-================================ */
-
 const params = new URLSearchParams(window.location.search);
-let pdfPath = params.get("pdf");
+let pdfPath = "/krisishikkha/" + params.get("pdf");
 
-/* Full absolute path (your style) */
-pdfPath = "/krisishikkha/" + pdfPath;
-
-/* PDF.js worker */
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
 
-/* ===============================
-   BASIC SETUP
-================================ */
+const container = document.getElementById("pdfContainer");
+const progressBar = document.getElementById("progress");
 
 let pdfDoc = null;
-let pageNum = 1;
+let totalHeight = 0;
 
-const canvas = document.getElementById("pdfCanvas");
-const ctx = canvas.getContext("2d");
-
-/* ===============================
-   🧠 LAST PAGE REMEMBER
-================================ */
-
-/* Use full pdfPath as unique key */
-const savedPage = localStorage.getItem(pdfPath);
-if(savedPage){
-  pageNum = parseInt(savedPage);
-}
-
-/* ===============================
-   RENDER PAGE
-================================ */
-
-function renderPage(num){
-  pdfDoc.getPage(num).then(page=>{
-
-    const viewport = page.getViewport({ scale: 1.4 });
-    canvas.height = viewport.height;
-    canvas.width  = viewport.width;
-
-    page.render({
-      canvasContext: ctx,
-      viewport: viewport
-    });
-
-    document.getElementById("pageInfo").innerText =
-      `Page ${num} / ${pdfDoc.numPages}`;
-
-    /* Save current page */
-    localStorage.setItem(pdfPath, num);
-  });
-}
-
-/* ===============================
-   NAVIGATION
-================================ */
-
-function nextPage(){
-  if(pageNum < pdfDoc.numPages){
-    pageNum++;
-    renderPage(pageNum);
-  }
-}
-
-function prevPage(){
-  if(pageNum > 1){
-    pageNum--;
-    renderPage(pageNum);
-  }
-}
-
-function goBack(){
-  history.back();
-}
-
-/* ===============================
-   LOAD PDF
-================================ */
-
-pdfjsLib.getDocument(pdfPath).promise.then(pdf=>{
-  pdfDoc = pdf;
-  renderPage(pageNum);
-});
-
-/* ===============================
-   🔒 SECURITY BLOCKS
-================================ */
-
-/* Block print, save, screenshot key */
+/* 🔒 Security blocks */
+document.addEventListener("contextmenu", e=>e.preventDefault());
 document.addEventListener("keydown", e=>{
   if(
-    (e.ctrlKey && (e.key === "p" || e.key === "s")) ||
+    (e.ctrlKey && ["p","s","c"].includes(e.key.toLowerCase())) ||
     e.key === "PrintScreen"
   ){
     e.preventDefault();
-    alert("❌ Print & Download disabled");
+    alert("❌ Action disabled");
   }
 });
 
-/* Disable right click */
-document.addEventListener("contextmenu", e=>{
-  e.preventDefault();
+/* Load PDF */
+pdfjsLib.getDocument(pdfPath).promise.then(pdf=>{
+  pdfDoc = pdf;
+
+  const savedScroll = localStorage.getItem(pdfPath + "_scroll");
+
+  for(let i=1;i<=pdf.numPages;i++){
+    pdf.getPage(i).then(page=>{
+      const viewport = page.getViewport({scale:1.4});
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.height = viewport.height;
+      canvas.width  = viewport.width;
+
+      page.render({canvasContext:ctx,viewport});
+      container.appendChild(canvas);
+
+      totalHeight += viewport.height;
+
+      /* Restore last scroll */
+      if(savedScroll){
+        setTimeout(()=>{
+          window.scrollTo(0, parseInt(savedScroll));
+        },300);
+      }
+    });
+  }
 });
 
-/* ===============================
-   📱 ANDROID-LIKE SWIPE BACK
-================================ */
+/* 📊 Progress + remember scroll */
+window.addEventListener("scroll", ()=>{
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const percent = Math.min(100, Math.round((scrollTop/docHeight)*100));
+
+  progressBar.style.width = percent + "%";
+  localStorage.setItem(pdfPath + "_scroll", scrollTop);
+});================================ */
 
 let touchStartX = 0;
 
