@@ -3,16 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Krisishikkha | Education & PDF Notes</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="assets/css/style.css">
 
 <style>
+body{
+  font-family: Georgia, serif;
+  background:#f3f3f3;
+  margin:0;
+  padding:0;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{
+  font-size:38px;
+  margin-bottom:8px;
+}
+
+p{
+  font-size:17px;
+  color:#444;
+}
+
 /* MAIN CATEGORY GRID */
 .main-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:16px;
-  margin:25px 0;
+  gap:18px;
+  margin:30px 0;
 }
 
 /* MAIN CATEGORY BOX */
@@ -20,24 +43,24 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:85px;              /* 👈 height কমানো */
-  border-radius:14px;           /* 👈 radius কমানো */
+  min-height:95px;
+  border-radius:16px;
   color:#fff;
-  font-size:18px;               /* 👈 font ছোট */
+  font-size:18px;
   font-weight:bold;
   text-decoration:none;
   text-align:center;
-  padding:10px;                 /* 👈 padding কমানো */
-  box-shadow:0 6px 14px rgba(0,0,0,.18);
-  transition:all .25s ease;
+  padding:12px;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+  transition:.25s;
 }
 
 .main-box:hover{
-  transform:translateY(-4px) scale(1.01);
-  box-shadow:0 10px 20px rgba(0,0,0,.28);
+  transform:translateY(-4px);
+  box-shadow:0 10px 22px rgba(0,0,0,.28);
 }
 
-/* COLORFUL THEMES */
+/* COLOR THEMES */
 .ntrca{
   background:linear-gradient(135deg,#2e7d32,#81c784);
 }
@@ -50,16 +73,28 @@
 .others{
   background:linear-gradient(135deg,#ef6c00,#ffb74d);
 }
+
+.footer{
+  margin-top:40px;
+  font-size:14px;
+  text-align:center;
+}
+.footer a{
+  color:#555;
+  text-decoration:none;
+  margin:0 8px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+
   <h1>🌾 Krisishikkha</h1>
   <p>Education + Notes + Secure PDF Reading Platform</p>
 
-  <!-- MAIN CATEGORY BOXES -->
+  <!-- 🔴 MAIN CATEGORY SECTION -->
   <div class="main-grid">
 
     <a href="ntrca.html" class="main-box ntrca">
@@ -80,9 +115,11 @@
 
   </div>
 
-  <hr>
-  <a href="privacy-policy.html">Privacy Policy</a> |
-  <a href="terms.html">Terms & Conditions</a>
+  <div class="footer">
+    <a href="privacy-policy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms & Conditions</a>
+  </div>
+
 </div>
 
 </body>
