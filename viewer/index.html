@@ -2,89 +2,81 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PDF Viewer</title>
+<title>PDF Reader</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
   margin:0;
-  background:#f2f2f2;
   font-family:Georgia, serif;
-  overscroll-behavior: none;
+  background:#f2f2f2;
 }
 
-/* 🔒 Disable selection */
-*{
-  user-select:none;
-}
-
-#toolbar{
+#topBar{
   position:fixed;
   top:0;
   width:100%;
   background:#fff;
-  padding:8px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  padding:8px 12px;
   box-shadow:0 2px 6px rgba(0,0,0,.2);
   z-index:1000;
 }
 
-button{
-  font-size:15px;
-  padding:6px 10px;
-  cursor:pointer;
+#progressWrap{
+  width:100%;
+  height:6px;
+  background:#ddd;
+  margin-top:6px;
 }
 
-#pageInfo{
-  font-size:15px;
+#progress{
+  height:6px;
+  width:0%;
+  background:linear-gradient(90deg,#2e7d32,#81c784);
 }
 
 #pdfContainer{
-  margin-top:60px;
-  text-align:center;
+  margin-top:70px;
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 canvas{
   width:100%;
-  max-width:900px;
+  margin-bottom:18px;
+  background:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
-/* 🔹 SMALL WATERMARK */
+/* WATERMARK (small & soft) */
 #watermark{
   position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) rotate(-25deg);
-  font-size:18px;
-  color:rgba(0,0,0,0.07);
+  bottom:15%;
+  right:5%;
+  font-size:16px;
+  color:rgba(0,0,0,0.15);
   pointer-events:none;
+  user-select:none;
   z-index:9999;
-  white-space:nowrap;
 }
 </style>
 </head>
 
 <body>
 
-<div id="toolbar">
-  <button onclick="goBack()">⬅ Back</button>
-  <div id="pageInfo">Page</div>
-  <div>
-    <button onclick="prevPage()">◀</button>
-    <button onclick="nextPage()">▶</button>
+<div id="topBar">
+  <button onclick="history.back()">⬅ Back</button>
+  <div id="progressWrap">
+    <div id="progress"></div>
   </div>
 </div>
 
-<div id="pdfContainer">
-  <canvas id="pdfCanvas"></canvas>
-</div>
+<div id="pdfContainer"></div>
 
 <div id="watermark">fb:@krisishikkha.com</div>
 
 <script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
 <script src="viewer.js"></script>
-
 </body>
 </html>
