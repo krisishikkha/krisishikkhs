@@ -1,85 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
+
 <head>
+
 <meta charset="UTF-8">
+
 <title>PDF Viewer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{
-  margin:0;
-  background:#f2f2f2;
-  font-family:Georgia, serif;
+
+html, body{
+
 }
 
-/* top bar */
-#toolbar{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:#fff;
-  padding:8px 10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 2px 6px rgba(0,0,0,.2);
-  z-index:1000;
+margin:0;
+
+padding:0;
+
+background: #e5e5e5;
+
+#pdf-canvas{
+
 }
 
-button{
-  font-size:15px;
-  padding:6px 10px;
-  cursor:pointer;
+display:block;
+
+margin:auto;
+
+.watermark(
+
 }
 
-#pageInfo{
-  font-size:15px;
-}
+position:fixed;
 
-/* pdf area */
-#pdfContainer{
-  margin-top:60px;
-  text-align:center;
-}
+top:40%;
 
-canvas{
-  width:100%;
-  max-width:900px;
-  margin-bottom:16px;
-}
+left:15%;
 
-/* watermark */
-#watermark{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  font-size:12px;
-  color:rgba(0,0,0,.25);
-  pointer-events:none;
-  user-select:none;
-}
+font-size:26px;
+
+color:rgba(0,0,0,0.15);
+
+transform:rotate(-30deg);
+
+pointer-events:none;
+
 </style>
-</head>
-
-<body oncontextmenu="return false">
-
-<div id="toolbar">
-  <button onclick="goBack()">⬅ Back</button>
-  <div id="pageInfo">Loading…</div>
-  <div>
-    <button onclick="prevPage()">◀</button>
-    <button onclick="nextPage()">▶</button>
-  </div>
-</div>
-
-<div id="pdfContainer">
-  <canvas id="pdfCanvas"></canvas>
-</div>
-
-<div id="watermark">© krisishikkha</div>
 
 <script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="watermark">fb:@krisishikkha.com</div>
+
+<canvas id="pdf-canvas"></canvas>
+
 <script src="viewer.js"></script>
 
 </body>
+
 </html>
