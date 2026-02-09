@@ -45,16 +45,18 @@ canvas{
   max-width:900px;
 }
 
+/* 🔹 SMALL & SOFT WATERMARK */
 #watermark{
   position:fixed;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%) rotate(-25deg);
-  font-size:42px;
-  color:rgba(0,0,0,0.12);
+  font-size:20px;                 /* 🔹 ছোট করা */
+  color:rgba(0,0,0,0.08);         /* 🔹 হালকা */
   pointer-events:none;
   z-index:9999;
   user-select:none;
+  white-space:nowrap;
 }
 </style>
 </head>
