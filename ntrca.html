@@ -10,18 +10,15 @@ body{
   background:#e6e6e6;
   padding:20px;
 }
-
 h1{
   font-size:36px;
   margin-bottom:20px;
 }
-
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
 }
-
 .card{
   background:#fff;
   padding:25px 20px;
@@ -31,20 +28,16 @@ h1{
   cursor:pointer;
   transition:.2s;
 }
-
 .card:hover{
   transform:translateY(-5px);
 }
-
 .card h2{
   font-size:22px;
   margin-bottom:10px;
 }
-
 .card h3{
   font-size:20px;
 }
-
 .read{
   display:inline-block;
   margin-top:12px;
@@ -53,7 +46,6 @@ h1{
   text-decoration:none;
   border-bottom:2px solid #5a2a82;
 }
-
 .back{
   margin-bottom:20px;
   cursor:pointer;
@@ -68,13 +60,15 @@ h1{
 
 <!-- LEVEL 1 : CATEGORIES -->
 <div id="level1" class="grid">
-  <div class="card" onclick="openCategory('ssc')">
+  <div class="card" onclick="openCategory('SSC Agriculture')">
     <h2>📘 SSC Agriculture</h2>
   </div>
-  <div class="card" onclick="openCategory('english')">
+
+  <div class="card" onclick="openCategory('HSC Agriculture 1st Paper')">
     <h2>📗 HSC Agriculture 1st Paper</h2>
   </div>
-  <div class="card" onclick="openCategory('bangla')">
+
+  <div class="card" onclick="openCategory('HSC Agriculture 2nd Paper')">
     <h2>📕 HSC Agriculture 2nd Paper</h2>
   </div>
 </div>
@@ -88,55 +82,55 @@ h1{
 <script>
 /* 🔴 এখানেই শুধু PDF নাম add করবেন */
 const data = {
-    "SSC Agriculture": [
+  "SSC Agriculture": [
     "ssc-first-chapter.pdf",
     "ssc-second-chapter.pdf",
     "ssc-third-chapter.pdf",
-    "ssc-forth-chapter.pdf",
+    "ssc-fourth-chapter.pdf",
     "ssc-fifth-chapter.pdf",
     "ssc-sixth-chapter.pdf",
     "ssc-seventh-chapter.pdf"
-
   ],
-
   "HSC Agriculture 1st Paper": [
-  "hsc-first-paper-first-chapter.pdf",
-  "hsc-first-paper-second-chapter.pdf",
-  "hsc-first-paper-third-chapter.pdf",
-  "hsc-first-paper-forth-chapter.pdf",
-  "hsc-first-paper-fifth-chapter.pdf",
-  "hsc-first-paper-sixth-chapter.pdf"
+    "hsc-first-paper-first-chapter.pdf",
+    "hsc-first-paper-second-chapter.pdf",
+    "hsc-first-paper-third-chapter.pdf",
+    "hsc-first-paper-fourth-chapter.pdf",
+    "hsc-first-paper-fifth-chapter.pdf",
+    "hsc-first-paper-sixth-chapter.pdf"
   ],
-
   "HSC Agriculture 2nd Paper": [
-  "hsc-second-paper-first-chapter.pdf",
-  "hsc-second-paper-second-chapter.pdf",
-  "hsc-second-paper-third-chapter.pdf",
-  "hsc-second-paper-forth-chapter.pdf",
-  "hsc-second-paper-fifth-chapter.pdf"
+    "hsc-second-paper-first-chapter.pdf",
+    "hsc-second-paper-second-chapter.pdf",
+    "hsc-second-paper-third-chapter.pdf",
+    "hsc-second-paper-fourth-chapter.pdf",
+    "hsc-second-paper-fifth-chapter.pdf"
   ]
 };
 /* 🔴 শেষ */
 
-function openCategory(cat){
-  document.getElementById("level1").style.display="none";
-  document.getElementById("level2").style.display="block";
+function openCategory(category){
+  document.getElementById("level1").style.display = "none";
+  document.getElementById("level2").style.display = "block";
 
   const grid = document.getElementById("chapterGrid");
   grid.innerHTML = "";
 
-  data[cat].forEach(file=>{
+  if(!data[category]) return;
+
+  data[category].forEach((file, index) => {
     const title = file
       .replace(".pdf","")
       .replace(/-/g," ")
-      .replace(/\b\w/g,l=>l.toUpperCase());
+      .replace(/\b\w/g, l => l.toUpperCase());
 
     grid.innerHTML += `
       <div class="card">
-        <h3>${title}</h3>
+        <h3>${index + 1}. ${title}</h3>
         <a class="read"
+           target="_blank"
            href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}">
-           📖 Read PDF
+          📖 Read PDF
         </a>
       </div>
     `;
@@ -144,8 +138,8 @@ function openCategory(cat){
 }
 
 function goBack(){
-  document.getElementById("level2").style.display="none";
-  document.getElementById("level1").style.display="grid";
+  document.getElementById("level2").style.display = "none";
+  document.getElementById("level1").style.display = "grid";
 }
 </script>
 
