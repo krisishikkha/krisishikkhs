@@ -7,77 +7,83 @@
 
 <style>
 body{
-  font-family: Georgia, serif;
-  background:#eaeaea;
-  padding:14px;
-  margin:0;
+  font-family:Georgia, serif;
+  background:#e6e6e6;
+  padding:20px;
 }
 
 h1{
-  font-size:26px;
-  margin-bottom:6px;
+  font-size:32px;
+  margin-bottom:10px;
 }
 
 #breadcrumb{
-  font-size:13px;
-  margin-bottom:12px;
+  font-size:14px;
+  margin-bottom:14px;
 }
 
 input{
   width:100%;
-  padding:7px;
-  font-size:14px;
-  margin-bottom:14px;
+  padding:9px;
+  font-size:15px;
+  margin-bottom:18px;
   display:none;
 }
 
-/* GRID — SMALL */
+/* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
 }
 
-/* CARD — SMALL */
+/* 🔧 FIXED SIZE CARD */
 .card{
   background:#fff;
-  padding:12px 10px;
-  border-radius:10px;
-  box-shadow:0 3px 8px rgba(0,0,0,.15);
+  padding:14px;
+  border-radius:12px;
+  box-shadow:0 6px 12px rgba(0,0,0,.15);
   text-align:center;
   cursor:pointer;
   transition:.2s;
 }
 
 .card:hover{
-  transform:translateY(-3px);
+  transform:translateY(-4px);
+}
+
+/* 🎨 COLORFUL SUBJECT / PDF BOX */
+.card:nth-child(3n+1){
+  background:linear-gradient(135deg,#ffffff,#e3f2fd);
+}
+.card:nth-child(3n+2){
+  background:linear-gradient(135deg,#ffffff,#fce4ec);
+}
+.card:nth-child(3n+3){
+  background:linear-gradient(135deg,#ffffff,#e8f5e9);
 }
 
 .card h2{
-  font-size:15px;
-  margin:0;
+  font-size:18px;
 }
-
 .card h3{
-  font-size:13px;
-  margin:0;
+  font-size:16px;
 }
 
-/* READ LINK */
 .read{
   display:inline-block;
-  margin-top:6px;
-  font-size:13px;
+  margin-top:8px;
+  font-size:14px;
   color:#5a2a82;
   text-decoration:none;
+  border-bottom:2px solid #5a2a82;
 }
 
-/* BADGE — SMALL */
 .badge{
-  font-size:10px;
-  padding:2px 5px;
-  border-radius:4px;
-  margin-left:4px;
+  font-size:11px;
+  padding:3px 7px;
+  border-radius:6px;
+  margin-left:5px;
   background:#ccc;
 }
 
@@ -93,19 +99,13 @@ input{
 <h1>NTRCA Preparation Notes</h1>
 <div id="breadcrumb">NTRCA Notes</div>
 
-<input id="searchBox" placeholder="🔍 Search PDF">
+<input id="searchBox" placeholder="🔍 Search chapter...">
 
 <!-- LEVEL 1 -->
 <div id="level1" class="grid">
-  <div class="card" onclick="openCategory('SSC Agriculture')">
-    <h2>SSC Agriculture</h2>
-  </div>
-  <div class="card" onclick="openCategory('HSC Agriculture 1st Paper')">
-    <h2>HSC Agri 1st</h2>
-  </div>
-  <div class="card" onclick="openCategory('HSC Agriculture 2nd Paper')">
-    <h2>HSC Agri 2nd</h2>
-  </div>
+  <div class="card" onclick="openCategory('SSC Agriculture')"><h2>📘 SSC Agriculture</h2></div>
+  <div class="card" onclick="openCategory('HSC Agriculture 1st Paper')"><h2>📗 HSC Agriculture 1st Paper</h2></div>
+  <div class="card" onclick="openCategory('HSC Agriculture 2nd Paper')"><h2>📕 HSC Agriculture 2nd Paper</h2></div>
 </div>
 
 <!-- LEVEL 2 -->
@@ -114,83 +114,68 @@ input{
 </div>
 
 <script>
-const data = {
-  "SSC Agriculture":[
-    "ssc-first-chapter.pdf",
-    "ssc-second-chapter.pdf",
-    "ssc-third-chapter.pdf",
-    "ssc-forth-chapter.pdf",
-    "ssc-fifth-chapter.pdf",
-    "ssc-sixth-chapter.pdf",
-    "ssc-seventh-chapter.pdf"
-  ],
-  "HSC Agriculture 1st Paper":[
-    "hsc-first-paper-first-chapter.pdf",
-    "hsc-first-paper-second-chapter.pdf",
-    "hsc-first-paper-third-chapter.pdf",
-    "hsc-first-paper-forth-chapter.pdf",
-    "hsc-first-paper-fifth-chapter.pdf",
-    "hsc-first-paper-sixth-chapter.pdf"
-  ],
-  "HSC Agriculture 2nd Paper":[
-    "hsc-second-paper-first-chapter.pdf",
-    "hsc-second-paper-second-chapter.pdf",
-    "hsc-second-paper-third-chapter.pdf",
-    "hsc-second-paper-forth-chapter.pdf",
-    "hsc-second-paper-fifth-chapter.pdf"
-  ]
+const data={
+"SSC Agriculture":[
+"ssc-first-chapter.pdf","ssc-second-chapter.pdf","ssc-third-chapter.pdf",
+"ssc-forth-chapter.pdf","ssc-fifth-chapter.pdf","ssc-sixth-chapter.pdf","ssc-seventh-chapter.pdf"
+],
+"HSC Agriculture 1st Paper":[
+"hsc-first-paper-first-chapter.pdf","hsc-first-paper-second-chapter.pdf",
+"hsc-first-paper-third-chapter.pdf","hsc-first-paper-forth-chapter.pdf",
+"hsc-first-paper-fifth-chapter.pdf","hsc-first-paper-sixth-chapter.pdf"
+],
+"HSC Agriculture 2nd Paper":[
+"hsc-second-paper-first-chapter.pdf","hsc-second-paper-second-chapter.pdf",
+"hsc-second-paper-third-chapter.pdf","hsc-second-paper-forth-chapter.pdf",
+"hsc-second-paper-fifth-chapter.pdf"
+]
 };
 
 let currentCategory="";
 
 function openCategory(cat){
-  currentCategory=cat;
-  history.pushState({cat}, "");
-  level1.style.display="none";
-  level2.style.display="block";
-  searchBox.style.display="block";
-  updateBreadcrumb();
-  render("");
+currentCategory=cat;
+history.pushState({cat},"");
+level1.style.display="none";
+level2.style.display="block";
+searchBox.style.display="block";
+updateBreadcrumb();
+renderChapters("");
 }
 
 function updateBreadcrumb(){
-  breadcrumb.innerHTML =
-  `<span onclick="goHome()" style="cursor:pointer;color:#5a2a82">
-   NTRCA Notes</span> > ${currentCategory}
-   (${data[currentCategory].length})`;
+breadcrumb.innerHTML=
+`<span style="cursor:pointer;color:#5a2a82" onclick="goHome()">NTRCA Notes</span>
+> ${currentCategory} (${data[currentCategory].length} PDFs)`;
 }
 
-function render(filter){
-  chapterGrid.innerHTML="";
-  data[currentCategory].forEach(file=>{
-    if(!file.includes(filter)) return;
-    const title=file.replace(".pdf","").replace(/-/g," ");
-    const key=currentCategory+file;
-    const read=localStorage.getItem(key);
-    chapterGrid.innerHTML+=`
-    <div class="card">
-      <h3>${title}
-      <span class="badge ${read?'readed':''}">
-      ${read?'READ':'NEW'}
-      </span></h3>
-      <a class="read"
-       href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}"
-       onclick="localStorage.setItem('${key}',true)">
-       Read
-      </a>
-    </div>`;
-  });
+function renderChapters(filter){
+chapterGrid.innerHTML="";
+data[currentCategory].forEach(file=>{
+if(!file.includes(filter))return;
+const title=file.replace(".pdf","").replace(/-/g," ");
+const key=currentCategory+file;
+const read=localStorage.getItem(key);
+chapterGrid.innerHTML+=`
+<div class="card">
+<h3>${title}
+<span class="badge ${read?'readed':''}">${read?'READ':'NEW'}</span>
+</h3>
+<a class="read" href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}"
+onclick="localStorage.setItem('${key}',true)">📖 Read PDF</a>
+</div>`;
+});
 }
 
 function goHome(){
-  level2.style.display="none";
-  level1.style.display="grid";
-  searchBox.style.display="none";
-  breadcrumb.innerText="NTRCA Notes";
+level2.style.display="none";
+level1.style.display="grid";
+searchBox.style.display="none";
+breadcrumb.innerText="NTRCA Notes";
 }
 
-searchBox.oninput=e=>render(e.target.value);
-onpopstate=goHome;
+searchBox.oninput=e=>renderChapters(e.target.value);
+window.onpopstate=goHome;
 </script>
 
 </body>
