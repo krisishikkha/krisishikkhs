@@ -10,9 +10,9 @@
 /* MAIN CATEGORY GRID */
 .main-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-  margin:35px 0;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:16px;
+  margin:25px 0;
 }
 
 /* MAIN CATEGORY BOX */
@@ -20,20 +20,21 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:130px;
-  border-radius:18px;
+  min-height:85px;              /* 👈 height কমানো */
+  border-radius:14px;           /* 👈 radius কমানো */
   color:#fff;
-  font-size:22px;
+  font-size:18px;               /* 👈 font ছোট */
   font-weight:bold;
   text-decoration:none;
   text-align:center;
-  box-shadow:0 10px 22px rgba(0,0,0,.18);
-  transition:all .3s ease;
+  padding:10px;                 /* 👈 padding কমানো */
+  box-shadow:0 6px 14px rgba(0,0,0,.18);
+  transition:all .25s ease;
 }
 
 .main-box:hover{
-  transform:translateY(-8px) scale(1.02);
-  box-shadow:0 18px 32px rgba(0,0,0,.28);
+  transform:translateY(-4px) scale(1.01);
+  box-shadow:0 10px 20px rgba(0,0,0,.28);
 }
 
 /* COLORFUL THEMES */
@@ -82,25 +83,6 @@
   <hr>
   <a href="privacy-policy.html">Privacy Policy</a> |
   <a href="terms.html">Terms & Conditions</a>
-</div>
-
-</body>
-</html>    <div class="main-box research">
-      <h2>🏫 Research Institute</h2>
-      <span>গাইড • পেপার • রিসোর্স</span>
-    </div>
-
-    <div class="main-box others">
-      <h2>📦 Others</h2>
-      <span>বিভিন্ন প্রয়োজনীয় ডকুমেন্ট</span>
-    </div>
-
-  </div>
-
-  <footer>
-    © 2026 • Educational Resource Platform
-  </footer>
-
 </div>
 
 </body>
