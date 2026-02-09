@@ -1,43 +1,58 @@
 const params = new URLSearchParams(window.location.search);
 let pdfPath = params.get("pdf");
 
-if (!pdfPath) {
-  alert("PDF not specified");
-  throw new Error("PDF missing");
-}
-
 pdfPath = "/krisishikkha/" + pdfPath;
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
-"/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
+  "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
 
-const container = document.body;
+let pdfDoc = null;
+let pageNum = 1;
+let canvas = document.getElementById("pdfCanvas");
+let ctx = canvas.getContext("2d");
 
-pdfjsLib.getDocument(pdfPath).promise.then(pdf => {
+const savedPage = localStorage.getItem(pdfPath);
+if(savedPage){
+  pageNum = parseInt(savedPage);
+}
 
-  for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+function renderPage(num){
+  pdfDoc.getPage(num).then(page=>{
+    const viewport = page.getViewport({scale:1.4});
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
 
-    pdf.getPage(pageNum).then(page => {
-
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-
-      const viewport = page.getViewport({ scale: 1.3 });
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      canvas.style.display = "block";
-      canvas.style.margin = "20px auto";
-
-      container.appendChild(canvas);
-
-      page.render({
-        canvasContext: ctx,
-        viewport: viewport
-      });
-
+    page.render({
+      canvasContext: ctx,
+      viewport: viewport
     });
-  }
 
-}).catch(err => {
-  alert("PDF load error: " + err.message);
+    document.getElementById("pageInfo").innerText =
+      `Page ${num} / ${pdfDoc.numPages}`;
+
+    localStorage.setItem(pdfPath, num);
+  });
+}
+
+function nextPage(){
+  if(pageNum < pdfDoc.numPages){
+    pageNum++;
+    renderPage(pageNum);
+  }
+}
+
+function prevPage(){
+  if(pageNum > 1){
+    pageNum--;
+    renderPage(pageNum);
+  }
+}
+
+function goBack(){
+  history.back();
+}
+
+pdfjsLib.getDocument(pdfPath).promise.then(pdf=>{
+  pdfDoc = pdf;
+  renderPage(pageNum);
 });
