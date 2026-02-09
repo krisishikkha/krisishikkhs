@@ -1,88 +1,53 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Study Hub</title>
+<title>Krisishikkha | Education & PDF Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="assets/css/style.css">
 
 <style>
-body {
-  margin: 0;
-  font-family: "Georgia", "Noto Serif Bengali", serif;
-  background: #f9fafb;
-  color: #222;
-  line-height: 1.7;
-}
-
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 24px 18px 40px;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 36px;
-  color: #1b5e20;
-}
-
-header p {
-  margin-top: 8px;
-  font-size: 17px;
-  color: #555;
-}
-
 /* MAIN CATEGORY GRID */
-.main-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
+.main-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+  margin:35px 0;
 }
 
 /* MAIN CATEGORY BOX */
-.main-box {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 36px 22px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  transition: transform .25s ease, box-shadow .25s ease;
-  cursor: pointer;
+.main-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:130px;
+  border-radius:18px;
+  color:#fff;
+  font-size:22px;
+  font-weight:bold;
+  text-decoration:none;
+  text-align:center;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+  transition:all .3s ease;
 }
 
-.main-box:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.15);
+.main-box:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 18px 32px rgba(0,0,0,.28);
 }
 
-.main-box h2 {
-  margin: 0;
-  font-size: 22px;
+/* COLORFUL THEMES */
+.ntrca{
+  background:linear-gradient(135deg,#2e7d32,#81c784);
 }
-
-.main-box span {
-  display: block;
-  margin-top: 8px;
-  font-size: 14px;
-  opacity: .9;
+.bcs{
+  background:linear-gradient(135deg,#0d47a1,#64b5f6);
 }
-
-/* COLOR VARIANTS */
-.ntrca { background: linear-gradient(135deg,#1b5e20,#4caf50); color:#fff; }
-.bcs { background: linear-gradient(135deg,#0d47a1,#1976d2); color:#fff; }
-.research { background: linear-gradient(135deg,#6a1b9a,#ab47bc); color:#fff; }
-.others { background: linear-gradient(135deg,#ef6c00,#ff9800); color:#fff; }
-
-footer {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 14px;
-  color: #777;
+.research{
+  background:linear-gradient(135deg,#6a1b9a,#ce93d8);
+}
+.others{
+  background:linear-gradient(135deg,#ef6c00,#ffb74d);
 }
 </style>
 </head>
@@ -90,26 +55,37 @@ footer {
 <body>
 
 <div class="container">
+  <h1>🌾 Krisishikkha</h1>
+  <p>Education + Notes + Secure PDF Reading Platform</p>
 
-  <header>
-    <h1>Study Materials Hub</h1>
-    <p>আপনার প্রয়োজনীয় সকল স্টাডি ক্যাটাগরি এক জায়গায়</p>
-  </header>
-
-  <!-- MAIN CATEGORIES -->
+  <!-- MAIN CATEGORY BOXES -->
   <div class="main-grid">
 
-    <div class="main-box ntrca">
-      <h2>📚 NTRCA Notes</h2>
-      <span>SSC • HSC • Subject-wise Notes</span>
-    </div>
+    <a href="ntrca.html" class="main-box ntrca">
+      📚 NTRCA Notes
+    </a>
 
-    <div class="main-box bcs">
-      <h2>📘 BCS</h2>
-      <span>প্রিলিমিনারি • লিখিত • সাজেশন</span>
-    </div>
+    <a href="pages/categories/bcs.html" class="main-box bcs">
+      📘 BCS
+    </a>
 
-    <div class="main-box research">
+    <a href="pages/categories/research.html" class="main-box research">
+      🏫 Research Institute
+    </a>
+
+    <a href="pages/categories/others.html" class="main-box others">
+      📦 Others
+    </a>
+
+  </div>
+
+  <hr>
+  <a href="privacy-policy.html">Privacy Policy</a> |
+  <a href="terms.html">Terms & Conditions</a>
+</div>
+
+</body>
+</html>    <div class="main-box research">
       <h2>🏫 Research Institute</h2>
       <span>গাইড • পেপার • রিসোর্স</span>
     </div>
