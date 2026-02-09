@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>NTRCA Preparation Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
@@ -12,8 +13,21 @@ body{
 }
 
 h1{
-  font-size:36px;
+  font-size:34px;
+  margin-bottom:8px;
+}
+
+#breadcrumb{
+  font-size:15px;
+  margin-bottom:15px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  font-size:16px;
   margin-bottom:20px;
+  display:none;
 }
 
 .grid{
@@ -38,26 +52,33 @@ h1{
 
 .card h2{
   font-size:22px;
-  margin-bottom:10px;
 }
 
 .card h3{
-  font-size:20px;
+  font-size:18px;
 }
 
 .read{
   display:inline-block;
-  margin-top:12px;
+  margin-top:10px;
   font-size:16px;
   color:#5a2a82;
   text-decoration:none;
   border-bottom:2px solid #5a2a82;
 }
 
-.back{
-  margin-bottom:20px;
-  cursor:pointer;
-  font-size:16px;
+.badge{
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:6px;
+  margin-left:6px;
+  background:#ccc;
+  color:#000;
+}
+
+.readed{
+  background:#4caf50;
+  color:#fff;
 }
 </style>
 </head>
@@ -65,32 +86,31 @@ h1{
 <body>
 
 <h1>NTRCA Preparation Notes</h1>
+<div id="breadcrumb">NTRCA Notes</div>
 
-<!-- LEVEL 1 : CATEGORIES -->
+<input id="searchBox" placeholder="🔍 Search chapter...">
+
+<!-- LEVEL 1 -->
 <div id="level1" class="grid">
   <div class="card" onclick="openCategory('SSC Agriculture')">
     <h2>📘 SSC Agriculture</h2>
   </div>
-
   <div class="card" onclick="openCategory('HSC Agriculture 1st Paper')">
     <h2>📗 HSC Agriculture 1st Paper</h2>
   </div>
-
   <div class="card" onclick="openCategory('HSC Agriculture 2nd Paper')">
     <h2>📕 HSC Agriculture 2nd Paper</h2>
   </div>
 </div>
 
-<!-- LEVEL 2 : CHAPTERS -->
+<!-- LEVEL 2 -->
 <div id="level2" style="display:none;">
-  <div class="back" onclick="goBack()">⬅ Back</div>
-  <div id="chapterGrid" class="grid"></div>
+  <div class="grid" id="chapterGrid"></div>
 </div>
 
 <script>
-/* 🔴 এখানেই শুধু PDF নাম add করবেন */
 const data = {
-  "SSC Agriculture": [
+  "SSC Agriculture":[
     "ssc-first-chapter.pdf",
     "ssc-second-chapter.pdf",
     "ssc-third-chapter.pdf",
@@ -99,8 +119,7 @@ const data = {
     "ssc-sixth-chapter.pdf",
     "ssc-seventh-chapter.pdf"
   ],
-
-  "HSC Agriculture 1st Paper": [
+  "HSC Agriculture 1st Paper":[
     "hsc-first-paper-first-chapter.pdf",
     "hsc-first-paper-second-chapter.pdf",
     "hsc-first-paper-third-chapter.pdf",
@@ -108,8 +127,7 @@ const data = {
     "hsc-first-paper-fifth-chapter.pdf",
     "hsc-first-paper-sixth-chapter.pdf"
   ],
-
-  "HSC Agriculture 2nd Paper": [
+  "HSC Agriculture 2nd Paper":[
     "hsc-second-paper-first-chapter.pdf",
     "hsc-second-paper-second-chapter.pdf",
     "hsc-second-paper-third-chapter.pdf",
@@ -117,45 +135,72 @@ const data = {
     "hsc-second-paper-fifth-chapter.pdf"
   ]
 };
-/* 🔴 শেষ */
 
-/* CATEGORY OPEN */
+let currentCategory = "";
+
 function openCategory(cat){
-  history.pushState({page:"level2"}, "", "");
-
+  currentCategory = cat;
+  history.pushState({cat}, "");
   document.getElementById("level1").style.display="none";
   document.getElementById("level2").style.display="block";
+  document.getElementById("searchBox").style.display="block";
 
+  updateBreadcrumb();
+  renderChapters("");
+}
+
+function updateBreadcrumb(){
+  document.getElementById("breadcrumb").innerHTML =
+    `<span style="cursor:pointer;color:#5a2a82"
+      onclick="goHome()">NTRCA Notes</span> > ${currentCategory}
+      (${data[currentCategory].length} PDFs)`;
+}
+
+function renderChapters(filter){
   const grid = document.getElementById("chapterGrid");
-  grid.innerHTML = "";
+  grid.innerHTML="";
 
-  data[cat].forEach(file=>{
-    const title = file
-      .replace(".pdf","")
-      .replace(/-/g," ")
-      .replace(/\b\w/g,l=>l.toUpperCase());
+  data[currentCategory].forEach(file=>{
+    if(!file.includes(filter)) return;
+
+    const title = file.replace(".pdf","").replace(/-/g," ");
+    const key = currentCategory + file;
+    const read = localStorage.getItem(key);
 
     grid.innerHTML += `
       <div class="card">
-        <h3>${title}</h3>
+        <h3>${title}
+          <span class="badge ${read?'readed':''}">
+            ${read?'READ':'NEW'}
+          </span>
+        </h3>
         <a class="read"
-           href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}">
-           📖 Read PDF
+          href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}"
+          onclick="markRead('${key}')">
+          📖 Read PDF
         </a>
       </div>
     `;
   });
 }
 
-/* BACK BUTTON */
-function goBack(){
-  history.back();
+function markRead(key){
+  localStorage.setItem(key,true);
 }
 
-/* PHONE / BROWSER BACK HANDLE */
+function goHome(){
+  document.getElementById("level2").style.display="none";
+  document.getElementById("level1").style.display="grid";
+  document.getElementById("searchBox").style.display="none";
+  document.getElementById("breadcrumb").innerText="NTRCA Notes";
+}
+
+document.getElementById("searchBox").addEventListener("input",e=>{
+  renderChapters(e.target.value);
+});
+
 window.onpopstate = function(){
-  document.getElementById("level2").style.display = "none";
-  document.getElementById("level1").style.display = "grid";
+  goHome();
 };
 </script>
 
