@@ -7,38 +7,57 @@
 <style>
 body{
   font-family: Georgia, serif;
-  background:#cfcfcf;
+  background:#e6e6e6;
   padding:20px;
 }
 
 h1{
   font-size:36px;
+  margin-bottom:20px;
 }
 
-.subject{
-  margin-top:40px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
-.subject h2{
-  font-size:28px;
-  border-bottom:2px solid #444;
-  padding-bottom:6px;
+.card{
+  background:#fff;
+  padding:25px 20px;
+  border-radius:10px;
+  box-shadow:0 6px 12px rgba(0,0,0,.15);
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.chapter{
-  margin:15px 0 30px 15px;
+.card:hover{
+  transform:translateY(-5px);
 }
 
-.chapter h3{
+.card h2{
   font-size:22px;
-  margin-bottom:6px;
+  margin-bottom:10px;
+}
+
+.card h3{
+  font-size:20px;
 }
 
 .read{
-  font-size:18px;
+  display:inline-block;
+  margin-top:12px;
+  font-size:16px;
   color:#5a2a82;
   text-decoration:none;
   border-bottom:2px solid #5a2a82;
+}
+
+.back{
+  margin-bottom:20px;
+  cursor:pointer;
+  font-size:16px;
 }
 </style>
 </head>
@@ -47,12 +66,29 @@ h1{
 
 <h1>NTRCA Preparation Notes</h1>
 
-<div id="pdfList"></div>
+<!-- LEVEL 1 : CATEGORIES -->
+<div id="level1" class="grid">
+  <div class="card" onclick="openCategory('ssc')">
+    <h2>📘 SSC Agriculture</h2>
+  </div>
+  <div class="card" onclick="openCategory('english')">
+    <h2>📗 HSC Agriculture 1st Paper</h2>
+  </div>
+  <div class="card" onclick="openCategory('bangla')">
+    <h2>📕 HSC Agriculture 2nd Paper</h2>
+  </div>
+</div>
+
+<!-- LEVEL 2 : CHAPTERS -->
+<div id="level2" style="display:none;">
+  <div class="back" onclick="goBack()">⬅ Back</div>
+  <div id="chapterGrid" class="grid"></div>
+</div>
 
 <script>
-/* 🔴 শুধু এই অংশে নতুন PDF যোগ করবেন */
-const subjects = {
-  "SSC Agriculture": [
+/* 🔴 এখানেই শুধু PDF নাম add করবেন */
+const data = {
+    "SSC Agriculture": [
     "ssc-first-chapter.pdf",
     "ssc-second-chapter.pdf",
     "ssc-third-chapter.pdf",
@@ -80,22 +116,23 @@ const subjects = {
   "hsc-second-paper-fifth-chapter.pdf"
   ]
 };
-/* 🔴 এখানেই শেষ কাজ */
+/* 🔴 শেষ */
 
-const list = document.getElementById("pdfList");
+function openCategory(cat){
+  document.getElementById("level1").style.display="none";
+  document.getElementById("level2").style.display="block";
 
-for(const subject in subjects){
+  const grid = document.getElementById("chapterGrid");
+  grid.innerHTML = "";
 
-  list.innerHTML += `<div class="subject"><h2>${subject}</h2></div>`;
-
-  subjects[subject].forEach(file=>{
+  data[cat].forEach(file=>{
     const title = file
       .replace(".pdf","")
       .replace(/-/g," ")
       .replace(/\b\w/g,l=>l.toUpperCase());
 
-    list.innerHTML += `
-      <div class="chapter">
+    grid.innerHTML += `
+      <div class="card">
         <h3>${title}</h3>
         <a class="read"
            href="viewer/index.html?pdf=pdf/ntrca/ntrca-notes/${file}">
@@ -104,6 +141,11 @@ for(const subject in subjects){
       </div>
     `;
   });
+}
+
+function goBack(){
+  document.getElementById("level2").style.display="none";
+  document.getElementById("level1").style.display="grid";
 }
 </script>
 
