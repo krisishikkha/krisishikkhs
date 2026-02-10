@@ -1,72 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <title>Krisishikkha | Agriculture Education</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2e7d32">
+
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2e7d32">
-<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta charset="UTF-8">
-<title>Krisishikkha | Agriculture Education</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2e7d32">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-<!-- iOS support -->
-<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-<link rel="stylesheet" href="assets/css/style.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
-<h1>Krisishikkha</h1>
-<p>Agriculture Education & Secure PDF Platform</p>
+  <header>
+    <h1>Krisishikkha</h1>
+    <p>Agriculture Education & Secure PDF Platform</p>
+  </header>
 
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/krisishikkha/service-worker.js")
-      .then(reg => {
-        console.log("Service Worker registered:", reg.scope);
-      })
-      .catch(err => {
-        console.log("Service Worker failed:", err);
+  <!-- MAIN CATEGORY (ডেমো) -->
+  <main class="main-grid">
+    <div class="card">NTRCA</div>
+    <div class="card">BCS</div>
+    <div class="card">Research</div>
+    <div class="card">PDF Notes</div>
+  </main>
+
+  <!-- SERVICE WORKER REGISTER -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('service-worker.js')
+          .then(reg => console.log('SW registered:', reg.scope))
+          .catch(err => console.log('SW failed:', err));
       });
-  });
-}
-</script>
+    }
+  </script>
 
-</body>
-</html>
-</div>
-
-<!-- ✅ SERVICE WORKER REGISTER -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/krisishikkha/service-worker.js')
-      .then(reg => console.log('Service Worker registered:', reg.scope))
-      .catch(err => console.log('Service Worker registration failed:', err));
-  });
-}
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker
-      .register('/krisishikkha/service-worker.js')
-      .then(function (reg) {
-        console.log('Service Worker registered', reg.scope);
-      })
-      .catch(function (err) {
-        console.log('Service Worker failed', err);
-      });
-  });
-}
-      </script>
 </body>
 </html>
