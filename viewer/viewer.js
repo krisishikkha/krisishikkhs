@@ -13,12 +13,13 @@ pdfPath = "/krisishikkha/" + pdfPath;
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "/krisishikkha/vendor/pdfjs/pdf.worker.min.js";
 
-/* progress key (per PDF) */
+/* progress key per PDF */
 const progressKey = "pdf-progress-" + pdfPath;
 
 const container = document.body;
+const progressText = document.getElementById("progressPercent");
 
-let totalHeight = 0;   // full PDF height
+let totalHeight = 0;
 let viewedPercent = 0;
 
 pdfjsLib.getDocument(pdfPath).promise.then(pdf => {
@@ -39,35 +40,32 @@ pdfjsLib.getDocument(pdfPath).promise.then(pdf => {
 
       container.appendChild(canvas);
 
-      /* accumulate total height */
       totalHeight += viewport.height;
 
       page.render({
         canvasContext: ctx,
         viewport: viewport,
       });
-
     });
   }
 
-  /* show previous progress (if any) */
+  /* show previous progress */
   const saved = localStorage.getItem(progressKey);
   if (saved) {
-    console.log("Previously read: " + saved + "%");
+    progressText.innerText = saved + "%";
   }
 
 }).catch(err => {
   alert("PDF load error: " + err.message);
 });
 
-/* scroll-based reading progress */
+/* scroll-based progress */
 window.addEventListener("scroll", () => {
 
   if (!totalHeight) return;
 
   const scrollTop = window.scrollY;
   const winHeight = window.innerHeight;
-
   const viewedHeight = scrollTop + winHeight;
 
   viewedPercent = Math.min(
@@ -75,10 +73,11 @@ window.addEventListener("scroll", () => {
     Math.round((viewedHeight / totalHeight) * 100)
   );
 
+  progressText.innerText = viewedPercent + "%";
   localStorage.setItem(progressKey, viewedPercent);
 });
 
-/* save progress when user leaves page */
+/* save on exit */
 window.addEventListener("beforeunload", () => {
   localStorage.setItem(progressKey, viewedPercent);
 });
