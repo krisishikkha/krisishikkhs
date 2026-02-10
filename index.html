@@ -5,29 +5,29 @@
 <title>Krisishikkha | Education & PDF Notes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- ✅ PWA: Manifest link -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2e7d32">
+
 <style>
 body{
   font-family:Georgia, serif;
   background:#f3f3f3;
   margin:0;
 }
-
 .container{
   max-width:1000px;
   margin:auto;
   padding:20px;
 }
-
 h1{
   font-size:36px;
   margin-bottom:6px;
 }
-
 p{
   font-size:16px;
   color:#444;
 }
-
 /* MAIN GRID */
 .main-grid{
   display:grid;
@@ -35,7 +35,6 @@ p{
   gap:16px;
   margin:26px 0;
 }
-
 /* 🔧 FIXED SIZE MAIN BOX */
 .main-box{
   display:flex;
@@ -52,12 +51,10 @@ p{
   box-shadow:0 6px 14px rgba(0,0,0,.18);
   transition:.25s;
 }
-
 .main-box:hover{
   transform:translateY(-3px);
   box-shadow:0 10px 20px rgba(0,0,0,.28);
 }
-
 /* COLOR THEMES */
 .ntrca{
   background:linear-gradient(135deg,#2e7d32,#81c784);
@@ -71,7 +68,6 @@ p{
 .others{
   background:linear-gradient(135deg,#ef6c00,#ffb74d);
 }
-
 .footer{
   margin-top:40px;
   text-align:center;
@@ -88,7 +84,6 @@ p{
 <body>
 
 <div class="container">
-
 <h1>🌾 Krisishikkha</h1>
 <p>Education + Notes + Secure PDF Reading Platform</p>
 
@@ -103,7 +98,14 @@ p{
   <a href="privacy-policy.html">Privacy Policy</a> |
   <a href="terms.html">Terms & Conditions</a>
 </div>
-
 </div>
+
+<!-- ✅ PWA: Service Worker register -->
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
 </body>
 </html>
