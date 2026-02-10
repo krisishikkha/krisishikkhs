@@ -5,9 +5,15 @@
 <title>Krisishikkha | Education & PDF Notes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- ✅ PWA MANIFEST -->
+<link rel="manifest" href="manifest.json">
+
+<!-- ✅ THEME COLOR (Status bar color) -->
+<meta name="theme-color" content="#2e7d32">
+
 <style>
 body{
-  font-family:Georgia, serif;
+  font-family: Georgia, serif;
   background:#f3f3f3;
   margin:0;
 }
@@ -36,7 +42,7 @@ p{
   margin:26px 0;
 }
 
-/* 🔧 FIXED SIZE MAIN BOX */
+/* FIXED SIZE MAIN BOX */
 .main-box{
   display:flex;
   align-items:center;
@@ -105,5 +111,17 @@ p{
 </div>
 
 </div>
+
+<!-- ✅ SERVICE WORKER REGISTER -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/krisishikkha/service-worker.js')
+      .then(reg => console.log('Service Worker registered:', reg.scope))
+      .catch(err => console.log('Service Worker registration failed:', err));
+  });
+}
+</script>
+
 </body>
 </html>
