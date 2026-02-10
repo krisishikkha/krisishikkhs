@@ -1,12 +1,12 @@
 {
   "name": "Krisishikkha | Agriculture Education",
   "short_name": "Krisishikkha",
-  "description": "Education, Notes & Secure PDF Reading Platform for Agriculture",
-  "start_url": "./index.html",
-  "scope": "./",
+  "description": "Agriculture Education, Notes & Secure PDF Reading Platform",
+  "start_url": "/krisishikkha/index.html",
+  "scope": "/krisishikkha/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f5f5f5",
+  "background_color": "#e8f5e9",
   "theme_color": "#2e7d32",
   "icons": [
     {
