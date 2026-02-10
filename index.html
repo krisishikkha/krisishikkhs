@@ -2,114 +2,43 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Krisishikkha | Education & PDF Notes</title>
+<title>Krisishikkha | Agriculture Education</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ✅ PWA MANIFEST -->
+<!-- PWA -->
 <link rel="manifest" href="manifest.json">
-
-<!-- ✅ THEME COLOR (Status bar color) -->
 <meta name="theme-color" content="#2e7d32">
 
-<style>
-body{
-  font-family: Georgia, serif;
-  background:#f3f3f3;
-  margin:0;
-}
+<!-- iOS support -->
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-.container{
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
-}
-
-h1{
-  font-size:36px;
-  margin-bottom:6px;
-}
-
-p{
-  font-size:16px;
-  color:#444;
-}
-
-/* MAIN GRID */
-.main-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:16px;
-  margin:26px 0;
-}
-
-/* FIXED SIZE MAIN BOX */
-.main-box{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:70px;
-  padding:14px;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:bold;
-  text-decoration:none;
-  color:#fff;
-  text-align:center;
-  box-shadow:0 6px 14px rgba(0,0,0,.18);
-  transition:.25s;
-}
-
-.main-box:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 20px rgba(0,0,0,.28);
-}
-
-/* COLOR THEMES */
-.ntrca{
-  background:linear-gradient(135deg,#2e7d32,#81c784);
-}
-.bcs{
-  background:linear-gradient(135deg,#0d47a1,#64b5f6);
-}
-.research{
-  background:linear-gradient(135deg,#6a1b9a,#ce93d8);
-}
-.others{
-  background:linear-gradient(135deg,#ef6c00,#ffb74d);
-}
-
-.footer{
-  margin-top:40px;
-  text-align:center;
-  font-size:14px;
-}
-.footer a{
-  color:#555;
-  text-decoration:none;
-  margin:0 6px;
-}
-</style>
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
-<div class="container">
+<h1>Krisishikkha</h1>
+<p>Agriculture Education & Secure PDF Platform</p>
 
-<h1>🌾 Krisishikkha</h1>
-<p>Education + Notes + Secure PDF Reading Platform</p>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/krisishikkha/service-worker.js")
+      .then(reg => {
+        console.log("Service Worker registered:", reg.scope);
+      })
+      .catch(err => {
+        console.log("Service Worker failed:", err);
+      });
+  });
+}
+</script>
 
-<div class="main-grid">
-  <a href="ntrca.html" class="main-box ntrca">📚 NTRCA Notes</a>
-  <a href="pages/categories/bcs.html" class="main-box bcs">📘 BCS</a>
-  <a href="pages/categories/research.html" class="main-box research">🏫 Research Institute</a>
-  <a href="pages/categories/others.html" class="main-box others">📦 Others</a>
-</div>
-
-<div class="footer">
-  <a href="privacy-policy.html">Privacy Policy</a> |
-  <a href="terms.html">Terms & Conditions</a>
-</div>
-
+</body>
+</html>
 </div>
 
 <!-- ✅ SERVICE WORKER REGISTER -->
