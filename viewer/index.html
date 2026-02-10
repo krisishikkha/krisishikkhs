@@ -1,65 +1,61 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>PDF Viewer</title>
 
 <style>
-
 html, body{
-
+  margin:0;
+  padding:0;
+  background:#e5e5e5;
 }
 
-margin:0;
-
-padding:0;
-
-background: #e5e5e5;
-
-#pdf-canvas{
-
+/* Progress bar container */
+#progressBox{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:36px;
+  background:#ffffff;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:bold;
 }
 
-display:block;
-
-margin:auto;
-
-.watermark(
-
+/* PDF area spacing */
+body{
+  padding-top:40px;
 }
 
-position:fixed;
-
-top:40%;
-
-left:15%;
-
-font-size:26px;
-
-color:rgba(0,0,0,0.15);
-
-transform:rotate(-30deg);
-
-pointer-events:none;
-
+.watermark{
+  position:fixed;
+  top:40%;
+  left:15%;
+  font-size:26px;
+  color:rgba(0,0,0,0.15);
+  transform:rotate(-30deg);
+  pointer-events:none;
+}
 </style>
 
 <script src="/krisishikkha/vendor/pdfjs/pdf.min.js"></script>
-
 </head>
 
 <body>
 
-<div class="watermark">fb:@krisishikkha.com</div>
+<div id="progressBox">
+  📖 Read: <span id="progressPercent">0%</span>
+</div>
 
-<canvas id="pdf-canvas"></canvas>
+<div class="watermark">fb:@krisishikkha.com</div>
 
 <script src="viewer.js"></script>
 
 </body>
-
 </html>
