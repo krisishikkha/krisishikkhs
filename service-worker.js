@@ -1,12 +1,11 @@
-const CACHE_NAME = "krisishikkha-v2";
+const CACHE_NAME = "krisishikkha-v3";
 
 const OFFLINE_FILES = [
   "./",
-  "index.html",
-  "manifest.json",
-  "assets/css/style.css",
-  "assets/icons/icon-192.png",
-  "assets/icons/icon-512.png"
+  "./index.html",
+  "./manifest.json",
+  "./assets/icons/icon-192.png",
+  "./assets/icons/icon-512.png"
 ];
 
 self.addEventListener("install", event => {
@@ -22,11 +21,8 @@ self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
+        keys.filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
       )
     )
   );
