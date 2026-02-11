@@ -5,7 +5,7 @@
 <title>Krisishikkha | Education & PDF Notes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ✅ PWA: Manifest link -->
+<!-- ✅ PWA Manifest -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2e7d32">
 
@@ -28,6 +28,7 @@ p{
   font-size:16px;
   color:#444;
 }
+
 /* MAIN GRID */
 .main-grid{
   display:grid;
@@ -35,7 +36,8 @@ p{
   gap:16px;
   margin:26px 0;
 }
-/* 🔧 FIXED SIZE MAIN BOX */
+
+/* MAIN BOX */
 .main-box{
   display:flex;
   align-items:center;
@@ -55,6 +57,7 @@ p{
   transform:translateY(-3px);
   box-shadow:0 10px 20px rgba(0,0,0,.28);
 }
+
 /* COLOR THEMES */
 .ntrca{
   background:linear-gradient(135deg,#2e7d32,#81c784);
@@ -68,6 +71,7 @@ p{
 .others{
   background:linear-gradient(135deg,#ef6c00,#ffb74d);
 }
+
 .footer{
   margin-top:40px;
   text-align:center;
@@ -77,6 +81,42 @@ p{
   color:#555;
   text-decoration:none;
   margin:0 6px;
+}
+
+/* ✅ Floating Install Button */
+.install-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#2e7d32;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:30px;
+  font-size:14px;
+  font-weight:bold;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  cursor:pointer;
+  display:none;
+  z-index:9999;
+  transition:.3s;
+}
+.install-btn:hover{
+  transform:translateY(-3px);
+}
+
+.install-guide{
+  position:fixed;
+  bottom:70px;
+  right:20px;
+  background:#fff;
+  color:#333;
+  padding:12px;
+  border-radius:12px;
+  font-size:13px;
+  box-shadow:0 6px 14px rgba(0,0,0,.2);
+  display:none;
+  width:220px;
+  z-index:9999;
 }
 </style>
 </head>
@@ -100,11 +140,55 @@ p{
 </div>
 </div>
 
-<!-- ✅ PWA: Service Worker register -->
+<!-- ✅ Install Button -->
+<div id="installBtn" class="install-btn">📲 Install App</div>
+
+<div id="installGuide" class="install-guide">
+  👉 Browser menu (⋮) এ গিয়ে  
+  <b>Add to Home Screen</b> চাপুন
+</div>
+
 <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
+/* ✅ Service Worker */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
 }
+
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+const installGuide = document.getElementById('installGuide');
+
+/* Scroll করলে button show */
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 200) {
+    installBtn.style.display = "block";
+  }
+});
+
+/* Chrome install support */
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+/* Button click */
+installBtn.addEventListener('click', async () => {
+
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      installBtn.style.display = "none";
+    }
+    deferredPrompt = null;
+  } else {
+    installGuide.style.display = "block";
+    setTimeout(()=>{
+      installGuide.style.display = "none";
+    }, 5000);
+  }
+
+});
 </script>
 
 </body>
