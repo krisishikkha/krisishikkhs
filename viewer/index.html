@@ -56,6 +56,60 @@ body{
 <div class="watermark">fb:@krisishikkha.com</div>
 
 <script src="viewer.js"></script>
+  <!-- Install Button -->
+<div id="installBtn" class="install-btn" style="display:none;">
+  📲 Install App
+</div>
+
+<style>
+.install-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#2e7d32;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:30px;
+  font-size:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  cursor:pointer;
+  z-index:99999;
+}
+</style>
+
+<script>
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+/* Capture install event */
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+/* Scroll detect (whole page scroll) */
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 600) {
+    installBtn.style.display = "block";
+  }
+});
+
+/* Install button click */
+installBtn.addEventListener('click', async () => {
+
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === 'accepted') {
+      installBtn.style.display = "none";
+    }
+
+    deferredPrompt = null;
+  }
+
+});
+</script>
 
 </body>
 </html>
