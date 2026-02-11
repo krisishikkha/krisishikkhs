@@ -149,7 +149,8 @@ p{
 </div>
 
 <script>
-/* ✅ Service Worker */
+
+/* Service Worker */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
@@ -158,17 +159,17 @@ let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 const installGuide = document.getElementById('installGuide');
 
+/* Chrome install support */
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
 /* Scroll করলে button show */
 window.addEventListener('scroll', () => {
   if (window.scrollY > 200 && deferredPrompt) {
     installBtn.style.display = "block";
   }
-});
-
-/* Chrome install support */
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
 });
 
 /* Button click */
@@ -177,10 +178,13 @@ installBtn.addEventListener('click', async () => {
   if (deferredPrompt) {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
+
     if (outcome === 'accepted') {
       installBtn.style.display = "none";
     }
+
     deferredPrompt = null;
+
   } else {
     installGuide.style.display = "block";
     setTimeout(()=>{
@@ -189,6 +193,7 @@ installBtn.addEventListener('click', async () => {
   }
 
 });
+
 </script>
 
 </body>
