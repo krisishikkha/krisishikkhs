@@ -49,3 +49,25 @@ function selectAnswer(qIndex, optIndex, btn) {
   const buttons = btn.parentElement.querySelectorAll("button");
   buttons.forEach(b => b.disabled = true);
 }
+let timeLeft = 25 * 60; // 25 minutes
+let timerInterval;
+let userAnswers = [];
+
+function startTimer() {
+  const timerDisplay = document.getElementById("timer");
+
+  timerInterval = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    timerDisplay.textContent =
+      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+    timeLeft--;
+
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      submitExam();
+    }
+  }, 1000);
+}
