@@ -458,3 +458,113 @@ answer:0,
 exp:"উন্নত জাত, সঠিক সার ও সেচ ব্যবস্থাপনা উৎপাদনশীলতা বৃদ্ধি করে।"
 }
 ];
+<script>
+
+function startExam() {
+
+  const name = document.getElementById("studentName").value.trim();
+  const code = document.getElementById("accessCode").value.trim();
+  const error = document.getElementById("error");
+
+  if (!name || !code) {
+    error.innerText = "নাম এবং পাসওয়ার্ড দিন";
+    return;
+  }
+
+  if (code !== PASSWORD) {
+    error.innerText = "ভুল পাসওয়ার্ড!";
+    return;
+  }
+
+  error.innerText = "";
+
+  document.getElementById("gate").style.display = "none";
+  document.getElementById("submitSection").style.display = "block";
+
+  loadQuestions();
+  startTimer();
+}
+
+function loadQuestions() {
+  const examDiv = document.getElementById("exam");
+  examDiv.innerHTML = "";
+
+  questions.forEach((q, index) => {
+    let html = `<div class="card">
+      <h4>${index + 1}. ${q.q}</h4>`;
+
+    q.options.forEach((opt, i) => {
+      html += `<div class="option" onclick="selectOption(${index}, ${i}, this)">
+        ${opt}
+      </div>`;
+    });
+
+    html += `</div>`;
+    examDiv.innerHTML += html;
+  });
+}
+
+function selectOption(qIndex, optIndex, el) {
+  if (locked[qIndex]) return;
+
+  answers[qIndex] = optIndex;
+  locked[qIndex] = true;
+
+  const parent = el.parentElement;
+  const options = parent.querySelectorAll(".option");
+
+  options.forEach((o, i) => {
+    o.classList.add("locked");
+    if (i === questions[qIndex].answer) {
+      o.classList.add("correct-border");
+    }
+    if (i === optIndex && i !== questions[qIndex].answer) {
+      o.classList.add("wrong-border");
+    }
+  });
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+
+  let score = 0;
+
+  questions.forEach((q, i) => {
+    if (answers[i] === q.answer) score++;
+  });
+
+  const percentage = (score / questions.length) * 100;
+  const resultDiv = document.getElementById("result");
+
+  let resultClass = percentage >= 40 ? "pass" : "fail";
+  let message = percentage >= 40 ? "অভিনন্দন! আপনি পাস করেছেন 🎉" : "দুঃখিত! আপনি ফেল করেছেন";
+
+  resultDiv.innerHTML = `
+    <div class="result-box ${resultClass}">
+      <h2>আপনার স্কোর: ${score}/${questions.length}</h2>
+      <h3>${percentage.toFixed(2)}%</h3>
+      <p>${message}</p>
+    </div>
+  `;
+}
+
+function startTimer() {
+  const timerDiv = document.getElementById("timer");
+
+  timerInterval = setInterval(() => {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+
+    timerDiv.innerText = `সময় বাকি: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+    timeLeft--;
+
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      submitExam();
+    }
+
+  }, 1000);
+}
+
+</script>
