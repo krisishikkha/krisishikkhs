@@ -1,565 +1,747 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LGK67QBZD3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-LGK67QBZD3');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NTRCA Agriculture Lecturer, Assistant Teacher and Instructor Exam-1</title>
+<title>NTRCA Agriculture Exam</title>
 
 <style>
+
+/* ===== Basic Reset ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
 body{
-font-family: 'Segoe UI', sans-serif;
-margin:0;
-background:#f2f5f7;
+  background:#f4f6f9;
 }
 
-header{
-background:linear-gradient(90deg,#1b5e20,#43a047);
-color:white;
-padding:15px;
-text-align:center;
-font-size:20px;
-font-weight:bold;
+/* ===== Login Box ===== */
+#loginSection{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#0f2027,#2c5364);
+  padding:20px;
 }
 
-.container{
-max-width:950px;
-margin:20px auto;
-padding:15px;
+.login-box{
+  background:white;
+  padding:35px;
+  width:100%;
+  max-width:420px;
+  border-radius:15px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
-.card{
-background:white;
-padding:15px;
-margin-bottom:15px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.08);
+.login-box h2{
+  text-align:center;
+  margin-bottom:20px;
+  color:#2c5364;
+}
+
+.login-box input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:16px;
+  transition:0.3s;
+}
+
+.login-box input:focus{
+  outline:none;
+  border-color:#2c5364;
+  box-shadow:0 0 8px rgba(44,83,100,0.6);
+}
+
+.login-box button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#2c5364;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.error{
+  color:red;
+  margin-top:10px;
+  font-size:14px;
+  display:none;
+}
+
+/* ===== Exam Section ===== */
+#examSection{
+  display:none;
+  padding:80px 15px 40px 15px;
+}
+
+/* ===== Timer ===== */
+#timer{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:#2c5364;
+  color:white;
+  text-align:center;
+  padding:15px;
+  font-size:18px;
+  font-weight:bold;
+  z-index:1000;
+}
+
+/* ===== Question Card ===== */
+.question-card{
+  background:#ffffff;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.question-card h3{
+  margin-bottom:15px;
 }
 
 .option{
-padding:8px;
-margin:6px 0;
-border-radius:6px;
-border:1px solid #ddd;
-cursor:pointer;
-transition:.3s;
+  margin:8px 0;
+  padding:8px;
+  border-radius:6px;
+  cursor:pointer;
+  border:1px solid #ddd;
+  transition:0.2s;
 }
 
 .option:hover{
-background:#e8f5e9;
+  background:#eef2f7;
 }
 
-.locked{
-pointer-events:none;
-opacity:.7;
-}
-
-.correct-border{
-border:2px solid #2e7d32;
-}
-
-.wrong-border{
-border:2px solid #c62828;
-}
-
-button{
-padding:10px 15px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-background:#2e7d32;
-color:white;
-font-weight:bold;
-}
-
-input{
-padding:8px;
-margin:5px 0;
-width:100%;
-}
-
-#timer{
-position:sticky;
-top:0;
-background:#fff3cd;
-padding:10px;
-text-align:center;
-font-weight:bold;
-display:none;
+/* ===== Result Section ===== */
+#resultSection{
+  display:none;
+  padding:20px;
 }
 
 .result-box{
-padding:20px;
-color:white;
-border-radius:10px;
-text-align:center;
-margin-bottom:20px;
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
+  color:white;
+  margin-bottom:25px;
 }
 
 .pass{
-background:linear-gradient(45deg,#1b5e20,#66bb6a);
+  background:linear-gradient(135deg,#11998e,#38ef7d);
 }
 
 .fail{
-background:linear-gradient(45deg,#b71c1c,#ef5350);
+  background:linear-gradient(135deg,#cb2d3e,#ef473a);
 }
+
+.explanation{
+  background:#e9f5ff;
+  padding:15px;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.wrong{
+  border:2px solid red;
+}
+
+.internal-links{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  margin-top:20px;
+}
+
+.link-card{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  text-decoration:none;
+  color:#2c5364;
+  font-weight:bold;
+}
+
 </style>
 </head>
-
 <body>
 
-<header>
-NTRCA Agriculture Lecturer, Assistant Teacher and Instructor Exam-1
-</header>
-
-<div class="container">
-
-<div id="gate" class="card">
-<h3>পরীক্ষা শুরু করুন</h3>
-<input type="text" id="studentName" placeholder="আপনার নাম লিখুন">
-<input type="password" id="accessCode" placeholder="পাসওয়ার্ড লিখুন">
-<button onclick="startExam()">পরীক্ষা শুরু</button>
-<p id="error" style="color:red;"></p>
+<div id="loginSection">
+  <div class="login-box">
+    <h2>পরীক্ষা শুরু করুন</h2>
+    <input type="text" id="studentName" placeholder="পরীক্ষার্থীর নাম লিখুন">
+    <input type="password" id="accessCode" placeholder="এক্সেস কোড লিখুন">
+    <button onclick="startExam()">পরীক্ষা শুরু</button>
+    <div class="error" id="errorMsg">ভুল এক্সেস কোড!</div>
+  </div>
 </div>
 
-<div id="timer"></div>
-
-<div id="exam"></div>
-
-<div id="submitSection" style="display:none;">
-<button onclick="submitExam()">পরীক্ষা জমা দিন</button>
+<div id="examSection">
+  <div id="timer">সময়: ২৫:০০</div>
+  <div id="questionContainer"></div>
 </div>
 
-<div id="result"></div>
+<div id="resultSection">
+  <div id="resultBox" class="result-box"></div>
+  <div id="answerReview"></div>
 
+  <div class="internal-links">
+    <a href="index.html" class="link-card">হোম</a>
+    <a href="ntrca.html" class="link-card">NTRCA</a>
+  </div>
 </div>
-
 <script>
-const PASSWORD="krisi1";
-let timeLeft=1500; // 25 মিনিট
-let timerInterval;
-let student="";
-let answers={};
-let locked={};
+const questions = [
 
-const questions=[
 {
-q:"১. উদ্ভিদের খাদ্য তৈরির প্রক্রিয়াকে কী বলে?",
-options:["শ্বসন","প্রকাশ সংশ্লেষণ","বাষ্পীভবন","অভিস্রবণ"],
-answer:1,
-exp:"প্রকাশ সংশ্লেষণ হলো এমন একটি প্রক্রিয়া যেখানে উদ্ভিদ সূর্যালোক, পানি ও কার্বন-ডাই-অক্সাইড ব্যবহার করে গ্লুকোজ তৈরি করে। এটি উদ্ভিদের প্রধান খাদ্য তৈরির প্রক্রিয়া।"
-},
-{
-q:"২. মাটির pH ৭ এর নিচে হলে তাকে কী বলা হয়?",
-options:["ক্ষারীয়","অম্লীয়","নিরপেক্ষ","লবণাক্ত"],
-answer:1,
-exp:"pH ৭ এর নিচে হলে মাটি অম্লীয় হয়। অম্লীয় মাটিতে অনেক সময় চুন প্রয়োগ করে pH সমন্বয় করা হয়।"
-},
-{
-q:"৩. ইউরিয়া সারেতে নাইট্রোজেনের পরিমাণ কত?",
-options:["২১%","৩৩%","৪৬%","১৮%"],
-answer:2,
-exp:"ইউরিয়া সারে ৪৬% নাইট্রোজেন থাকে, যা উদ্ভিদের সবুজ বৃদ্ধি ও পাতা গঠনে গুরুত্বপূর্ণ ভূমিকা রাখে।"
-},
-{
-q:"৪. ধানের প্রধান রোগ কোনটি?",
-options:["ব্লাস্ট","টিক্কা","রস্ট","স্মাট"],
-answer:0,
-exp:"ধানের ব্লাস্ট রোগ Pyricularia oryzae ছত্রাক দ্বারা সৃষ্ট। এটি ধানের পাতায় ও শীষে আক্রমণ করে ফলন কমিয়ে দেয়।"
-},
-{
-q:"৫. হেটেরোসিস বলতে কী বোঝায়?",
-options:["বিশুদ্ধ লাইন","সংকর শক্তি","মিউটেশন","ইনব্রিডিং"],
-answer:1,
-exp:"হেটেরোসিস বা সংকর শক্তি হলো দুটি ভিন্ন জাতের সংকরায়ণের ফলে উৎপন্ন সন্তানের অধিক উৎপাদনশীলতা।"
-},
-{
-q:"৬. রাইজোবিয়াম কোন কাজ করে?",
-options:["ফসফরাস সরবরাহ","নাইট্রোজেন স্থিরীকরণ","ছত্রাক দমন","মাটি আলগা করা"],
-answer:1,
-exp:"রাইজোবিয়াম ডাল জাতীয় উদ্ভিদের মূলগাঠিতে বাস করে এবং বায়ুমণ্ডলীয় নাইট্রোজেন স্থিরীকরণ করে।"
-},
-{
-q:"৭. বাষ্পমোচন প্রক্রিয়া কোথায় ঘটে?",
-options:["মূল","কাণ্ড","পাতা","ফুল"],
-answer:2,
-exp:"পাতার রন্ধ্রের মাধ্যমে পানি বাষ্প আকারে বের হয়ে যাওয়াকে বাষ্পমোচন বলে।"
-},
-{
-q:"৮. কৃষি অর্থনীতিতে চাহিদার সূত্র কী নির্দেশ করে?",
-options:["মূল্য ও চাহিদার সরাসরি সম্পর্ক","মূল্য ও চাহিদার বিপরীত সম্পর্ক","উৎপাদন বৃদ্ধি","লাভ বৃদ্ধি"],
-answer:1,
-exp:"চাহিদার সূত্র অনুযায়ী মূল্য বৃদ্ধি পেলে চাহিদা কমে এবং মূল্য কমলে চাহিদা বাড়ে।"
-},
-{
-q:"৯. সেচের সর্বাধিক কার্যকর পদ্ধতি কোনটি?",
-options:["বন্যা সেচ","ঝরনা সেচ","ড্রিপ সেচ","বালতি সেচ"],
-answer:2,
-exp:"ড্রিপ সেচ পদ্ধতিতে পানি সরাসরি উদ্ভিদের গোড়ায় সরবরাহ করা হয়, ফলে পানি অপচয় কম হয়।"
-},
-{
-q:"১০. গরুর মাস্টাইটিস রোগ কোন অঙ্গে হয়?",
-options:["ফুসফুস","লিভার","থন","ত্বক"],
-answer:2,
-exp:"মাস্টাইটিস হলো দুগ্ধদানকারী গাভীর থনের প্রদাহজনিত রোগ। এটি দুধ উৎপাদন কমিয়ে দেয়।"
+question: "বাংলাদেশের প্রধান খাদ্যশস্য কোনটি?",
+options: ["গম", "ভুট্টা", "ধান", "ডাল"],
+correct: 2,
+explanation: "বাংলাদেশের প্রধান খাদ্যশস্য ধান। দেশের অধিকাংশ মানুষের প্রধান খাদ্য ভাত, যা ধান থেকে উৎপন্ন হয়।"
 },
 
-// ---------- ১১ থেকে ২৫ ----------
 {
-q:"১১. উদ্ভিদের বৃদ্ধি নিয়ন্ত্রক হরমোন কোনটি?",
-options:["অক্সিন","ইনসুলিন","অ্যাড্রেনালিন","টেস্টোস্টেরন"],
-answer:0,
-exp:"অক্সিন উদ্ভিদের কোষ দীর্ঘায়িত করে এবং বৃদ্ধি নিয়ন্ত্রণ করে।"
+question: "উন্নত জাতের বীজ ব্যবহারের প্রধান উদ্দেশ্য কী?",
+options: ["উৎপাদন কমানো", "রোগ বৃদ্ধি", "উৎপাদন বৃদ্ধি", "মাটি শক্ত করা"],
+correct: 2,
+explanation: "উন্নত জাতের বীজ উচ্চ ফলনশীল এবং রোগ প্রতিরোধী হওয়ায় উৎপাদন বৃদ্ধি পায়।"
 },
+
 {
-q:"১২. ফসল পর্যায়ক্রমের প্রধান উপকারিতা কী?",
-options:["আগাছা বৃদ্ধি","মাটির উর্বরতা বৃদ্ধি","রোগ বৃদ্ধি","উৎপাদন হ্রাস"],
-answer:1,
-exp:"ফসল পর্যায়ক্রমে মাটির পুষ্টি উপাদান ভারসাম্য বজায় থাকে এবং রোগ-পোকা কমে।"
+question: "মাটির উর্বরতা বৃদ্ধির জন্য কোনটি প্রয়োজন?",
+options: ["জৈব সার", "প্লাস্টিক", "লবণ", "বালি"],
+correct: 0,
+explanation: "জৈব সার মাটির গঠন উন্নত করে এবং প্রয়োজনীয় পুষ্টি সরবরাহ করে।"
 },
+
 {
-q:"১৩. জেনেটিক্সের জনক কে?",
-options:["ডারউইন","মেন্ডেল","ল্যামার্ক","ওয়াটসন"],
-answer:1,
-exp:"গ্রেগর মেন্ডেল মটরশুঁটির উপর পরীক্ষা করে বংশগতির সূত্র আবিষ্কার করেন।"
+question: "নাইট্রোজেনের ঘাটতিতে গাছের পাতা কেমন হয়?",
+options: ["গাঢ় সবুজ", "হলুদ", "লাল", "কালো"],
+correct: 1,
+explanation: "নাইট্রোজেনের অভাবে পাতা হলুদ হয়ে যায়, যা ক্লোরোসিস নামে পরিচিত।"
 },
+
 {
-q:"১৪. আলোর প্রভাবে ফুল ফোটার প্রক্রিয়াকে কী বলে?",
-options:["ফটোসিন্থেসিস","ফটোপিরিয়ডিজম","ট্রান্সপিরেশন","রেসপিরেশন"],
-answer:1,
-exp:"ফটোপিরিয়ডিজম হলো আলোর দৈর্ঘ্যের প্রভাবে ফুল ফোটা।"
+question: "রবি মৌসুমের ফসল কোনটি?",
+options: ["ধান", "পাট", "গম", "আউশ"],
+correct: 2,
+explanation: "গম রবি মৌসুমে চাষ করা হয়।"
 },
+
 {
-q:"১৫. কীটতত্ত্বে পূর্ণাঙ্গ রূপান্তর কাকে বলে?",
-options:["ডিম-লার্ভা-পিউপা-প্রাপ্তবয়স্ক","ডিম-প্রাপ্তবয়স্ক","ডিম-লার্ভা","ডিম-পিউপা"],
-answer:0,
-exp:"পূর্ণাঙ্গ রূপান্তরে চারটি ধাপ থাকে: ডিম, লার্ভা, পিউপা, প্রাপ্তবয়স্ক।"
+question: "সেচের সবচেয়ে কার্যকর পদ্ধতি কোনটি?",
+options: ["ড্রিপ সেচ", "বন্যা সেচ", "খাল সেচ", "বালতি সেচ"],
+correct: 0,
+explanation: "ড্রিপ সেচ পদ্ধতিতে পানি অপচয় কম হয় এবং সরাসরি গাছের গোড়ায় পানি পৌঁছায়।"
 },
+
 {
-q:"১৬. মাটির টেক্সচার নির্ভর করে কোনটির উপর?",
-options:["জৈব পদার্থ","বালি-কাদা-সিল্টের অনুপাত","রং","pH"],
-answer:1,
-exp:"মাটির টেক্সচার নির্ধারিত হয় বালি, সিল্ট ও কাদার অনুপাত দ্বারা।"
+question: "ফসল আবর্তন করার উদ্দেশ্য কী?",
+options: ["একই ফসল বারবার চাষ", "মাটির উর্বরতা রক্ষা", "পানি নষ্ট", "আগাছা বৃদ্ধি"],
+correct: 1,
+explanation: "ফসল আবর্তন করলে মাটির পুষ্টি ভারসাম্য বজায় থাকে।"
 },
+
 {
-q:"১৭. ধানের উচ্চ ফলনশীল জাত উন্নয়নে কী ব্যবহৃত হয়?",
-options:["সংকরায়ণ","বংশবিস্তার","আগাছা নিয়ন্ত্রণ","সেচ"],
-answer:0,
-exp:"উচ্চ ফলনশীল জাত তৈরিতে সংকরায়ণ পদ্ধতি ব্যবহার করা হয়।"
+question: "কোনটি ডাল জাতীয় ফসল?",
+options: ["ধান", "মুগ", "গম", "ভুট্টা"],
+correct: 1,
+explanation: "মুগ একটি ডাল জাতীয় ফসল এবং এতে প্রোটিন বেশি থাকে।"
 },
+
 {
-q:"১৮. ব্রয়লার মুরগির প্রধান উদ্দেশ্য কী?",
-options:["ডিম উৎপাদন","মাংস উৎপাদন","বংশবিস্তার","ডিম সংরক্ষণ"],
-answer:1,
-exp:"ব্রয়লার মুরগি দ্রুত বর্ধনশীল এবং মাংস উৎপাদনের জন্য পালিত হয়।"
+question: "পাট প্রধানত কোন মাটিতে ভালো জন্মায়?",
+options: ["দোআঁশ মাটি", "বালুমাটি", "লাল মাটি", "পাহাড়ি মাটি"],
+correct: 0,
+explanation: "দোআঁশ মাটি পাট চাষের জন্য উপযুক্ত।"
 },
+
 {
-q:"১৯. কৃষিতে আইপিএম এর পূর্ণরূপ কী?",
-options:["ইন্টিগ্রেটেড পেস্ট ম্যানেজমেন্ট","ইন্টারন্যাশনাল প্ল্যান","ইনসেক্ট প্রসেস মডেল","ইনটেনসিভ প্রোডাকশন"],
-answer:0,
-exp:"আইপিএম হলো সমন্বিত বালাই ব্যবস্থাপনা পদ্ধতি।"
+question: "বাংলাদেশে কোন সারটি সবচেয়ে বেশি ব্যবহৃত হয়?",
+options: ["ইউরিয়া", "পটাশ", "টিএসপি", "জিপসাম"],
+correct: 0,
+explanation: "ইউরিয়া নাইট্রোজেন সরবরাহ করে এবং বাংলাদেশে ব্যাপক ব্যবহৃত হয়।"
 },
-{
-q:"২০. লবণাক্ত মাটিতে কোন ফসল ভালো জন্মে?",
-options:["ধান","পাট","বার্লি","গম"],
-answer:2,
-exp:"বার্লি লবণাক্ততা সহনশীল ফসল।"
+  {
+question: "বাংলাদেশে আমন ধান সাধারণত কোন মৌসুমে চাষ হয়?",
+options: ["খরিফ-১", "খরিফ-২", "রবি", "গ্রীষ্ম"],
+correct: 1,
+explanation: "আমন ধান খরিফ-২ মৌসুমে চাষ করা হয়।"
 },
+
 {
-q:"২১. উদ্ভিদের শ্বসন কোথায় ঘটে?",
-options:["ক্লোরোপ্লাস্ট","মাইটোকন্ড্রিয়া","নিউক্লিয়াস","রাইবোজোম"],
-answer:1,
-exp:"মাইটোকন্ড্রিয়াতে শ্বসন প্রক্রিয়ায় শক্তি উৎপন্ন হয়।"
+question: "টিএসপি সারে কোন উপাদান বেশি থাকে?",
+options: ["নাইট্রোজেন", "ফসফরাস", "পটাশ", "গন্ধক"],
+correct: 1,
+explanation: "টিএসপি (Triple Super Phosphate) সারে ফসফরাস বেশি থাকে।"
 },
+
 {
-q:"২২. দুধে চর্বির পরিমাণ বেশি থাকে কোন প্রাণীতে?",
-options:["গাভী","মহিষ","ছাগল","ভেড়া"],
-answer:1,
-exp:"মহিষের দুধে চর্বির পরিমাণ গাভীর তুলনায় বেশি।"
+question: "সবুজ সার ব্যবহারের উদ্দেশ্য কী?",
+options: ["মাটি শক্ত করা", "মাটির জৈব পদার্থ বৃদ্ধি", "লবণ বৃদ্ধি", "পানি কমানো"],
+correct: 1,
+explanation: "সবুজ সার মাটির জৈব পদার্থ ও উর্বরতা বৃদ্ধি করে।"
 },
+
 {
-q:"২৩. গ্রিন রেভল্যুশনের মূল উপাদান কী?",
-options:["উচ্চ ফলনশীল জাত","বৃষ্টি","পশুপালন","মৎস্য"],
-answer:0,
-exp:"গ্রিন রেভল্যুশনে উচ্চ ফলনশীল জাত, সেচ ও সার ব্যবহারের মাধ্যমে উৎপাদন বৃদ্ধি করা হয়।"
+question: "কোনটি তেলবীজ ফসল?",
+options: ["সরিষা", "ধান", "গম", "ডাল"],
+correct: 0,
+explanation: "সরিষা একটি প্রধান তেলবীজ ফসল।"
 },
+
 {
-q:"২৪. কৃষি সম্প্রসারণের মূল লক্ষ্য কী?",
-options:["গবেষণা করা","চাষিকে প্রশিক্ষণ দেওয়া","বাজার নিয়ন্ত্রণ","রপ্তানি বৃদ্ধি"],
-answer:1,
-exp:"কৃষি সম্প্রসারণের মাধ্যমে কৃষকদের আধুনিক প্রযুক্তি শেখানো হয়।"
+question: "পটাশিয়ামের অভাবে কী হয়?",
+options: ["পাতা পুড়ে যায়", "পাতা হলুদ", "পাতা মোটা", "ফল বড়"],
+correct: 0,
+explanation: "পটাশিয়ামের অভাবে পাতার কিনারা পুড়ে যাওয়ার মতো দেখা যায়।"
 },
+
 {
-q:"২৫. ফসফরাসের অভাবে উদ্ভিদের কোন লক্ষণ দেখা যায়?",
-options:["পাতা হলুদ","বেগুনি আভা","দ্রুত বৃদ্ধি","ফুল বেশি"],
-answer:1,
-exp:"ফসফরাসের অভাবে পাতায় বেগুনি বা বেগুনী আভা দেখা যায়।"
+question: "বাংলাদেশে প্রধান আঁশ ফসল কোনটি?",
+options: ["কাপাস", "পাট", "নারিকেল", "আখ"],
+correct: 1,
+explanation: "বাংলাদেশে পাট প্রধান আঁশ ফসল।"
 },
+
 {
-q:"২৬. উদ্ভিদের পানির চলাচল কোন টিস্যুর মাধ্যমে হয়?",
-options:["জাইলেম","ফ্লোয়েম","ক্যাম্বিয়াম","এপিডার্মিস"],
-answer:0,
-exp:"জাইলেম টিস্যুর মাধ্যমে মূল থেকে পাতা পর্যন্ত পানি ও খনিজ লবণ পরিবাহিত হয়।"
+question: "ড্রিপ সেচের প্রধান সুবিধা কী?",
+options: ["পানি অপচয় বেশি", "পানি সাশ্রয়", "খরচ বেশি", "রোগ বৃদ্ধি"],
+correct: 1,
+explanation: "ড্রিপ সেচে সরাসরি গাছের গোড়ায় পানি দেওয়া হয়, ফলে অপচয় কম।"
 },
+
 {
-q:"২৭. ফ্লোয়েমের প্রধান কাজ কী?",
-options:["পানি পরিবহন","খাদ্য পরিবহন","শ্বসন","বংশবিস্তার"],
-answer:1,
-exp:"ফ্লোয়েম পাতায় প্রস্তুত খাদ্য উদ্ভিদের অন্যান্য অংশে পরিবহন করে।"
+question: "জৈব কীটনাশকের উদাহরণ কোনটি?",
+options: ["নিম তেল", "ডিডিটি", "কার্বারিল", "ম্যালাথিয়ন"],
+correct: 0,
+explanation: "নিম তেল একটি প্রাকৃতিক জৈব কীটনাশক।"
 },
+
 {
-q:"২৮. ধানের বীজতলা প্রস্তুতের উপযুক্ত সময় কোনটি?",
-options:["শুকনো মৌসুম","রোপণ মৌসুমের আগে","ফসল কাটার পরে","শীতকালে"],
-answer:1,
-exp:"ধান রোপণের পূর্বে সঠিক সময়ে বীজতলা প্রস্তুত করলে চারা শক্ত ও স্বাস্থ্যবান হয়।"
+question: "কোনটি সবজি ফসল?",
+options: ["বেগুন", "গম", "সরিষা", "পাট"],
+correct: 0,
+explanation: "বেগুন একটি সবজি ফসল।"
 },
+
 {
-q:"২৯. উদ্ভিদের কোষ বিভাজনের প্রক্রিয়াকে কী বলে?",
-options:["মিয়োসিস","মাইটোসিস","ফারমেন্টেশন","ডিফিউশন"],
-answer:1,
-exp:"মাইটোসিস হলো দেহকোষ বিভাজন প্রক্রিয়া, যা বৃদ্ধি ও ক্ষত নিরাময়ে সহায়তা করে।"
+question: "গাছের খাদ্য প্রস্তুতের প্রক্রিয়াকে কী বলে?",
+options: ["শ্বসন", "প্রকাশ সংশ্লেষণ", "বাষ্পীভবন", "অঙ্কুরোদগম"],
+correct: 1,
+explanation: "প্রকাশ সংশ্লেষণ প্রক্রিয়ায় গাছ নিজে খাদ্য তৈরি করে।"
 },
-{
-q:"৩০. নাইট্রোজেনের অভাবে পাতার কী রং ধারণ করে?",
-options:["গাঢ় সবুজ","হলুদ","নীল","লাল"],
-answer:1,
-exp:"নাইট্রোজেনের অভাবে পুরাতন পাতা হলুদ হয়ে যায়, কারণ ক্লোরোফিল উৎপাদন কমে যায়।"
+  {
+question: "বাংলাদেশে বোরো ধান কোন মৌসুমে চাষ হয়?",
+options: ["রবি মৌসুম", "খরিফ-১", "খরিফ-২", "বর্ষা মৌসুম"],
+correct: 0,
+explanation: "বোরো ধান রবি মৌসুমে সেচের মাধ্যমে চাষ করা হয়।"
 },
+
 {
-q:"৩১. পাটের প্রধান আঁশ কোন অংশ থেকে পাওয়া যায়?",
-options:["পাতা","মূল","কাণ্ড","বীজ"],
-answer:2,
-exp:"পাটের আঁশ কাণ্ডের বাকল থেকে সংগ্রহ করা হয়।"
+question: "গাছের বৃদ্ধির জন্য সবচেয়ে প্রয়োজনীয় উপাদান কোনটি?",
+options: ["নাইট্রোজেন", "লোহা", "তামা", "সোডিয়াম"],
+correct: 0,
+explanation: "নাইট্রোজেন গাছের বৃদ্ধি ও সবুজ রং বজায় রাখতে গুরুত্বপূর্ণ ভূমিকা রাখে।"
 },
+
 {
-q:"৩২. কৃষি যান্ত্রিকীকরণের প্রধান উদ্দেশ্য কী?",
-options:["খরচ বাড়ানো","শ্রম কমানো","উৎপাদন কমানো","জমি কমানো"],
-answer:1,
-exp:"কৃষি যান্ত্রিকীকরণের মাধ্যমে শ্রম ও সময় সাশ্রয় হয় এবং উৎপাদন দক্ষতা বাড়ে।"
+question: "কোনটি ফল ফসল?",
+options: ["কলা", "ধান", "পাট", "গম"],
+correct: 0,
+explanation: "কলা একটি ফল ফসল এবং বাংলাদেশে ব্যাপকভাবে উৎপাদিত হয়।"
 },
+
 {
-q:"৩৩. ডাল ফসল মাটিতে কী যোগ করে?",
-options:["ফসফরাস","পটাশ","নাইট্রোজেন","চুন"],
-answer:2,
-exp:"ডাল জাতীয় ফসল রাইজোবিয়ামের মাধ্যমে মাটিতে নাইট্রোজেন যোগ করে।"
+question: "মাটির pH ৭ হলে তা কেমন প্রকৃতির?",
+options: ["অম্লীয়", "ক্ষারীয়", "নিরপেক্ষ", "লবণাক্ত"],
+correct: 2,
+explanation: "pH ৭ মানে মাটি নিরপেক্ষ।"
 },
+
 {
-q:"৩৪. কৃষিতে জৈব সার ব্যবহারের সুবিধা কী?",
-options:["মাটির ক্ষতি","উর্বরতা বৃদ্ধি","লবণাক্ততা বৃদ্ধি","pH হ্রাস"],
-answer:1,
-exp:"জৈব সার মাটির গঠন উন্নত করে এবং দীর্ঘমেয়াদে উর্বরতা বৃদ্ধি করে।"
+question: "ফসলের রোগ সৃষ্টিকারী জীবাণুকে কী বলে?",
+options: ["পরজীবী", "রোগজীবাণু", "শিকারী", "উৎপাদক"],
+correct: 1,
+explanation: "রোগ সৃষ্টিকারী অণুজীবকে রোগজীবাণু বলা হয়।"
 },
+
 {
-q:"৩৫. ব্রিডিংয়ে বিশুদ্ধ লাইন বলতে কী বোঝায়?",
-options:["সংকর জাত","সমজাতীয় জিনবিশিষ্ট লাইন","মিউটেশন","হাইব্রিড"],
-answer:1,
-exp:"বিশুদ্ধ লাইন হলো এমন একটি লাইন যার জিনগত বৈশিষ্ট্য স্থির ও সমজাতীয়।"
+question: "আখ কোন ধরনের ফসল?",
+options: ["তেল ফসল", "চিনি ফসল", "ডাল ফসল", "আঁশ ফসল"],
+correct: 1,
+explanation: "আখ থেকে চিনি উৎপন্ন হয়।"
 },
+
 {
-q:"৩৬. ফলের পাকাধানে কোন হরমোন ভূমিকা রাখে?",
-options:["অক্সিন","জিবারেলিন","ইথিলিন","সাইটোকাইনিন"],
-answer:2,
-exp:"ইথিলিন হরমোন ফল পাকাতে গুরুত্বপূর্ণ ভূমিকা পালন করে।"
+question: "ফসল কাটার পর সংরক্ষণের প্রধান উদ্দেশ্য কী?",
+options: ["নষ্ট করা", "দাম কমানো", "ক্ষতি রোধ", "ওজন বাড়ানো"],
+correct: 2,
+explanation: "সংরক্ষণের মাধ্যমে পচন ও ক্ষতি রোধ করা হয়।"
 },
+
 {
-q:"৩৭. কৃষি বিপণনের প্রধান লক্ষ্য কী?",
-options:["উৎপাদন কমানো","পণ্যের ন্যায্য মূল্য নিশ্চিত করা","চাষি কমানো","আমদানি বৃদ্ধি"],
-answer:1,
-exp:"কৃষি বিপণনের মাধ্যমে কৃষকের পণ্যের ন্যায্য মূল্য নিশ্চিত করা হয়।"
+question: "গবাদিপশুর প্রধান খাদ্য কী?",
+options: ["ঘাস", "মাছ", "ধান", "ডাল"],
+correct: 0,
+explanation: "গবাদিপশুর প্রধান খাদ্য ঘাস ও খড়।"
 },
+
 {
-q:"৩৮. গমের প্রধান রোগ কোনটি?",
-options:["রস্ট","ব্লাস্ট","টিক্কা","স্মাট"],
-answer:0,
-exp:"গমের রস্ট রোগ Puccinia ছত্রাক দ্বারা সৃষ্ট এবং ফলন কমায়।"
+question: "মাটির ক্ষয় রোধে কোনটি কার্যকর?",
+options: ["বনায়ন", "গাছ কাটা", "অতিরিক্ত চাষ", "অতিরিক্ত সেচ"],
+correct: 0,
+explanation: "বনায়ন মাটির ক্ষয় রোধে সহায়ক।"
 },
+
 {
-q:"৩৯. বীজ অঙ্কুরোদ্গমের জন্য কী প্রয়োজন?",
-options:["আলো","অক্সিজেন","মাটি","সার"],
-answer:1,
-exp:"অঙ্কুরোদ্গমের জন্য পানি, তাপমাত্রা ও অক্সিজেন প্রয়োজন।"
+question: "কোনটি উচ্চ ফলনশীল জাত?",
+options: ["স্থানীয় জাত", "উচ্চ ফলনশীল জাত", "বুনো জাত", "অনুন্নত জাত"],
+correct: 1,
+explanation: "উচ্চ ফলনশীল জাত উন্নত প্রযুক্তিতে উৎপাদিত হয় এবং ফলন বেশি দেয়।"
 },
+
 {
-q:"৪০. উদ্ভিদের শক্তি উৎপাদনের কেন্দ্রকে কী বলা হয়?",
-options:["নিউক্লিয়াস","মাইটোকন্ড্রিয়া","ক্লোরোপ্লাস্ট","রাইবোজোম"],
-answer:1,
-exp:"মাইটোকন্ড্রিয়াকে কোষের পাওয়ার হাউস বলা হয়।"
+question: "ডাল ফসল মাটিতে কী বৃদ্ধি করে?",
+options: ["নাইট্রোজেন", "লবণ", "বালি", "ক্ষার"],
+correct: 0,
+explanation: "ডাল ফসলের মূলগ্রন্থিতে রাইজোবিয়াম ব্যাকটেরিয়া নাইট্রোজেন স্থির করে।"
 },
+
 {
-q:"৪১. কৃষিতে সমবায় ব্যবস্থার সুবিধা কী?",
-options:["ব্যয় বৃদ্ধি","সম্মিলিত লাভ","ক্ষতি বৃদ্ধি","বাজার বন্ধ"],
-answer:1,
-exp:"সমবায় ব্যবস্থায় কৃষকেরা সম্মিলিতভাবে কাজ করে লাভ বৃদ্ধি করতে পারে।"
+question: "বাংলাদেশে প্রধান মসলা ফসল কোনটি?",
+options: ["হলুদ", "গম", "ধান", "ভুট্টা"],
+correct: 0,
+explanation: "হলুদ একটি গুরুত্বপূর্ণ মসলা ফসল।"
 },
+
 {
-q:"৪২. আগাছা নিয়ন্ত্রণের রাসায়নিক পদ্ধতি কী?",
-options:["হার্বিসাইড ব্যবহার","হাত দিয়ে তুলে ফেলা","চাষ দেওয়া","সেচ দেওয়া"],
-answer:0,
-exp:"হার্বিসাইড হলো আগাছা নিয়ন্ত্রণের রাসায়নিক পদ্ধতি।"
+question: "গমের বৈজ্ঞানিক নাম কী?",
+options: ["Oryza sativa", "Triticum aestivum", "Zea mays", "Brassica juncea"],
+correct: 1,
+explanation: "গমের বৈজ্ঞানিক নাম Triticum aestivum।"
 },
+
 {
-q:"৪৩. গবাদিপশুর খাদ্যে প্রোটিনের ভূমিকা কী?",
-options:["শক্তি","বৃদ্ধি","রং পরিবর্তন","দুধ কমানো"],
-answer:1,
-exp:"প্রোটিন দেহ গঠন ও বৃদ্ধিতে গুরুত্বপূর্ণ ভূমিকা পালন করে।"
+question: "ভুট্টার বৈজ্ঞানিক নাম কী?",
+options: ["Zea mays", "Oryza sativa", "Triticum aestivum", "Solanum tuberosum"],
+correct: 0,
+explanation: "ভুট্টার বৈজ্ঞানিক নাম Zea mays।"
 },
+
 {
-q:"৪৪. কৃষি গবেষণার মূল উদ্দেশ্য কী?",
-options:["তথ্য লুকানো","নতুন প্রযুক্তি উদ্ভাবন","উৎপাদন কমানো","চাষ বন্ধ করা"],
-answer:1,
-exp:"কৃষি গবেষণার মাধ্যমে নতুন প্রযুক্তি ও উন্নত জাত উদ্ভাবন করা হয়।"
+question: "ধানের বৈজ্ঞানিক নাম কী?",
+options: ["Oryza sativa", "Zea mays", "Triticum aestivum", "Glycine max"],
+correct: 0,
+explanation: "ধানের বৈজ্ঞানিক নাম Oryza sativa।"
 },
+
 {
-q:"৪৫. জলবায়ু পরিবর্তনের প্রভাবে কী হয়?",
-options:["ফসল বৃদ্ধি","ফলন হ্রাস","মাটি শক্ত","সেচ কম"],
-answer:1,
-exp:"জলবায়ু পরিবর্তনের ফলে তাপমাত্রা ও বৃষ্টিপাতের তারতম্যে ফলন কমে যেতে পারে।"
+question: "কোনটি মূল ফসল?",
+options: ["আলু", "ধান", "গম", "সরিষা"],
+correct: 0,
+explanation: "আলু একটি কন্দজাতীয় মূল ফসল।"
 },
+
 {
-q:"৪৬. সেচের পানির অপচয় কমাতে কোন পদ্ধতি উত্তম?",
-options:["বন্যা সেচ","ড্রিপ সেচ","খাল সেচ","বালতি"],
-answer:1,
-exp:"ড্রিপ সেচে সরাসরি গাছের গোড়ায় পানি দেওয়া হয়, ফলে অপচয় কম হয়।"
+question: "কৃষি সম্প্রসারণের উদ্দেশ্য কী?",
+options: ["জ্ঞান হ্রাস", "প্রযুক্তি বিস্তার", "উৎপাদন কমানো", "ক্ষতি বৃদ্ধি"],
+correct: 1,
+explanation: "কৃষি সম্প্রসারণের মাধ্যমে কৃষকের কাছে আধুনিক প্রযুক্তি পৌঁছানো হয়।"
 },
+
 {
-q:"৪৭. কৃষিতে টেকসই উন্নয়ন বলতে কী বোঝায়?",
-options:["শুধু উৎপাদন বৃদ্ধি","পরিবেশ রক্ষা করে উৎপাদন","জমি বিক্রি","সার বৃদ্ধি"],
-answer:1,
-exp:"টেকসই উন্নয়নে পরিবেশ সংরক্ষণ করে দীর্ঘমেয়াদে উৎপাদন নিশ্চিত করা হয়।"
+question: "গাছের কোন অংশে প্রকাশ সংশ্লেষণ হয়?",
+options: ["মূল", "কাণ্ড", "পাতা", "ফুল"],
+correct: 2,
+explanation: "পাতায় ক্লোরোফিল থাকার কারণে প্রকাশ সংশ্লেষণ ঘটে।"
 },
+
 {
-q:"৪৮. উদ্ভিদের প্রজনন অঙ্গ কোনটি?",
-options:["পাতা","মূল","ফুল","কাণ্ড"],
-answer:2,
-exp:"ফুল হলো উদ্ভিদের প্রজনন অঙ্গ, যেখানে পরাগায়ন ও নিষেক ঘটে।"
+question: "কোনটি শস্য ফসল?",
+options: ["ধান", "কলা", "আম", "লিচু"],
+correct: 0,
+explanation: "ধান একটি প্রধান শস্য ফসল।"
 },
+
 {
-q:"৪৯. কৃষিতে GIS এর ব্যবহার কী?",
-options:["জমি মাপা","মাটি বিশ্লেষণ","ভূ-তথ্য বিশ্লেষণ","বীজ সংরক্ষণ"],
-answer:2,
-exp:"GIS প্রযুক্তির মাধ্যমে ভূ-তথ্য বিশ্লেষণ করে কৃষি পরিকল্পনা করা যায়।"
+question: "কৃষি যান্ত্রিকীকরণের সুবিধা কী?",
+options: ["সময় সাশ্রয়", "উৎপাদন কমানো", "খরচ বৃদ্ধি", "ক্ষতি বৃদ্ধি"],
+correct: 0,
+explanation: "যান্ত্রিকীকরণের ফলে সময় ও শ্রম সাশ্রয় হয়।"
 },
+  {
+question: "বাংলাদেশে সবচেয়ে বেশি উৎপাদিত ফল কোনটি?",
+options: ["আম", "কাঁঠাল", "কলা", "লিচু"],
+correct: 2,
+explanation: "বাংলাদেশে কলা সারা বছর উৎপাদিত হয় এবং মোট উৎপাদনের দিক থেকে শীর্ষে।"
+},
+
 {
-q:"৫০. কৃষিতে উৎপাদনশীলতা বৃদ্ধির প্রধান উপাদান কী?",
-options:["উন্নত জাত","বৃষ্টি নির্ভরতা","চাষ কমানো","শ্রম হ্রাস"],
-answer:0,
-exp:"উন্নত জাত, সঠিক সার ও সেচ ব্যবস্থাপনা উৎপাদনশীলতা বৃদ্ধি করে।"
+question: "মাটির উর্বরতা নির্ধারণের জন্য কী পরীক্ষা করা হয়?",
+options: ["মাটির রং", "মাটির pH ও পুষ্টি বিশ্লেষণ", "মাটির গন্ধ", "মাটির তাপমাত্রা"],
+correct: 1,
+explanation: "মাটির pH ও পুষ্টি বিশ্লেষণের মাধ্যমে উর্বরতা নির্ধারণ করা হয়।"
+},
+
+{
+question: "কোনটি ডাল জাতীয় ফসল নয়?",
+options: ["মসুর", "ছোলা", "মুগ", "ভুট্টা"],
+correct: 3,
+explanation: "ভুট্টা শস্য ফসল, ডাল নয়।"
+},
+
+{
+question: "জৈব কৃষির মূল লক্ষ্য কী?",
+options: ["রাসায়নিক সার ব্যবহার", "প্রাকৃতিক উপাদান ব্যবহার", "উৎপাদন কমানো", "মাটি ক্ষতি"],
+correct: 1,
+explanation: "জৈব কৃষিতে প্রাকৃতিক সার ও কীটনাশক ব্যবহার করা হয়।"
+},
+
+{
+question: "কোনটি চারা উৎপাদনের পদ্ধতি?",
+options: ["বীজতলা", "গুদাম", "মাড়াই", "ঝাড়াই"],
+correct: 0,
+explanation: "বীজতলায় চারা উৎপাদন করা হয়।"
+},
+
+{
+question: "সার প্রয়োগের সঠিক সময় নির্ধারণে কী গুরুত্বপূর্ণ?",
+options: ["ফসলের বৃদ্ধির স্তর", "আবহাওয়া উপেক্ষা", "মাটি না দেখা", "ইচ্ছামতো সময়"],
+correct: 0,
+explanation: "ফসলের বৃদ্ধির স্তর অনুযায়ী সার প্রয়োগ করলে ফলন বেশি হয়।"
+},
+
+{
+question: "কৃষিতে আইসিটি ব্যবহারের সুবিধা কী?",
+options: ["তথ্য আদান-প্রদান সহজ", "উৎপাদন কমানো", "ক্ষতি বৃদ্ধি", "খরচ বাড়ানো"],
+correct: 0,
+explanation: "আইসিটি ব্যবহারে কৃষি তথ্য দ্রুত পৌঁছে যায়।"
+},
+
+{
+question: "ধান কাটার উপযুক্ত সময় কোনটি?",
+options: ["অপরিপক্ব অবস্থায়", "পূর্ণ পরিপক্ব অবস্থায়", "চারা অবস্থায়", "ফুল অবস্থায়"],
+correct: 1,
+explanation: "পূর্ণ পরিপক্ব অবস্থায় ধান কাটলে ফলন ও গুণমান ভালো হয়।"
+},
+
+{
+question: "মাটির লবণাক্ততা বৃদ্ধির প্রধান কারণ কী?",
+options: ["অতিরিক্ত সেচ", "বৃষ্টিপাত", "বনায়ন", "ফসল আবর্তন"],
+correct: 0,
+explanation: "অতিরিক্ত সেচ ও নিষ্কাশনের অভাবে লবণাক্ততা বাড়ে।"
+},
+
+{
+question: "কৃষি উৎপাদন বৃদ্ধির মূল চাবিকাঠি কী?",
+options: ["উন্নত প্রযুক্তি", "অবহেলা", "কম সেচ", "কম সার"],
+correct: 0,
+explanation: "উন্নত প্রযুক্তি ও আধুনিক ব্যবস্থাপনা কৃষি উৎপাদন বাড়ায়।"
 }
+
 ];
+  
+let studentName = "";
+let totalTime = 25 * 60;
+let timerInterval;
+let answers = {};
+let locked = {};
+const accessKey = "krisi1";
 
-function startExam() {
+/* ===== Start Exam ===== */
+function startExam(){
+    const nameInput = document.getElementById("studentName").value.trim();
+    const codeInput = document.getElementById("accessCode").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
 
-  const name = document.getElementById("studentName").value.trim();
-  const code = document.getElementById("accessCode").value.trim();
-  const error = document.getElementById("error");
+    if(codeInput !== accessKey){
+        errorMsg.style.display = "block";
+        return;
+    }
 
-  if (!name || !code) {
-    error.innerText = "নাম এবং পাসওয়ার্ড দিন";
-    return;
-  }
+    if(nameInput === ""){
+        errorMsg.innerText = "নাম লিখুন!";
+        errorMsg.style.display = "block";
+        return;
+    }
 
-  if (code !== PASSWORD) {
-    error.innerText = "ভুল পাসওয়ার্ড!";
-    return;
-  }
+    studentName = nameInput;
+    errorMsg.style.display = "none";
 
-  error.innerText = "";
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("examSection").style.display = "block";
 
-  document.getElementById("gate").style.display = "none";
-  document.getElementById("submitSection").style.display = "block";
-
-  loadQuestions();
-  startTimer();
+    startTimer();
+    loadQuestions();
 }
 
-function loadQuestions() {
-  const examDiv = document.getElementById("exam");
-  examDiv.innerHTML = "";
+/* ===== Timer ===== */
+function startTimer(){
+    const timerDisplay = document.getElementById("timer");
 
-  questions.forEach((q, index) => {
-    let html = `<div class="card">
-      <h4>${index + 1}. ${q.q}</h4>`;
+    timerInterval = setInterval(()=>{
+        totalTime--;
 
-    q.options.forEach((opt, i) => {
-      html += `<div class="option" onclick="selectOption(${index}, ${i}, this)">
-        ${opt}
-      </div>`;
+        let minutes = Math.floor(totalTime/60);
+        let seconds = totalTime%60;
+
+        timerDisplay.innerText = `সময়: ${minutes}:${seconds < 10 ? "0"+seconds : seconds}`;
+
+        if(totalTime <= 300){
+            timerDisplay.style.background = "orange";
+        }
+
+        if(totalTime <= 60){
+            timerDisplay.style.background = "red";
+        }
+
+        if(totalTime <= 0){
+            clearInterval(timerInterval);
+            submitExam();
+        }
+
+    },1000);
+}
+
+/* ===== Lock Option ===== */
+function selectOption(qIndex, optionIndex, element){
+
+    if(locked[qIndex]) return;
+
+    answers[qIndex] = optionIndex;
+    locked[qIndex] = true;
+
+    const options = element.parentElement.querySelectorAll(".option");
+    options.forEach(opt=>{
+        opt.style.pointerEvents = "none";
     });
 
-    html += `</div>`;
-    examDiv.innerHTML += html;
-  });
 }
 
-function selectOption(qIndex, optIndex, el) {
-  if (locked[qIndex]) return;
+/* ===== Load Questions Placeholder ===== */
+function loadQuestions(){
+    const container = document.getElementById("questionContainer");
+    container.innerHTML = "";
 
-  answers[qIndex] = optIndex;
-  locked[qIndex] = true;
+    questions.forEach((q,index)=>{
 
-  const parent = el.parentElement;
-  const options = parent.querySelectorAll(".option");
+        const card = document.createElement("div");
+        card.className = "question-card";
+        card.id = "question-"+index;
 
-  options.forEach((o, i) => {
-    o.classList.add("locked");
-    if (i === questions[qIndex].answer) {
-      o.classList.add("correct-border");
+        let html = `<h3>প্রশ্ন ${index+1}: ${q.question}</h3>`;
+
+        q.options.forEach((opt,i)=>{
+            html += `<div class="option" onclick="selectOption(${index},${i},this)">
+                        ${opt}
+                     </div>`;
+        });
+
+        card.innerHTML = html;
+        container.appendChild(card);
+
+    });
+}
+/* ===== Submit Exam ===== */
+function submitExam(){
+
+    clearInterval(timerInterval);
+
+    let score = 0;
+
+    questions.forEach((q,index)=>{
+        if(answers[index] === q.correct){
+            score++;
+        }
+    });
+
+    let percentage = (score / questions.length) * 100;
+
+    document.getElementById("examSection").style.display = "none";
+    document.getElementById("resultSection").style.display = "block";
+
+    const resultBox = document.getElementById("resultBox");
+
+    if(percentage >= 40){
+        resultBox.className = "result-box pass";
+        resultBox.innerHTML = `
+            <h2>অভিনন্দন ${studentName}</h2>
+            <h3>আপনি উত্তীর্ণ (PASS)</h3>
+            <p>প্রাপ্ত নম্বর: ${score} / ${questions.length}</p>
+            <p>শতকরা হার: ${percentage.toFixed(2)}%</p>
+        `;
+    }else{
+        resultBox.className = "result-box fail";
+        resultBox.innerHTML = `
+            <h2>${studentName}</h2>
+            <h3>আপনি অনুত্তীর্ণ (FAIL)</h3>
+            <p>প্রাপ্ত নম্বর: ${score} / ${questions.length}</p>
+            <p>শতকরা হার: ${percentage.toFixed(2)}%</p>
+        `;
     }
-    if (i === optIndex && i !== questions[qIndex].answer) {
-      o.classList.add("wrong-border");
-    }
-  });
+
+    showReview();
 }
 
-function submitExam() {
-  clearInterval(timerInterval);
 
-  let score = 0;
+/* ===== Show Answer Review ===== */
+function showReview(){
 
-  questions.forEach((q, i) => {
-    if (answers[i] === q.answer) score++;
-  });
+    const reviewContainer = document.getElementById("answerReview");
+    reviewContainer.innerHTML = "";
 
-  const percentage = (score / questions.length) * 100;
-  const resultDiv = document.getElementById("result");
+    questions.forEach((q,index)=>{
 
-  let resultClass = percentage >= 40 ? "pass" : "fail";
-  let message = percentage >= 40 ? "অভিনন্দন! আপনি পাস করেছেন 🎉" : "দুঃখিত! আপনি ফেল করেছেন";
+        const div = document.createElement("div");
+        div.className = "question-card";
 
-  resultDiv.innerHTML = `
-    <div class="result-box ${resultClass}">
-      <h2>আপনার স্কোর: ${score}/${questions.length}</h2>
-      <h3>${percentage.toFixed(2)}%</h3>
-      <p>${message}</p>
-    </div>
-  `;
+        if(answers[index] !== q.correct){
+            div.classList.add("wrong");
+        }
+
+        div.innerHTML = `
+            <h3>প্রশ্ন ${index+1}: ${q.question}</h3>
+            <p><strong>সঠিক উত্তর:</strong> ${q.options[q.correct]}</p>
+            <div class="explanation">
+                <strong>ব্যাখ্যা:</strong> ${q.explanation}
+            </div>
+        `;
+
+        reviewContainer.appendChild(div);
+    });
+
+    reviewContainer.innerHTML += `
+        <div style="text-align:center; margin-top:30px;">
+            <button onclick="retakeExam()" 
+            style="padding:10px 20px; border:none; border-radius:8px; background:#2c5364; color:white; cursor:pointer;">
+            পুনরায় পরীক্ষা দিন
+            </button>
+        </div>
+    `;
 }
 
-function startTimer() {
-  const timerDiv = document.getElementById("timer");
 
-  timerInterval = setInterval(() => {
-    let minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
-
-    timerDiv.innerText = `সময় বাকি: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-
-    timeLeft--;
-
-    if (timeLeft < 0) {
-      clearInterval(timerInterval);
-      submitExam();
-    }
-
-  }, 1000);
+/* ===== Retake Exam ===== */
+function retakeExam(){
+    location.reload();
 }
 
 </script>
+</body>
+</html>
