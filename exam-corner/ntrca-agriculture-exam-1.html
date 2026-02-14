@@ -176,7 +176,24 @@ body{
   color:#2c5364;
   font-weight:bold;
 }
+.option {
+    padding:10px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
 
+.option:hover{
+    background:#f1f1f1;
+}
+
+.option.selected{
+    background:#2c5364;
+    color:white;
+    border-color:#2c5364;
+}
 </style>
 </head>
 <body>
@@ -193,6 +210,22 @@ body{
 
 <div id="examSection">
   <div id="timer">সময়: ২৫:০০</div>
+  <div id="examSection" style="display:none;">
+
+    <div id="timer"></div>
+
+    <div id="questionContainer"></div>
+
+    <!-- এখানে বসাবেন -->
+    <div style="text-align:center; margin-top:30px;">
+        <button onclick="submitExam()" 
+        style="padding:12px 25px; border:none; border-radius:8px; 
+        background:#2c5364; color:white; font-size:16px; cursor:pointer;">
+        পরীক্ষা সাবমিট করুন
+        </button>
+    </div>
+
+  </div>
   <div id="questionContainer"></div>
 </div>
 
@@ -628,12 +661,13 @@ function selectOption(qIndex, optionIndex, element){
     locked[qIndex] = true;
 
     const options = element.parentElement.querySelectorAll(".option");
+
     options.forEach(opt=>{
         opt.style.pointerEvents = "none";
     });
 
+    element.classList.add("selected");
 }
-
 /* ===== Load Questions Placeholder ===== */
 function loadQuestions(){
     const container = document.getElementById("questionContainer");
