@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LGK67QBZD3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGK67QBZD3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LGK67QBZD3');
+  </script>
 
-  gtag('config', 'G-LGK67QBZD3');
-</script>
-<meta charset="UTF-8">
-<title>Krisishikkha | Education & PDF Notes</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Krisishikkha | Education & PDF Notes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2e7d32">
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2e7d32">
 
 <style>
 body{
@@ -24,31 +24,25 @@ body{
   background:#f3f3f3;
   margin:0;
 }
-
 .container{
   max-width:1000px;
   margin:auto;
   padding:20px;
 }
-
 h1{
   font-size:28px;
   margin-bottom:6px;
 }
-
 p{
   font-size:16px;
   color:#444;
 }
-
-/* MAIN GRID */
 .main-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:16px;
   margin:25px 0;
 }
-
 .main-box{
   display:flex;
   align-items:center;
@@ -64,39 +58,16 @@ p{
   box-shadow:0 6px 14px rgba(0,0,0,.18);
   transition:.25s;
 }
-
 .main-box:hover{
   transform:translateY(-3px);
   box-shadow:0 10px 20px rgba(0,0,0,.28);
 }
+.ntrca{background:linear-gradient(135deg,#2e7d32,#81c784);}
+.bcs{background:linear-gradient(135deg,#0d47a1,#64b5f6);}
+.research{background:linear-gradient(135deg,#6a1b9a,#ce93d8);}
+.others{background:linear-gradient(135deg,#ef6c00,#ffb74d);}
+.exam{background:linear-gradient(135deg,#c62828,#ff8a80);}
 
-/* COLOR THEMES */
-.ntrca{
-  background:linear-gradient(135deg,#2e7d32,#81c784);
-}
-.bcs{
-  background:linear-gradient(135deg,#0d47a1,#64b5f6);
-}
-.research{
-  background:linear-gradient(135deg,#6a1b9a,#ce93d8);
-}
-.others{
-  background:linear-gradient(135deg,#ef6c00,#ffb74d);
-}
-
-.footer{
-  margin-top:40px;
-  text-align:center;
-  font-size:14px;
-}
-
-.footer a{
-  color:#555;
-  text-decoration:none;
-  margin:0 6px;
-}
-
-/* Floating Install Button */
 .install-btn{
   position:fixed;
   bottom:20px;
@@ -111,9 +82,7 @@ p{
   display:none;
   z-index:9999;
   box-shadow:0 4px 12px rgba(0,0,0,0.25);
-  transition:.3s;
 }
-
 .install-btn:hover{
   transform:translateY(-3px);
 }
@@ -131,20 +100,23 @@ p{
     <a href="pages/categories/bcs.html" class="main-box bcs">📗 BCS</a>
     <a href="pages/categories/research.html" class="main-box research">🔬 Research Institute</a>
     <a href="pages/categories/others.html" class="main-box others">📂 Others</a>
+
+    <!-- শুধু এই লিংক ভবিষ্যতে পরিবর্তন করবেন -->
+    <a href="exam-corner/ntrca-agriculture-exam-1.html" class="main-box exam">
+      📝 Exam Corner
+    </a>
   </div>
 
-  <footer style="text-align:center; padding:20px; background:#2e7d32; color:white;">
-  <a href="privacy-policy.html" style="color:white; margin-right:15px;">Privacy Policy</a>
-  <a href="terms.html" style="color:white;">Terms & Conditions</a>
-</footer>
+  <footer style="margin-top:80px; text-align:center; padding:20px; background:#2e7d32; color:white;">
+    <a href="privacy-policy.html" style="color:white; margin-right:15px;">Privacy Policy</a>
+    <a href="terms.html" style="color:white;">Terms & Conditions</a>
+  </footer>
 </div>
 
 <!-- Install Button -->
 <div id="installBtn" class="install-btn">📲 Install App</div>
 
 <script>
-
-/* Service Worker */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
@@ -152,33 +124,18 @@ if ('serviceWorker' in navigator) {
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
-/* Capture install event */
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
+  installBtn.style.display = "block";
 });
 
-/* Scroll করলে button show */
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 200 && deferredPrompt) {
-    installBtn.style.display = "block";
-  }
-});
-
-/* Install click */
 installBtn.addEventListener('click', async () => {
   if (!deferredPrompt) return;
-
   deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-
-  if (outcome === 'accepted') {
-    installBtn.style.display = "none";
-  }
-
+  await deferredPrompt.userChoice;
   deferredPrompt = null;
 });
-
 </script>
 
 </body>
