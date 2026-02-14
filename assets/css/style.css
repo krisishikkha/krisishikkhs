@@ -41,4 +41,21 @@
   margin:0;
   font-size:22px;
 }
+/* ===== TIMER BOX ===== */
+
+.timer-box {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  background: #ffeaa7;
+  padding: 15px;
+  margin: 20px auto;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#timer {
+  color: red;
+}
 
