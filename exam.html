@@ -13,6 +13,8 @@ body{
   background:#f3f3f3;
 }
 
+/* ================= EXISTING DESIGN (UNCHANGED) ================= */
+
 /* Exam Title */
 #examTitle{
   text-align:center;
@@ -66,6 +68,7 @@ body{
   font-weight:600;
   line-height:1.4;
 }
+
 button{
   margin:8px 0;
   padding:12px 14px;
@@ -83,13 +86,11 @@ button{
 button:hover{
   transform:translateY(-2px);
   box-shadow:0 6px 14px rgba(0,0,0,0.2);
+  opacity:0.9;
 }
 
 button:active{
   transform:scale(0.98);
-}
-button:hover{
-  opacity:0.9;
 }
 
 .hidden{
@@ -102,11 +103,58 @@ button:hover{
   font-weight:bold;
   margin-bottom:20px;
 }
+
+/* ================= NEW LOGIN DESIGN (ADDED ONLY) ================= */
+
+.login-wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.login-box{
+  width:100%;
+  max-width:420px;
+  background:linear-gradient(135deg,#1e88e5,#43a047);
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
+  color:#fff;
+}
+
+.login-box h2{
+  margin-top:0;
+}
+
+.login-box input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  outline:none;
+}
+
+.login-box input:focus{
+  box-shadow:0 0 0 3px rgba(0,255,150,0.6);
+}
+
+.warning{
+  background:#ffebee;
+  color:#c62828;
+  padding:8px;
+  border-radius:8px;
+  margin-bottom:10px;
+  display:none;
+}
 </style>
 </head>
 
 <body>
-  <!-- LOGIN SECTION START -->
+
+<!-- ================= LOGIN SECTION ================= -->
 <div class="login-wrapper" id="loginSection">
   <div class="login-box">
 
@@ -115,32 +163,34 @@ button:hover{
     <p>
       এই অনলাইন পরীক্ষাটি কৃষি বিষয়ক শিক্ষক নিবন্ধন প্রার্থীদের প্রস্তুতি যাচাইয়ের জন্য তৈরি।
       মোট ৫০টি প্রশ্ন এবং ২৫ মিনিট সময় থাকবে।
-      পরীক্ষাটি সম্পূর্ণ করার পর বিস্তারিত ব্যাখ্যা দেখতে পারবেন।
     </p>
 
     <div id="warning" class="warning"></div>
 
     <input type="text" id="studentName" placeholder="পরীক্ষার্থীর নাম লিখুন">
-
     <input type="password" id="accessCode" placeholder="এক্সেস কোড লিখুন">
 
     <button onclick="validateAccess()">পরীক্ষা শুরু করুন</button>
 
   </div>
 </div>
-<!-- LOGIN SECTION END -->
 
-<h2 id="examTitle"></h2>
+<!-- ================= EXAM SECTION ================= -->
+<div id="examMain" class="hidden">
 
-<div class="timer-box">
-  সময় বাকি: <span id="timer">25:00</span>
+  <h2 id="examTitle"></h2>
+
+  <div class="timer-box">
+    সময় বাকি: <span id="timer">25:00</span>
+  </div>
+
+  <div id="lockedMessage" class="hidden">
+    🔒 This Exam is Locked
+  </div>
+
+  <div id="examContainer"></div>
+
 </div>
-
-<div id="lockedMessage" class="hidden">
-  🔒 This Exam is Locked
-</div>
-
-<div id="examContainer"></div>
 
 <script src="exam-status.js"></script>
 <script src="exam.js"></script>
