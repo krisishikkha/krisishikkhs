@@ -208,25 +208,20 @@ body{
   </div>
 </div>
 
-<div id="examSection">
+<div id="examSection" style="display:none;">
+
   <div id="timer">সময়: ২৫:০০</div>
-  <div id="examSection" style="display:none;">
 
-    <div id="timer"></div>
-
-    <div id="questionContainer"></div>
-
-    <!-- এখানে বসাবেন -->
-    <div style="text-align:center; margin-top:30px;">
-        <button onclick="submitExam()" 
-        style="padding:12px 25px; border:none; border-radius:8px; 
-        background:#2c5364; color:white; font-size:16px; cursor:pointer;">
-        পরীক্ষা সাবমিট করুন
-        </button>
-    </div>
-
-  </div>
   <div id="questionContainer"></div>
+
+  <div style="text-align:center; margin-top:30px;">
+      <button onclick="submitExam()"
+      style="padding:12px 25px; border:none; border-radius:8px;
+      background:#2c5364; color:white; font-size:16px; cursor:pointer;">
+      পরীক্ষা সাবমিট করুন
+      </button>
+  </div>
+
 </div>
 
 <div id="resultSection">
@@ -238,6 +233,7 @@ body{
     <a href="ntrca.html" class="link-card">NTRCA</a>
   </div>
 </div>
+  
 <script>
 const questions = [
 
