@@ -100,7 +100,8 @@ let timerInterval;
 let userAnswers = [];
 
 function startTimer() {
-  const timerDisplay = document.querySelector(".timer-box").style.display = "none";
+
+  const timerDisplay = document.getElementById("timer");
 
   timerInterval = setInterval(() => {
     const minutes = Math.floor(timeLeft / 60);
