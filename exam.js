@@ -7,16 +7,17 @@ if (!examId || !EXAM_STATUS[examId]) {
 }
 
 const status = EXAM_STATUS[examId].status;
-document.getElementById("examTitle").innerText = EXAM_STATUS[examId].title;
+document.getElementById("examTitle").innerText =
+  EXAM_STATUS[examId].title;
 
 if (status !== "live") {
   document.getElementById("lockedMessage").classList.remove("hidden");
   throw new Error("Exam Locked");
 }
 
-// Load questions dynamically
+// 🔥 Folder name updated here
 const script = document.createElement("script");
-script.src = `exams/${examId}/questions.js`;
+script.src = `exam-corner/${examId}/questions.js`;
 document.body.appendChild(script);
 
 script.onload = function () {
@@ -46,4 +47,4 @@ function renderQuestions() {
 function selectAnswer(qIndex, optIndex, btn) {
   const buttons = btn.parentElement.querySelectorAll("button");
   buttons.forEach(b => b.disabled = true);
-        }
+}
