@@ -16,13 +16,14 @@ if (status !== "live") {
   throw new Error("Exam Locked");
 }
 
-// 🔥 Folder name updated here
+// প্রশ্ন লোড
 const script = document.createElement("script");
 script.src = `exam-corner/${examId}/questions.js`;
 document.body.appendChild(script);
 
 script.onload = function () {
   renderQuestions();
+  startTimer();   // ✅ Timer শুরু এখানেই
 };
 
 function renderQuestions() {
@@ -45,11 +46,7 @@ function renderQuestions() {
   });
 }
 
-function selectAnswer(qIndex, optIndex, btn) {
-  const buttons = btn.parentElement.querySelectorAll("button");
-  buttons.forEach(b => b.disabled = true);
-}
-let timeLeft = 25 * 60; // 25 minutes
+let timeLeft = 25 * 60;
 let timerInterval;
 let userAnswers = [];
 
@@ -70,4 +67,35 @@ function startTimer() {
       submitExam();
     }
   }, 1000);
+}
+
+function selectAnswer(qIndex, optIndex, btn) {
+  const buttons = btn.parentElement.querySelectorAll("button");
+  buttons.forEach(b => b.disabled = true);
+
+  userAnswers[qIndex] = optIndex;
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+
+  let score = 0;
+
+  QUESTIONS.forEach((q, index) => {
+    if (userAnswers[index] === q.answer) {
+      score++;
+    }
+  });
+
+  const percentage = (score / QUESTIONS.length) * 100;
+  const result = percentage >= 40 ? "PASS ✅" : "FAIL ❌";
+
+  document.body.innerHTML = `
+    <div style="text-align:center; margin-top:50px;">
+      <h2>Exam Finished</h2>
+      <h3>Score: ${score} / ${QUESTIONS.length}</h3>
+      <h3>Percentage: ${percentage.toFixed(2)}%</h3>
+      <h2>${result}</h2>
+    </div>
+  `;
 }
