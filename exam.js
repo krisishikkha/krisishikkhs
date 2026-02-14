@@ -1,30 +1,73 @@
-const urlParams = new URLSearchParams(window.location.search);
-const examId = urlParams.get("exam");
+// =====================
+// 🔐 LOGIN SYSTEM
+// =====================
 
-if (!examId || !EXAM_STATUS[examId]) {
-  document.body.innerHTML = "<h2>Exam Not Found</h2>";
-  throw new Error("Invalid Exam");
+function validateAccess(){
+
+  const name = document.getElementById("studentName").value.trim();
+  const code = document.getElementById("accessCode").value.trim();
+  const warning = document.getElementById("warning");
+
+  if(name === ""){
+    warning.style.display = "block";
+    warning.innerText = "অনুগ্রহ করে আপনার নাম লিখুন।";
+    return;
+  }
+
+  if(code !== "krisi1"){
+    warning.style.display = "block";
+    warning.innerText = "ভুল এক্সেস কোড!";
+    return;
+  }
+
+  document.getElementById("loginSection").style.display = "none";
+  document.getElementById("examMain").classList.remove("hidden");
+
+  initExam();   // ✅ Login এর পর Exam শুরু
 }
 
-const status = EXAM_STATUS[examId].status;
-document.getElementById("examTitle").innerText =
-  EXAM_STATUS[examId].title;
 
-if (status !== "live") {
-  document.getElementById("lockedMessage").classList.remove("hidden");
-  document.getElementById("timerBox").style.display = "none";
-  throw new Error("Exam Locked");
+
+// =====================
+// 🚀 EXAM INITIALIZER
+// =====================
+
+function initExam(){
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const examId = urlParams.get("exam");
+
+  if (!examId || !EXAM_STATUS[examId]) {
+    document.body.innerHTML = "<h2>Exam Not Found</h2>";
+    throw new Error("Invalid Exam");
+  }
+
+  const status = EXAM_STATUS[examId].status;
+  document.getElementById("examTitle").innerText =
+    EXAM_STATUS[examId].title;
+
+  if (status !== "live") {
+    document.getElementById("lockedMessage").classList.remove("hidden");
+    document.getElementById("timerBox").style.display = "none";
+    throw new Error("Exam Locked");
+  }
+
+  // প্রশ্ন লোড
+  const script = document.createElement("script");
+  script.src = `exam-corner/${examId}/questions.js`;
+  document.body.appendChild(script);
+
+  script.onload = function () {
+    renderQuestions();
+    startTimer();
+  };
 }
 
-// প্রশ্ন লোড
-const script = document.createElement("script");
-script.src = `exam-corner/${examId}/questions.js`;
-document.body.appendChild(script);
 
-script.onload = function () {
-  renderQuestions();
-  startTimer();   // ✅ Timer শুরু এখানেই
-};
+
+// =====================
+// 📝 RENDER QUESTIONS
+// =====================
 
 function renderQuestions() {
   const container = document.getElementById("examContainer");
@@ -45,6 +88,12 @@ function renderQuestions() {
     container.appendChild(div);
   });
 }
+
+
+
+// =====================
+// ⏳ TIMER SYSTEM
+// =====================
 
 let timeLeft = 25 * 60;
 let timerInterval;
@@ -69,12 +118,24 @@ function startTimer() {
   }, 1000);
 }
 
+
+
+// =====================
+// 🎯 SELECT ANSWER
+// =====================
+
 function selectAnswer(qIndex, optIndex, btn) {
   const buttons = btn.parentElement.querySelectorAll("button");
   buttons.forEach(b => b.disabled = true);
 
   userAnswers[qIndex] = optIndex;
 }
+
+
+
+// =====================
+// 🏁 SUBMIT EXAM
+// =====================
 
 function submitExam() {
   clearInterval(timerInterval);
