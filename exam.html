@@ -1,43 +1,90 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <title>Exam | Krisishikkha</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Exam | Krisishikkha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="assets/css/style.css">
+<style>
+body{
+  font-family:sans-serif;
+  margin:0;
+  padding:20px;
+  background:#f3f3f3;
+}
 
-  <style>
-    body { font-family: sans-serif; margin: 0; padding: 20px; }
-    .hidden { display: none; }
-    .card {
-      background: #f9f9f9;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-    }
-  </style>
+/* Exam Title */
+#examTitle{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+/* Timer Box */
+.timer-box{
+  max-width:300px;
+  margin:0 auto 20px auto;
+  padding:12px;
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  background:#c62828;
+  color:#fff;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Question Card */
+.card{
+  background:#fff;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:8px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+button{
+  margin:6px 0;
+  padding:6px 10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  background:#2e7d32;
+  color:#fff;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+.hidden{
+  display:none;
+}
+
+#lockedMessage{
+  text-align:center;
+  color:red;
+  font-weight:bold;
+  margin-bottom:20px;
+}
+</style>
 </head>
 
 <body>
 
-  <h2 id="examTitle"></h2>
+<h2 id="examTitle"></h2>
 
-  <!-- ✅ TIMER BOX -->
-  <div id="timerBox" class="timer-box">
-    ⏳ সময় বাকি: <span id="timer">25:00</span>
-  </div>
+<div class="timer-box">
+  সময় বাকি: <span id="timer">25:00</span>
+</div>
 
-  <!-- ✅ LOCK MESSAGE -->
-  <div id="lockedMessage" class="hidden">
-    <h3>🔒 This Exam is Locked</h3>
-  </div>
+<div id="lockedMessage" class="hidden">
+  🔒 This Exam is Locked
+</div>
 
-  <!-- ✅ QUESTIONS CONTAINER -->
-  <div id="examContainer"></div>
+<div id="examContainer"></div>
 
-  <script src="exam-status.js"></script>
-  <script src="exam.js"></script>
+<script src="exam-status.js"></script>
+<script src="exam.js"></script>
 
 </body>
 </html>
