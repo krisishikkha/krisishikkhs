@@ -118,7 +118,10 @@ p{
 
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+  navigator.serviceWorker.register('service-worker.js')
+    .then(reg => {
+      reg.update(); // 🔥 প্রতিবার ঢুকলে update check করবে
+    });
 }
 
 let deferredPrompt;
