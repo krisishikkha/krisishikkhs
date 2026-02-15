@@ -1,24 +1,28 @@
-const CACHE_VERSION = "krisishikkha-v5";
+const CACHE_VERSION = "krisishikkha-v6";   // 🔥 প্রতি আপডেটে শুধু এটা বাড়াবে
 const STATIC_CACHE = CACHE_VERSION + "-static";
 const DYNAMIC_CACHE = CACHE_VERSION + "-dynamic";
 
-/* Static files */
+/* Static core files */
 const STATIC_FILES = [
   "./",
   "./index.html",
+  "./exam.html",
   "./manifest.json",
+  "./assets/css/style.css",
+  "./exam.js",
+  "./exam-status.js",
   "./assets/icons/icon-192.png",
   "./assets/icons/icon-512.png"
 ];
 
 /* INSTALL */
 self.addEventListener("install", event => {
+  self.skipWaiting(); // 🔥 নতুন SW সাথে সাথে activate হবে
+
   event.waitUntil(
-    caches.open(STATIC_CACHE).then(cache => {
-      return cache.addAll(STATIC_FILES);
-    })
+    caches.open(STATIC_CACHE)
+      .then(cache => cache.addAll(STATIC_FILES))
   );
-  self.skipWaiting();
 });
 
 /* ACTIVATE */
@@ -26,57 +30,41 @@ self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
-        keys
-          .filter(key => !key.includes(CACHE_VERSION))
-          .map(key => caches.delete(key))
+        keys.map(key => {
+          if (!key.includes(CACHE_VERSION)) {
+            return caches.delete(key); // 🔥 পুরানো সব cache delete
+          }
+        })
       );
     })
   );
-  self.clients.claim();
+
+  return self.clients.claim(); // 🔥 সব open tab control নেবে
 });
 
 /* FETCH */
 self.addEventListener("fetch", event => {
 
-  /* Only GET requests */
   if (event.request.method !== "GET") return;
 
   const requestURL = new URL(event.request.url);
 
-  /* Do not cache PDFs (secure viewer purpose) */
+  // PDF cache করবে না
   if (requestURL.pathname.endsWith(".pdf")) {
     return;
   }
 
-  /* HTML pages → Network First */
-  if (event.request.headers.get("accept").includes("text/html")) {
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          return caches.open(DYNAMIC_CACHE).then(cache => {
-            cache.put(event.request, response.clone());
-            return response;
-          });
-        })
-        .catch(() => {
-          return caches.match(event.request);
-        })
-    );
-    return;
-  }
-
-  /* CSS / JS / Images → Cache First */
+  // 🔥 EVERYTHING → Network First (instant update)
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-
-      return fetch(event.request).then(response => {
+    fetch(event.request)
+      .then(response => {
         return caches.open(DYNAMIC_CACHE).then(cache => {
           cache.put(event.request, response.clone());
           return response;
         });
-      });
-    })
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
-
 });
