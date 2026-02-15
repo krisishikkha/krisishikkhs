@@ -45,41 +45,39 @@
 ./* ===== PREMIUM TIMER DESIGN ===== */
 
 .timer-box {
-    max-width: 320px;
-    margin: 20px auto;   /* মাঝখানে আনবে */
+    width: 92%;
+    max-width: 400px;
+
+    margin: 20px auto;      /* শুরুতে মাঝখানে থাকবে */
     padding: 16px;
+
     text-align: center;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
 
     background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-    border-radius: 16px;
+    border-radius: 18px;
 
     color: #1b5e20;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 
-    transition: all 0.3s ease;
-}
-
-#timer {
-  font-size: 28px;
-  font-weight: bold;
+    position: sticky;   /* স্ক্রল করলে লেগে থাকবে */
+    top: 10px;          /* উপরে একটু gap থাকবে */
+    z-index: 999;       /* অন্য কিছুর নিচে যাবে না */
 }
 
 /* 5 min left */
 .timer-warning {
-  color: #ff9800 !important;
-  border-bottom: 3px solid #ff9800 !important;
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    color: #e65100 !important;
 }
 
-/* 1 min left */
 .timer-danger {
-  color: #e53935 !important;
-  border-bottom: 3px solid #e53935 !important;
-  animation: blink 1s infinite;
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    color: #b71c1c !important;
+    animation: blink 1s infinite;
 }
 
-/* Blink animation */
 @keyframes blink {
-  50% { opacity: 0.4; }
+    50% { opacity: 0.5; }
 }
