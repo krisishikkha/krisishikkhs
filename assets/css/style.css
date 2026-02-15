@@ -91,7 +91,6 @@
 @keyframes blink {
     50% { opacity: 0.6; }
 }
-<style>
 body{
   font-family:sans-serif;
   margin:0;
@@ -218,4 +217,3 @@ button:active{
   margin-bottom:10px;
   display:none;
 }
-</style>
