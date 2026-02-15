@@ -42,42 +42,52 @@
   font-size:22px;
 }
 
-./* ===== PREMIUM TIMER DESIGN ===== */
+/* ===== PREMIUM TIMER DESIGN ===== */
 
 .timer-box {
     width: 92%;
     max-width: 400px;
 
-    margin: 20px auto;      /* শুরুতে মাঝখানে থাকবে */
+    margin: 20px auto;
     padding: 16px;
 
     text-align: center;
     font-size: 28px;
     font-weight: bold;
 
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    background: linear-gradient(135deg, #00c853, #b2ff59);
     border-radius: 18px;
 
-    color: #1b5e20;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 
-    position: sticky;   /* স্ক্রল করলে লেগে থাকবে */
-    top: 10px;          /* উপরে একটু gap থাকবে */
-    z-index: 999;       /* অন্য কিছুর নিচে যাবে না */
+    position: sticky;
+    top: 10px;
+    z-index: 999;
+
+    display: block;
+}
+
+/* Timer number style */
+#timer {
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff;
 }
 
 /* 5 min left */
 .timer-warning {
-    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-    color: #e65100 !important;
+    background: linear-gradient(135deg, #ffb300, #ff7043);
+    color: #ffffff !important;
 }
 
+/* Last minute */
 .timer-danger {
-    background: linear-gradient(135deg, #ffebee, #ffcdd2);
-    color: #b71c1c !important;
+    background: linear-gradient(135deg, #d50000, #ff1744);
+    color: #ffffff !important;
     animation: blink 1s infinite;
 }
 
 @keyframes blink {
-    50% { opacity: 0.5; }
+    50% { opacity: 0.6; }
 }
