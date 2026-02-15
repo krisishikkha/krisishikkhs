@@ -223,4 +223,5 @@ button:active{
     max-width: 900px;
     margin: 0 auto;
     padding: 10px;
+    padding-top: 100px;
 }
