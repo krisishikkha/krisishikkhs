@@ -48,7 +48,7 @@ function initExam(){
 
   if (status !== "live") {
     document.getElementById("lockedMessage").classList.remove("hidden");
-    document.getElementById("timerBox").style.display = "none";
+    document.querySelector(".timer-box").style.display = "none";
     throw new Error("Exam Locked");
   }
 
