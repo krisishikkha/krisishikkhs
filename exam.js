@@ -95,31 +95,33 @@ function renderQuestions() {
 // ⏳ TIMER SYSTEM
 // =====================
 
-let timeLeft = 25 * 60;
+let timeLeft = 25 * 60; 
 let timerInterval;
-let userAnswers = [];
 
 function startTimer() {
 
-  const timerDisplay = document.getElementById("timer");
+    const timerDisplay = document.getElementById("timer");
 
-  timerInterval = setInterval(() => {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
+    // আগে একবার দেখাবে
+    updateTimer();
 
-    timerDisplay.textContent =
-      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    timerInterval = setInterval(updateTimer, 1000);
 
-    timeLeft--;
+    function updateTimer() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
 
-    if (timeLeft < 0) {
-      clearInterval(timerInterval);
-      submitExam();
+        timerDisplay.textContent =
+            minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+
+        timeLeft--;
+
+        if (timeLeft < 0) {
+            clearInterval(timerInterval);
+            submitExam();
+        }
     }
-  }, 1000);
 }
-
-
 
 // =====================
 // 🎯 SELECT ANSWER
