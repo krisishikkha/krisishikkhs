@@ -22,7 +22,7 @@ function validateAccess(){
 
   document.getElementById("loginSection").style.display = "none";
   document.getElementById("examMain").classList.remove("hidden");
-
+  startTimer();
   initExam();   // ✅ Login এর পর Exam শুরু
 }
 
