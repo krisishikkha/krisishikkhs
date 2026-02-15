@@ -126,12 +126,17 @@ function startTimer() {
 // =====================
 
 function selectAnswer(qIndex, optIndex, btn) {
+
   const buttons = btn.parentElement.querySelectorAll("button");
-  buttons.forEach(b => b.disabled = true);
+
+  buttons.forEach(b => {
+    b.classList.remove("selected");
+  });
+
+  btn.classList.add("selected");  // ✅ highlight
 
   userAnswers[qIndex] = optIndex;
 }
-
 
 
 // =====================
