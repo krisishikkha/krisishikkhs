@@ -41,16 +41,42 @@
   margin:0;
   font-size:22px;
 }
-/* ===== TIMER BOX ===== */
+
+./* ===== PREMIUM TIMER DESIGN ===== */
 
 .timer-box {
   position: sticky;
   top: 0;
-  background: white;
-  padding: 10px;
+  text-align: center;
+  padding: 14px;
+  font-size: 22px;
   font-weight: bold;
   z-index: 1000;
-  border-bottom: 2px solid #ddd;
-  color: #e53935;   /* 🔥 লাল কালার */
-  font-size: 22px;
+  background: #111;
+  color: #4CAF50; /* Default Green */
+  border-bottom: 3px solid #4CAF50;
+  transition: all 0.3s ease;
+}
+
+#timer {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* 5 min left */
+.timer-warning {
+  color: #ff9800 !important;
+  border-bottom: 3px solid #ff9800 !important;
+}
+
+/* 1 min left */
+.timer-danger {
+  color: #e53935 !important;
+  border-bottom: 3px solid #e53935 !important;
+  animation: blink 1s infinite;
+}
+
+/* Blink animation */
+@keyframes blink {
+  50% { opacity: 0.4; }
 }
