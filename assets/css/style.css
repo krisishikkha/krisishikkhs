@@ -45,21 +45,24 @@
 ./* ===== PREMIUM TIMER DESIGN ===== */
 
 .timer-box {
-  position: sticky;
-  top: 0;
-  text-align: center;
-  padding: 14px;
-  font-size: 22px;
-  font-weight: bold;
-  z-index: 1000;
-  background: #111;
-  color: #4CAF50; /* Default Green */
-  border-bottom: 3px solid #4CAF50;
-  transition: all 0.3s ease;
+    max-width: 320px;
+    margin: 20px auto;   /* মাঝখানে আনবে */
+    padding: 16px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-radius: 16px;
+
+    color: #1b5e20;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
+    transition: all 0.3s ease;
 }
 
 #timer {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: bold;
 }
 
