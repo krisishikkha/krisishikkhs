@@ -62,10 +62,10 @@
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 
     position: fixed;
-top: 10px;
-left: 50%;
-transform: translateX(-50%);
-z-index: 9999;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
     display: block;
 }
 
