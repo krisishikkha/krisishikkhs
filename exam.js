@@ -108,20 +108,33 @@ function startTimer() {
     timerInterval = setInterval(updateTimer, 1000);
 
     function updateTimer() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
 
-        timerDisplay.textContent =
-            minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
 
-        timeLeft--;
+  timerDisplay.textContent =
+    minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
 
-        if (timeLeft < 0) {
-            clearInterval(timerInterval);
-            submitExam();
-        }
+  const timerBox = document.querySelector(".timer-box");
+
+  // 🔥 5 মিনিট বাকি
+  if (timeLeft <= 300 && timeLeft > 60) {
+    timerBox.classList.add("timer-warning");
+  }
+
+  // 🔥 1 মিনিট বাকি
+  if (timeLeft <= 60) {
+    timerBox.classList.remove("timer-warning");
+    timerBox.classList.add("timer-danger");
+  }
+
+  timeLeft--;
+
+  if (timeLeft < 0) {
+    clearInterval(timerInterval);
+    submitExam();
+  }
     }
-}
 
 // =====================
 // 🎯 SELECT ANSWER
