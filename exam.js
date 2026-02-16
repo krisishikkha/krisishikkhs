@@ -94,25 +94,40 @@ function selectAnswer(qIndex, optIndex, btn) {
 
 // ================= TIMER =================
 
+let totalTime = 25 * 60; 
+let timerInterval;
+
 function startTimer() {
-  const timerDisplay = document.getElementById("timer");
+    const timerBox = document.querySelector(".timer-box");
+    const timeDisplay = document.getElementById("timeLeft");
 
-  timerInterval = setInterval(() => {
+    timerInterval = setInterval(function () {
 
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
+        let minutes = Math.floor(totalTime / 60);
+        let seconds = totalTime % 60;
 
-    timerDisplay.innerText =
-      minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    timeLeft--;
+        timeDisplay.innerText = minutes + ":" + seconds;
 
-    if (timeLeft < 0) {
-      clearInterval(timerInterval);
-      submitExam();
-    }
+        if (totalTime <= 300 && totalTime > 120) {
+            timerBox.classList.add("timer-warning");
+        }
 
-  }, 1000);
+        if (totalTime <= 120) {
+            timerBox.classList.remove("timer-warning");
+            timerBox.classList.add("timer-danger");
+        }
+
+        if (totalTime <= 0) {
+            clearInterval(timerInterval);
+            alert("সময় শেষ! পরীক্ষা অটো সাবমিট হচ্ছে...");
+            submitExam();
+        }
+
+        totalTime--;
+
+    }, 1000);
 }
 
 // ================= SUBMIT =================
