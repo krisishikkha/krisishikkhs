@@ -10,7 +10,7 @@ function validateAccess() {
     }
 
     // এখানে তুমি চাইলে নির্দিষ্ট কোড দিতে পারো
-    const validCode = "1234";  // চাইলে পরিবর্তন করতে পারো
+    const validCode = "krisi1";  // চাইলে পরিবর্তন করতে পারো
 
     if (code !== validCode) {
         warning.innerText = "ভুল এক্সেস কোড";
