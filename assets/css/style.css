@@ -104,9 +104,9 @@ body{
 /* Question Card */
 .card{
     background:#ffffff;
-    padding:22px;
-    margin:20px 8px;
-    border-radius:18px;
+    padding:20px;
+    margin:20px auto;
+    border-radius:15px;
     border:1px solid #e0e0e0;
     box-shadow:0 10px 25px rgba(0,0,0,0.10);
     transition: all 0.3s ease;
