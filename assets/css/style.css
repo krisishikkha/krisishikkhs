@@ -215,7 +215,7 @@ button }:active{
     padding-top: 110px;
 }
 .scoreboard-card {
-    width: 95%;
+    max-width: 600px;
     margin: 20px auto;
     padding: 20px;
     border-radius: 15px;
