@@ -60,9 +60,6 @@
 
     z-index: 9999;
 }
-  #examMain {
-    padding-top: 100px;
-  }
 
 /* Timer number style */
 #timer {
@@ -213,8 +210,8 @@ button }:active{
 }
 #examMain {
     width: 100%;
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 10px;
+    padding: 0 8px;   /* দুই পাশে সামান্য ফাঁক */
     padding-top: 110px;
 }
