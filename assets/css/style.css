@@ -209,9 +209,9 @@ button }:active{
 }
 #examMain {
     width: 100%;
-    max-width: 100%;
-    margin-top:70px;
-    padding: 0 8px;   /* দুই পাশে সামান্য ফাঁক */
+    max-width: 600px;   /* মোবাইলে সুন্দর সীমা */
+    margin: 70px auto 0 auto;  /* উপরে 70px, বাকি auto center */
+    padding: 0 10px;
     padding-top: 110px;
 }
 .scoreboard-card {
