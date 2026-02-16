@@ -45,29 +45,21 @@
 /* ===== PREMIUM TIMER DESIGN ===== */
 
 .timer-box {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 400px;
-
-    margin: 20px auto;
-    padding: 16px;
-
     text-align: center;
+
+    padding: 15px;
     font-size: 28px;
     font-weight: bold;
 
     background: linear-gradient(135deg, #00c853, #b2ff59);
-    border-radius: 0px;
-
     color: #ffffff;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 
-    position: fixed;
-    top: 0px;
-    left: 0%;
-    transform: none;
     z-index: 9999;
-    display: block;
-  }
+}
   #examMain {
     padding-top: 100px;
   }
