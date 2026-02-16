@@ -158,7 +158,12 @@ function submitExam() {
         }
     });
 
-    // 🔥 Auto Scroll Top
+    // ✅ Percentage Calculate
+    let percentage = ((score / QUESTIONS.length) * 100).toFixed(2);
+
+    // ✅ Student Name
+    let studentName = document.getElementById("studentName").value;
+
     window.scrollTo({
         top: 0,
         behavior: "smooth"
@@ -170,7 +175,9 @@ function submitExam() {
         <div class="scoreboard-card">
             <h2>📊 Scoreboard</h2>
             <h3>${document.getElementById("examTitle").innerText}</h3>
-            <p><strong>মোট প্রশ্ন:</strong> ${QUESTIONS.length}</p>
+
+            <p><strong>নাম:</strong> ${studentName}</p>
+            <p><strong>পারসেন্টেজ:</strong> ${percentage}%</p>
             <p><strong>সঠিক:</strong> ${score}</p>
             <p><strong>ভুল:</strong> ${wrong}</p>
             <p><strong>Unanswered:</strong> ${unanswered}</p>
@@ -201,16 +208,17 @@ function submitExam() {
 
         div.innerHTML = `
             <h4>Q${index + 1}: ${q.question}</h4>
-            <p><strong>আপনার উত্তর:</strong> 
+            <p><strong>আপনার উত্তর:</strong>
                 <span style="color:${statusColor}">
                     ${userAns !== undefined ? q.options[userAns] : "উত্তর দেননি"}
                 </span>
             </p>
             <p><strong>সঠিক উত্তর:</strong> ${q.options[correctAns]}</p>
-            <p><strong>ব্যাখ্যা:</strong> ${q.explanation ? q.explanation : "ব্যাখ্যা নেই"}
-            </p>
+            <p><strong>ব্যাখ্যা:</strong> ${q.explanation ? q.explanation : "ব্যাখ্যা নেই"}</p>
         `;
 
         reviewSection.appendChild(div);
+
     });
+
 }
