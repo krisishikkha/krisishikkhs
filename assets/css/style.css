@@ -59,6 +59,7 @@
     color: #ffffff;
 
     z-index: 9999;
+  pointer-events: none;   /* 👈 এটা যোগ করুন */
 }
 
 /* Timer number style */
