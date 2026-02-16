@@ -36,7 +36,8 @@ function initExam(){
 
   const urlParams = new URLSearchParams(window.location.search);
   const examId = urlParams.get("exam");
-
+console.log("Exam ID:", examId);
+console.log("Status Object:", EXAM_STATUS[examId]);
   if (!examId || !EXAM_STATUS[examId]) {
     document.body.innerHTML = "<h2>Exam Not Found</h2>";
     throw new Error("Invalid Exam");
