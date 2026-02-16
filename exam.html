@@ -4,55 +4,41 @@
 <meta charset="UTF-8">
 <title>Exam | Krisishikkha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/style.css?v=3">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
-<!-- ================= LOGIN SECTION ================= -->
+<!-- LOGIN SECTION -->
 <div class="login-wrapper" id="loginSection">
   <div class="login-box">
-
     <h2>NTRCA Agriculture Online Model Test</h2>
 
-    <p>
-      এই অনলাইন পরীক্ষাটি কৃষি বিষয়ক শিক্ষক নিবন্ধন প্রার্থীদের প্রস্তুতি যাচাইয়ের জন্য তৈরি।
-      মোট ৫০টি প্রশ্ন এবং ২৫ মিনিট সময় থাকবে।
-    </p>
+    <div id="warning" style="color:red;"></div>
 
-    <div id="warning" class="warning"></div>
-
-    <input type="text" id="studentName" placeholder="পরীক্ষার্থীর নাম লিখুন">
-    <input type="password" id="accessCode" placeholder="এক্সেস কোড লিখুন">
+    <input type="text" id="studentName" placeholder="পরীক্ষার্থীর নাম লিখুন"><br><br>
+    <input type="password" id="accessCode" placeholder="এক্সেস কোড লিখুন"><br><br>
 
     <button onclick="validateAccess()">পরীক্ষা শুরু করুন</button>
-
   </div>
 </div>
 
-<!-- ================= EXAM SECTION ================= -->
-<div id="examMain" class="hidden">
-
+<!-- EXAM SECTION -->
+<div id="examMain" style="display:none; padding:20px;">
   <h2 id="examTitle"></h2>
 
-  <div class="timer-box">
-    সময় বাকি: <span id="timer">25:00</span>
+  <div>
+    সময় বাকি: <span id="timer">25:00</span>
   </div>
 
-  <div id="lockedMessage" class="hidden">
-    🔒 This Exam is Locked
-  </div>
-
-  <!-- 🔥 এই লাইনটা যোগ করো -->
   <div id="examContainer"></div>
 
-  <button id="submitBtn" onclick="submitExam()">
-    পরীক্ষা শেষ করুন
-  </button>
-
+  <br>
+  <button onclick="submitExam()">পরীক্ষা শেষ করুন</button>
 </div>
-<script src="exam-license.js"></script>
-<script src="exam-status.js?v=7"></script>
-<script src="exam.js?v=7"></script>
+
+<script src="exam-status.js"></script>
+<script src="exam.js"></script>
+
 </body>
 </html>
