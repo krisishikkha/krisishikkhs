@@ -39,7 +39,7 @@
 
 .main-box h2{
   margin:0;
-  font-size:22px;
+  font-size: clamp(16px, 4vw, 20px);
 }
 
 /* ===== PREMIUM TIMER DESIGN ===== */
@@ -52,7 +52,7 @@
     text-align: center;
 
     padding: 15px;
-    font-size: 28px;
+    font-size: clamp(16px, 4vw, 22px);
     font-weight: bold;
 
     background: linear-gradient(135deg, #00c853, #b2ff59);
@@ -66,7 +66,7 @@
 
 /* Timer number style */
 #timer {
-    font-size: 32px;
+    font-size: clamp(18px, 5vw, 24px);
     font-weight: 900;
     color: #ffffff;
 }
