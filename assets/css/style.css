@@ -105,11 +105,12 @@ body{
 .card{
     background:#ffffff;
     padding:22px;
-    margin:20px 15px;
+    margin:20px 8px;
     border-radius:18px;
     border:1px solid #e0e0e0;
     box-shadow:0 10px 25px rgba(0,0,0,0.10);
     transition: all 0.3s ease;
+    width:95%;
 }
 
 .card:hover{
@@ -140,10 +141,9 @@ button{
 }
 
 button:hover{
-  button:hover{
     background:#f5f5f5;
     transform:translateY(-2px);
-  }
+}
 button }:active{
   transform:scale(0.98);
 }
@@ -151,8 +151,6 @@ button }:active{
 .hidden{
   display:none;
 }
-  .card button.selected {
-  background: #4CAF50 !important;
   .card button.selected{
     background:#000 !important;
     color:#fff !important;
@@ -212,7 +210,7 @@ button }:active{
 #examMain {
     width: 100%;
     max-width: 100%;
-    margin: 0 auto;
+    margin-top:70px;
     padding: 0 8px;   /* দুই পাশে সামান্য ফাঁক */
     padding-top: 110px;
 }
