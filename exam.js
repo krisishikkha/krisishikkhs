@@ -142,25 +142,75 @@ function startTimer() {
 
 function submitExam() {
 
-  clearInterval(timerInterval);
+    clearInterval(timerInterval);
 
-  let score = 0;
+    let score = 0;
+    let wrong = 0;
+    let unanswered = 0;
 
-  QUESTIONS.forEach((q, index) => {
-    if (userAnswers[index] === q.answer) {
-      score++;
-    }
-  });
+    QUESTIONS.forEach((q, index) => {
+        if (userAnswers[index] === q.answer) {
+            score++;
+        } else if (userAnswers[index] === undefined) {
+            unanswered++;
+        } else {
+            wrong++;
+        }
+    });
 
-  const percentage = (score / QUESTIONS.length) * 100;
-  const result = percentage >= 40 ? "PASS ✅" : "FAIL ❌";
+    // 🔥 Auto Scroll Top
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
-  document.body.innerHTML = `
-    <div style="text-align:center; margin-top:50px;">
-      <h2>Exam Finished</h2>
-      <h3>Score: ${score} / ${QUESTIONS.length}</h3>
-      <h3>Percentage: ${percentage.toFixed(2)}%</h3>
-      <h2>${result}</h2>
-    </div>
-  `;
+    const container = document.getElementById("examMain");
+
+    container.innerHTML = `
+        <div class="scoreboard-card">
+            <h2>📊 Scoreboard</h2>
+            <h3>${document.getElementById("examTitle").innerText}</h3>
+            <p><strong>মোট প্রশ্ন:</strong> ${QUESTIONS.length}</p>
+            <p><strong>সঠিক:</strong> ${score}</p>
+            <p><strong>ভুল:</strong> ${wrong}</p>
+            <p><strong>Unanswered:</strong> ${unanswered}</p>
+        </div>
+
+        <div id="reviewSection"></div>
+    `;
+
+    const reviewSection = document.getElementById("reviewSection");
+
+    QUESTIONS.forEach((q, index) => {
+
+        const userAns = userAnswers[index];
+        const correctAns = q.answer;
+
+        let statusColor = "#999";
+
+        if (userAns === correctAns) {
+            statusColor = "green";
+        } else if (userAns === undefined) {
+            statusColor = "orange";
+        } else {
+            statusColor = "red";
+        }
+
+        const div = document.createElement("div");
+        div.className = "review-card";
+
+        div.innerHTML = `
+            <h4>Q${index + 1}: ${q.question}</h4>
+            <p><strong>আপনার উত্তর:</strong> 
+                <span style="color:${statusColor}">
+                    ${userAns !== undefined ? q.options[userAns] : "উত্তর দেননি"}
+                </span>
+            </p>
+            <p><strong>সঠিক উত্তর:</strong> ${q.options[correctAns]}</p>
+            <p><strong>ব্যাখ্যা:</strong> ${q.explanation ? q.explanation : "ব্যাখ্যা নেই"}
+            </p>
+        `;
+
+        reviewSection.appendChild(div);
+    });
 }
