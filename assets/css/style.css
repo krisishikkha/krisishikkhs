@@ -45,7 +45,7 @@
 /* ===== PREMIUM TIMER DESIGN ===== */
 
 .timer-box {
-    width: 92%;
+    width: 100%;
     max-width: 400px;
 
     margin: 20px auto;
@@ -56,18 +56,21 @@
     font-weight: bold;
 
     background: linear-gradient(135deg, #00c853, #b2ff59);
-    border-radius: 18px;
+    border-radius: 0px;
 
     color: #ffffff;
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 
     position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0px;
+    left: 0%;
+    transform: none;
     z-index: 9999;
     display: block;
-}
+  }
+  #examMain {
+    padding-top: 100px;
+  }
 
 /* Timer number style */
 #timer {
