@@ -48,7 +48,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    max-width: 600px;
     text-align: center;
 
     padding: 15px;
@@ -110,7 +110,7 @@ body{
     border:1px solid #e0e0e0;
     box-shadow:0 10px 25px rgba(0,0,0,0.10);
     transition: all 0.3s ease;
-    width:95%;
+    max-width: 600px;
 }
 
 .card:hover{
@@ -226,7 +226,7 @@ button }:active{
 }
 
 .review-card {
-    width: 95%;
+    max-width: 600px;
     margin: 15px auto;
     padding: 15px;
     border-radius: 12px;
