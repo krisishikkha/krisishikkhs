@@ -214,3 +214,22 @@ button }:active{
     padding: 0 8px;   /* দুই পাশে সামান্য ফাঁক */
     padding-top: 110px;
 }
+.scoreboard-card {
+    width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.review-card {
+    width: 95%;
+    margin: 15px auto;
+    padding: 15px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
