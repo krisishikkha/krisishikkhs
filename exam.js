@@ -65,7 +65,7 @@ function renderQuestions() {
   QUESTIONS.forEach((q, index) => {
 
     const div = document.createElement("div");
-    div.style.marginBottom = "20px";
+    div.className = "card";   // IMPORTANT
 
     div.innerHTML = `
       <h4>প্রশ্ন ${index + 1}: ${q.question}</h4>
@@ -83,13 +83,22 @@ function renderQuestions() {
 // ================= SELECT ANSWER =================
 
 function selectAnswer(qIndex, optIndex, btn) {
-  const buttons = btn.parentElement.querySelectorAll("button");
 
-  buttons.forEach(b => b.style.background = "");
+    // যদি আগেই উত্তর দেওয়া থাকে তাহলে আর কিছু করবে না (LOCK)
+    if (userAnswers[qIndex] !== undefined) return;
 
-  btn.style.background = "lightgreen";
+    const buttons = btn.parentElement.querySelectorAll("button");
 
-  userAnswers[qIndex] = optIndex;
+    // সব বাটন disable করে দিবে
+    buttons.forEach(b => {
+        b.disabled = true;
+        b.classList.remove("selected");
+    });
+
+    // যেটা সিলেক্ট করা হয়েছে সেটা highlight করবে
+    btn.classList.add("selected");
+
+    userAnswers[qIndex] = optIndex;
 }
 
 // ================= TIMER =================
