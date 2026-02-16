@@ -94,8 +94,7 @@ function selectAnswer(qIndex, optIndex, btn) {
 
 // ================= TIMER =================
 
-let totalTime = 25 * 60; 
-let timerInterval;
+let totalTime = 25 * 60;
 
 function startTimer() {
     const timerBox = document.querySelector(".timer-box");
