@@ -47,7 +47,7 @@
 .timer-box {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
     max-width: 600px;
     text-align: center;
 
