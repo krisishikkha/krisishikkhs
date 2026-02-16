@@ -1,81 +1,71 @@
 let userAnswers = [];
-// =====================
-// 🔐 LOGIN SYSTEM
-// =====================
+let timeLeft = 25 * 60;
+let timerInterval;
 
-function validateAccess(){
+// ================= LOGIN =================
 
+function validateAccess() {
   const name = document.getElementById("studentName").value.trim();
   const code = document.getElementById("accessCode").value.trim();
   const warning = document.getElementById("warning");
 
-  if(name === ""){
-    warning.style.display = "block";
-    warning.innerText = "অনুগ্রহ করে আপনার নাম লিখুন।";
+  if (name === "") {
+    warning.innerText = "নাম লিখুন।";
     return;
   }
 
-  if(code !== "krisi1"){
-    warning.style.display = "block";
+  if (code !== "krisi1") {
     warning.innerText = "ভুল এক্সেস কোড!";
     return;
   }
 
   document.getElementById("loginSection").style.display = "none";
-  document.getElementById("examMain").classList.remove("hidden");
-  initExam();   // ✅ Login এর পর Exam শুরু
+  document.getElementById("examMain").style.display = "block";
+
+  initExam();
 }
 
+// ================= INIT EXAM =================
 
-
-// =====================
-// 🚀 EXAM INITIALIZER
-// =====================
-
-function initExam(){
+function initExam() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const examId = urlParams.get("exam");
-console.log("Exam ID:", examId);
-console.log("Status Object:", EXAM_STATUS[examId]);
+
   if (!examId || !EXAM_STATUS[examId]) {
     document.body.innerHTML = "<h2>Exam Not Found</h2>";
-    throw new Error("Invalid Exam");
+    return;
   }
 
-  const status = EXAM_STATUS[examId].status;
   document.getElementById("examTitle").innerText =
     EXAM_STATUS[examId].title;
 
-  if (status !== "live") {
-    document.getElementById("lockedMessage").classList.remove("hidden");
-    document.querySelector(".timer-box").style.display = "none";
-    throw new Error("Exam Locked");
+  if (EXAM_STATUS[examId].status !== "live") {
+    document.body.innerHTML = "<h2>Exam Locked</h2>";
+    return;
   }
 
-  // প্রশ্ন লোড
+  // Load Questions
   const script = document.createElement("script");
   script.src = `exam-corner/${examId}/questions.js`;
-  document.body.appendChild(script);
 
   script.onload = function () {
     renderQuestions();
     startTimer();
   };
+
+  document.body.appendChild(script);
 }
 
-
-
-// =====================
-// 📝 RENDER QUESTIONS
-// =====================
+// ================= RENDER QUESTIONS =================
 
 function renderQuestions() {
   const container = document.getElementById("examContainer");
 
   QUESTIONS.forEach((q, index) => {
+
     const div = document.createElement("div");
-    div.classList.add("card");
+    div.style.marginBottom = "20px";
 
     div.innerHTML = `
       <h4>প্রশ্ন ${index + 1}: ${q.question}</h4>
@@ -90,76 +80,45 @@ function renderQuestions() {
   });
 }
 
-
-
-// =====================
-// ⏳ TIMER SYSTEM
-// =====================
-
-let timeLeft = 25 * 60; 
-let timerInterval;
-
-function startTimer() {
-
-    const timerDisplay = document.getElementById("timer");
-
-    // আগে একবার দেখাবে
-    updateTimer();
-
-    timerInterval = setInterval(updateTimer, 1000);
-
-    function updateTimer() {
-
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-
-  timerDisplay.textContent =
-    minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
-
-  const timerBox = document.querySelector(".timer-box");
-
-  // 🔥 5 মিনিট বাকি
-  if (timeLeft <= 300 && timeLeft > 60) {
-    timerBox.classList.add("timer-warning");
-  }
-
-  // 🔥 1 মিনিট বাকি
-  if (timeLeft <= 60) {
-    timerBox.classList.remove("timer-warning");
-    timerBox.classList.add("timer-danger");
-  }
-
-  timeLeft--;
-
-  if (timeLeft < 0) {
-    clearInterval(timerInterval);
-    submitExam();
-  }
-    }
-
-// =====================
-// 🎯 SELECT ANSWER
-// =====================
+// ================= SELECT ANSWER =================
 
 function selectAnswer(qIndex, optIndex, btn) {
-
   const buttons = btn.parentElement.querySelectorAll("button");
 
-  buttons.forEach(b => {
-    b.classList.remove("selected");
-  });
+  buttons.forEach(b => b.style.background = "");
 
-  btn.classList.add("selected");  // ✅ highlight
+  btn.style.background = "lightgreen";
 
   userAnswers[qIndex] = optIndex;
 }
 
+// ================= TIMER =================
 
-// =====================
-// 🏁 SUBMIT EXAM
-// =====================
+function startTimer() {
+  const timerDisplay = document.getElementById("timer");
+
+  timerInterval = setInterval(() => {
+
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    timerDisplay.innerText =
+      minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+
+    timeLeft--;
+
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      submitExam();
+    }
+
+  }, 1000);
+}
+
+// ================= SUBMIT =================
 
 function submitExam() {
+
   clearInterval(timerInterval);
 
   let score = 0;
