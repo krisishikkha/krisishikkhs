@@ -32,17 +32,16 @@ self.addEventListener("activate", event => {
     caches.keys().then(keys => {
       return Promise.all(
         keys.map(key => {
-          if (!key.includes(CACHE_VERSION)) {
-            return caches.delete(key); // 🔥 পুরানো সব cache delete
+          if (key !== STATIC_CACHE && key !== DYNAMIC_CACHE) {
+            return caches.delete(key);
           }
         })
       );
     })
   );
 
-  return self.clients.claim(); // 🔥 সব open tab control নেবে
+  return self.clients.claim();
 });
-
 /* FETCH */
 self.addEventListener("fetch", event => {
 
