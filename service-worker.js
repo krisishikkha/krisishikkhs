@@ -1,4 +1,4 @@
-const CACHE_VERSION = "krisishikkha-v9.1";   // 🔥 প্রতি আপডেটে শুধু এটা বাড়াবে
+const CACHE_VERSION = "krisishikkha-v10";   // 🔥 প্রতি আপডেটে শুধু এটা বাড়াবে
 const STATIC_CACHE = CACHE_VERSION + "-static";
 const DYNAMIC_CACHE = CACHE_VERSION + "-dynamic";
 
@@ -48,12 +48,12 @@ self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   const requestURL = new URL(event.request.url);
+// questions.js cache করবে না
 
-  // PDF cache করবে না
-  if (requestURL.pathname.endsWith(".pdf")) {
-    return;
-  }
-
+// PDF cache করবে না
+if (requestURL.pathname.endsWith(".pdf")) {
+  return;
+}
   // 🔥 EVERYTHING → Network First (instant update)
   event.respondWith(
     fetch(event.request)
