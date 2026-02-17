@@ -59,6 +59,15 @@
   <button onclick="submitExam()">পরীক্ষা শেষ করুন</button>
 </div>
 
+<script>
+
+if (examId) {
+    const script = document.createElement("script");
+    script.src = `exam-corner/${examId}/questions.js?v=4.2`;
+    document.body.appendChild(script);
+}
+</script>
+
 <script src="exam.js?v=4.2"></script>
 </body>
 </html>
