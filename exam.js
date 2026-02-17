@@ -33,6 +33,8 @@ function initExam() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const examId = urlParams.get("exam");
+  alert("Exam ID: " + examId);
+alert("Status Key: " + Object.keys(EXAM_STATUS));
 
   if (!examId || !EXAM_STATUS[examId]) {
     document.body.innerHTML = "<h2>Exam Not Found</h2>";
