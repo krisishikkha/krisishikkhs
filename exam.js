@@ -47,29 +47,8 @@ function initExam() {
     return;
   }
 
-// Load Questions Dynamically
-const script = document.createElement("script");
-script.src = `exam-corner/${examId}/questions.js?v=${Date.now()}`;
-
-// যদি file না পাওয়া যায়
-script.onerror = function () {
-    document.body.innerHTML = "<h2>Questions File Not Found</h2>";
-};
-
-// file load হলে
-script.onload = function () {
-
-    // QUESTIONS exist কিনা verify
-    if (typeof QUESTIONS === "undefined" || !Array.isArray(QUESTIONS)) {
-        document.body.innerHTML = "<h2>Invalid Questions Format</h2>";
-        return;
-    }
-
-    renderQuestions();
-    startTimer();
-};
-
-document.body.appendChild(script);
+renderQuestions();
+startTimer();
 
 // ================= RENDER QUESTIONS =================
 
