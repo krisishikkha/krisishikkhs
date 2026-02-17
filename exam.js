@@ -45,17 +45,29 @@ function initExam() {
     return;
   }
 
-  // Load Questions
-  const script = document.createElement("script");
-  script.src = `exam-corner/${examId}/questions.js`;
+// Load Questions Dynamically
+const script = document.createElement("script");
+script.src = `exam-corner/${examId}/questions.js`;
 
-  script.onload = function () {
+// যদি file না পাওয়া যায়
+script.onerror = function () {
+    document.body.innerHTML = "<h2>Questions File Not Found</h2>";
+};
+
+// file load হলে
+script.onload = function () {
+
+    // QUESTIONS exist কিনা verify
+    if (typeof QUESTIONS === "undefined" || !Array.isArray(QUESTIONS)) {
+        document.body.innerHTML = "<h2>Invalid Questions Format</h2>";
+        return;
+    }
+
     renderQuestions();
     startTimer();
-  };
+};
 
-  document.body.appendChild(script);
-}
+document.body.appendChild(script);
 
 // ================= RENDER QUESTIONS =================
 
