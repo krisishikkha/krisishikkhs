@@ -7,6 +7,7 @@ const STATIC_FILES = [
   "./",
   "./index.html",
   "./exam.html",
+  "/exam-corner.html",
   "./manifest.json",
   "./assets/css/style.css",
   "./exam.js",
