@@ -16,6 +16,42 @@
     <div id="examList">
         <!-- PHASE 2 তে এখানে exam গুলো show করবো -->
     </div>
+<script>
+    const examListContainer = document.getElementById("examList");
 
+    for (let examId in EXAM_STATUS) {
+        const exam = EXAM_STATUS[examId];
+
+        const card = document.createElement("div");
+        card.style.border = "1px solid #ccc";
+        card.style.padding = "15px";
+        card.style.margin = "10px 0";
+        card.style.borderRadius = "8px";
+
+        const title = document.createElement("h3");
+        title.innerText = exam.title;
+
+        const button = document.createElement("button");
+        button.style.padding = "8px 15px";
+        button.style.marginTop = "10px";
+
+        if (exam.status === "live") {
+            button.innerText = "Start Exam";
+            button.onclick = function () {
+                window.location.href = `exam.html?exam=${examId}`;
+            };
+        } else {
+            button.innerText = "Locked";
+            button.style.backgroundColor = "#ccc";
+            button.onclick = function () {
+                alert("This Exam Set is Locked by Admin");
+            };
+        }
+
+        card.appendChild(title);
+        card.appendChild(button);
+        examListContainer.appendChild(card);
+    }
+         </script>
 </body>
 </html>
