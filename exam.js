@@ -5,6 +5,7 @@ let timerInterval;
 // ================= LOGIN =================
 
 function validateAccess() {
+  alert("Login button working");
   const name = document.getElementById("studentName").value.trim();
   const code = document.getElementById("accessCode").value.trim();
   const warning = document.getElementById("warning");
