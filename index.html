@@ -118,13 +118,82 @@ Exam Corner
 
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(reg => {
-      reg.update(); // 🔥 প্রতিবার ঢুকলে update check করবে
+  navigator.serviceWorker.register('service-worker.js').then(reg => {
+
+    // প্রতি ৩ মিনিটে update check
+    setInterval(() => {
+      reg.update();
+    }, 3 * 60 * 1000);
+
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed') {
+          if (navigator.serviceWorker.controller) {
+            showUpdatePopup();
+          }
+        }
+      });
     });
+
+  });
 }
 
-let deferredPrompt;
+function showUpdatePopup() {
+  let seconds = 5;
+
+  const popup = document.createElement('div');
+  popup.innerHTML = `
+    <div style="
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:#1e7e34;
+      color:white;
+      padding:15px 25px;
+      border-radius:10px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.3);
+      z-index:9999;
+      font-weight:bold;
+    ">
+      🔄 New Update Available<br>
+      Reloading in <span id="countdown">5</span>s
+      <button id="cancelBtn" style="
+        margin-left:15px;
+        padding:5px 10px;
+        border:none;
+        background:white;
+        color:#1e7e34;
+        font-weight:bold;
+        border-radius:5px;
+      ">Cancel</button>
+    </div>
+  `;
+
+  document.body.appendChild(popup);
+
+  const countdown = document.getElementById("countdown");
+  const cancelBtn = document.getElementById("cancelBtn");
+
+  const timer = setInterval(() => {
+    seconds--;
+    countdown.textContent = seconds;
+    if (seconds === 0) {
+      clearInterval(timer);
+      location.reload();
+    }
+  }, 1000);
+
+  cancelBtn.onclick = () => {
+    clearInterval(timer);
+    popup.remove();
+  };
+}
+</script>
+<script>
+  let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -139,27 +208,6 @@ installBtn.addEventListener('click', async () => {
   await deferredPrompt.userChoice;
   deferredPrompt = null;
 });
-</script>
-  <script>
-let CURRENT_VERSION = null;
-
-// প্রথমবার version নাও
-fetch('./version.json?v=' + Date.now())
-  .then(res => res.json())
-  .then(data => {
-    CURRENT_VERSION = data.version;
-  });
-
-// প্রতি ৫ মিনিট পর চেক করবে
-setInterval(() => {
-  fetch('./version.json?v=' + Date.now())
-    .then(res => res.json())
-    .then(data => {
-      if (CURRENT_VERSION && data.version !== CURRENT_VERSION) {
-        location.reload(true);
-      }
-    });
-}, 5 * 60 * 1000);
 </script>
 
 </body>
