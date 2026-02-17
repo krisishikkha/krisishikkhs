@@ -47,7 +47,7 @@ function initExam() {
 
 // Load Questions Dynamically
 const script = document.createElement("script");
-script.src = `exam-corner/${examId}/questions.js`;
+script.src = `exam-corner/${examId}/questions.js?v=${Date.now()}`;
 
 // যদি file না পাওয়া যায়
 script.onerror = function () {
