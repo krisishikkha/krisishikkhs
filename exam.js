@@ -22,6 +22,8 @@ function validateAccess() {
   document.getElementById("loginSection").style.display = "none";
   document.getElementById("examMain").style.display = "block";
 
+  alert(QUESTIONS.length);   // 👈 এইটা বসা এখানে
+  
   initExam();
 }
 
