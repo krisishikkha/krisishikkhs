@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Corner | Krisishikkha</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Exam Status Controller -->
     <script src="exam-status.js?v=4.2"></script>
@@ -23,10 +24,7 @@
         const exam = EXAM_STATUS[examId];
 
         const card = document.createElement("div");
-        card.style.border = "1px solid #ccc";
-        card.style.padding = "15px";
-        card.style.margin = "10px 0";
-        card.style.borderRadius = "8px";
+        card.className = "exam-card";
 
         const title = document.createElement("h3");
         title.innerText = exam.title;
@@ -36,11 +34,13 @@
         button.style.marginTop = "10px";
 
         if (exam.status === "live") {
+            card.classList.add("live-card");
             button.innerText = "Start Exam";
             button.onclick = function () {
                 window.location.href = `exam.html?exam=${examId}`;
             };
         } else {
+            card.classList.add("locked-card");
             button.innerText = "Locked";
             button.style.backgroundColor = "#ccc";
             button.onclick = function () {
