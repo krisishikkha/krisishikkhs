@@ -5,6 +5,29 @@
 <title>Exam | Krisishikkha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="assets/css/style.css">
+  <!-- 1️⃣ exam-status.js আগে -->
+<script src="exam-status.js?v=4.2"></script>
+  <!-- 2️⃣ তারপর security script -->
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const examId = params.get("exam");
+
+  if (!examId || !EXAM_STATUS[examId]) {
+    document.addEventListener("DOMContentLoaded", function() {
+      document.body.innerHTML =
+        "<h2 style='text-align:center;margin-top:50px;'>Invalid Exam ID</h2>";
+    });
+    throw new Error("Invalid Exam ID");
+  }
+
+  if (EXAM_STATUS[examId].status !== "live") {
+    document.addEventListener("DOMContentLoaded", function() {
+      document.body.innerHTML =
+        "<h2 style='text-align:center;margin-top:50px;'>This Exam is Locked by Admin</h2>";
+    });
+    throw new Error("Exam Locked");
+  }
+</script>
 </head>
 
 <body>
@@ -36,7 +59,6 @@
   <button onclick="submitExam()">পরীক্ষা শেষ করুন</button>
 </div>
 
-<script src="exam-status.js?v=4.2"></script>
 <script src="exam.js?v=4.2"></script>
 </body>
 </html>
