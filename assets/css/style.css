@@ -239,3 +239,36 @@ body {
     padding: 0;
     overflow-x: hidden;
 }
+/* ===== EXAM CORNER CARD DESIGN ===== */
+
+.exam-card {
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 14px;
+    text-align: center;
+    max-width: 600px;
+    transition: 0.3s ease;
+}
+
+/* Live Exam */
+.live-card {
+    background: #eefaf1;   /* খুব হালকা সবুজ */
+    border: 1px solid #cdeed8;
+}
+
+/* Locked Exam */
+.locked-card {
+    background: #f4f4f4;   /* হালকা ধূসর */
+    border: 1px solid #e0e0e0;
+}
+
+/* Title spacing */
+.exam-card h3 {
+    margin-bottom: 20px;
+}
+
+/* Button small center look */
+.exam-card button {
+    width: 60%;
+    margin: 0 auto;
+}
