@@ -140,6 +140,27 @@ installBtn.addEventListener('click', async () => {
   deferredPrompt = null;
 });
 </script>
+  <script>
+let CURRENT_VERSION = null;
+
+// প্রথমবার version নাও
+fetch('/version.json?v=' + Date.now())
+  .then(res => res.json())
+  .then(data => {
+    CURRENT_VERSION = data.version;
+  });
+
+// প্রতি ৫ মিনিট পর চেক করবে
+setInterval(() => {
+  fetch('/version.json?v=' + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      if (CURRENT_VERSION && data.version !== CURRENT_VERSION) {
+        location.reload(true);
+      }
+    });
+}, 5 * 60 * 1000);
+</script>
 
 </body>
 </html>
