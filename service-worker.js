@@ -1,4 +1,4 @@
-self.addEventListener("install", event => {
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
@@ -11,6 +11,4 @@ self.addEventListener("activate", event => {
   return self.clients.claim();
 });
 
-self.addEventListener("fetch", event => {
-  event.respondWith(fetch(event.request));
-});
+// ❌ fetch event পুরোপুরি remove করে দাও
