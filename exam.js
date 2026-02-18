@@ -40,9 +40,15 @@ function initExam() {
 
   document.getElementById("examTitle").innerText =
     EXAM_STATUS[examId].title;
+const script = document.createElement("script");
+script.src = `./exam-corner/${examId}/questions.js`;
 
-  renderQuestions();
-  startTimer();
+script.onload = function () {
+    renderQuestions();
+    startTimer();
+};
+
+document.body.appendChild(script);
 }
 
 function renderQuestions() {
