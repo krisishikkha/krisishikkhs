@@ -1,4 +1,4 @@
-var QUESTIONS = [
+const QUESTIONS = [
   {
     question: "মাটির কেশন এক্সচেঞ্জ ক্যাপাসিটি (CEC) প্রধানত কোন কণার উপর নির্ভর করে?",
     options: [
