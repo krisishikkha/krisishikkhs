@@ -180,13 +180,24 @@ function submitExam() {
     }
 
     examMain.innerHTML += `
-      <div class="review-card">
-        <h4>প্রশ্ন ${index + 1}: ${q.question}</h4>
-        <p class="${statusClass}">আপনার উত্তর: ${userAns !== undefined ? q.options[userAns] : "কিছু দেননি"}</p>
-        <p style="color:green;">সঠিক উত্তর: ${q.options[correctAns]}</p>
-        <strong>ফলাফল: ${statusText}</strong>
-      </div>
-    `;
+  <div class="review-card">
+    <h4>প্রশ্ন ${index + 1}: ${q.question}</h4>
+
+    <p class="${statusClass}">
+      আপনার উত্তর: ${userAns !== undefined ? q.options[userAns] : "উত্তর দেননি"}
+    </p>
+
+    <p style="color:green;">
+      সঠিক উত্তর: ${q.options[correctAns]}
+    </p>
+
+    <p class="explanation">
+      <strong>ব্যাখ্যা:</strong> ${q.explanation}
+    </p>
+
+    <strong>অবস্থা: ${statusText}</strong>
+  </div>
+`;
   });
 
   // Scroll to top
