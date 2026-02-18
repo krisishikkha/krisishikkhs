@@ -3,18 +3,6 @@ const STATIC_CACHE = CACHE_VERSION + "-static";
 const DYNAMIC_CACHE = CACHE_VERSION + "-dynamic";
 
 /* Static core files */
-const STATIC_FILES = [
-  "./",
-  "./index.html",
-  "./exam.html",
-  "/exam-corner.html",
-  "./manifest.json",
-  "./assets/css/style.css",
-  "./exam.js",
-  "./exam-status.js",
-  "./assets/icons/icon-192.png",
-  "./assets/icons/icon-512.png"
-];
 
 /* INSTALL */
 self.addEventListener("install", event => {
