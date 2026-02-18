@@ -78,24 +78,39 @@ function selectAnswer(qIndex, optIndex, btn) {
   buttons.forEach(b => b.disabled = true);
 }
 
+let totalTime = 25 * 60;
+
 function startTimer() {
 
+  const timerBox = document.querySelector(".timer-box");
   const timeDisplay = document.getElementById("timeLeft");
 
-  timerInterval = setInterval(() => {
+  timerInterval = setInterval(function () {
 
-    let minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
+    let minutes = Math.floor(totalTime / 60);
+    let seconds = totalTime % 60;
 
-    timeDisplay.innerText =
-      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    timeLeft--;
+    timeDisplay.innerText = minutes + ":" + seconds;
 
-    if (timeLeft < 0) {
+    // Last 5 minutes
+    if (totalTime <= 300 && totalTime > 120) {
+      timerBox.classList.add("timer-warning");
+    }
+
+    // Last 2 minutes
+    if (totalTime <= 120) {
+      timerBox.classList.remove("timer-warning");
+      timerBox.classList.add("timer-danger");
+    }
+
+    if (totalTime <= 0) {
       clearInterval(timerInterval);
       submitExam();
     }
+
+    totalTime--;
 
   }, 1000);
 }
