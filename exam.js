@@ -69,12 +69,22 @@ function renderQuestions() {
 
 function selectAnswer(qIndex, optIndex, btn) {
 
+  // যদি আগে উত্তর দেওয়া থাকে, কিছু করবে না
   if (userAnswers[qIndex] !== undefined) return;
 
   userAnswers[qIndex] = optIndex;
 
+  // সব বাটন disable
   const buttons = btn.parentElement.querySelectorAll("button");
-  buttons.forEach(b => b.disabled = true);
+  buttons.forEach(b => {
+    b.disabled = true;
+    b.style.opacity = "0.7";
+  });
+
+  // যে অপশন সিলেক্ট করেছে সেটার কালার চেঞ্জ
+  btn.style.background = "linear-gradient(45deg, #00c853, #64dd17)";
+  btn.style.color = "#fff";
+  btn.style.opacity = "1";
 }
 
 let totalTime = 25 * 60;
