@@ -2,220 +2,117 @@ let userAnswers = [];
 let timeLeft = 25 * 60;
 let timerInterval;
 
-// ================= LOGIN =================
-
 function validateAccess() {
+
   const name = document.getElementById("studentName").value.trim();
   const code = document.getElementById("accessCode").value.trim();
   const warning = document.getElementById("warning");
 
   if (name === "") {
-    warning.innerText = "নাম লিখুন।";
+    warning.innerText = "নাম লিখুন";
     return;
   }
 
   if (code !== "krisi1") {
-    warning.innerText = "ভুল এক্সেস কোড!";
+    warning.innerText = "ভুল এক্সেস কোড";
     return;
   }
 
   document.getElementById("loginSection").style.display = "none";
   document.getElementById("examMain").style.display = "block";
-  
+
   initExam();
 }
 
-// ================= INIT EXAM =================
-
 function initExam() {
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const examId = urlParams.get("exam");
+  const params = new URLSearchParams(window.location.search);
+  const examId = params.get("exam");
 
   if (!examId || !EXAM_STATUS[examId]) {
-    document.body.innerHTML = "<h2>Exam Not Found</h2>";
+    document.body.innerHTML = "<h2>Invalid Exam ID</h2>";
     return;
   }
-
-  document.getElementById("examTitle").innerText =
-    EXAM_STATUS[examId].title;
 
   if (EXAM_STATUS[examId].status !== "live") {
     document.body.innerHTML = "<h2>Exam Locked</h2>";
     return;
   }
 
-renderQuestions();
-startTimer();
+  document.getElementById("examTitle").innerText =
+    EXAM_STATUS[examId].title;
 
-// ================= RENDER QUESTIONS =================
+  renderQuestions();
+  startTimer();
+}
 
 function renderQuestions() {
+
   const container = document.getElementById("examContainer");
+  container.innerHTML = "";
 
   QUESTIONS.forEach((q, index) => {
 
     const div = document.createElement("div");
-    div.className = "card";   // IMPORTANT
-
     div.innerHTML = `
-      <h4>প্রশ্ন ${index + 1}: ${q.question}</h4>
+      <h4>${index + 1}. ${q.question}</h4>
       ${q.options.map((opt, i) =>
         `<button onclick="selectAnswer(${index}, ${i}, this)">
-          ${opt}
-        </button><br>`
+            ${opt}
+         </button><br>`
       ).join("")}
+      <br>
     `;
 
     container.appendChild(div);
   });
 }
 
-// ================= SELECT ANSWER =================
-
 function selectAnswer(qIndex, optIndex, btn) {
 
-    // যদি আগেই উত্তর দেওয়া থাকে তাহলে আর কিছু করবে না (LOCK)
-    if (userAnswers[qIndex] !== undefined) return;
+  if (userAnswers[qIndex] !== undefined) return;
 
-    const buttons = btn.parentElement.querySelectorAll("button");
+  userAnswers[qIndex] = optIndex;
 
-    // সব বাটন disable করে দিবে
-    buttons.forEach(b => {
-        b.disabled = true;
-        b.classList.remove("selected");
-    });
-
-    // যেটা সিলেক্ট করা হয়েছে সেটা highlight করবে
-    btn.classList.add("selected");
-
-    userAnswers[qIndex] = optIndex;
+  const buttons = btn.parentElement.querySelectorAll("button");
+  buttons.forEach(b => b.disabled = true);
 }
-
-// ================= TIMER =================
-
-let totalTime = 25 * 60;
 
 function startTimer() {
-    const timerBox = document.querySelector(".timer-box");
-    const timeDisplay = document.getElementById("timeLeft");
 
-    timerInterval = setInterval(function () {
+  const timeDisplay = document.getElementById("timeLeft");
 
-        let minutes = Math.floor(totalTime / 60);
-        let seconds = totalTime % 60;
+  timerInterval = setInterval(() => {
 
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
 
-        timeDisplay.innerText = minutes + ":" + seconds;
+    timeDisplay.innerText =
+      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-        if (totalTime <= 300 && totalTime > 120) {
-            timerBox.classList.add("timer-warning");
-        }
+    timeLeft--;
 
-        if (totalTime <= 120) {
-            timerBox.classList.remove("timer-warning");
-            timerBox.classList.add("timer-danger");
-        }
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      submitExam();
+    }
 
-        if (totalTime <= 0) {
-            clearInterval(timerInterval);
-            alert("সময় শেষ! পরীক্ষা অটো সাবমিট হচ্ছে...");
-            submitExam();
-        }
-
-        totalTime--;
-
-    }, 1000);
+  }, 1000);
 }
-
-// ================= SUBMIT =================
 
 function submitExam() {
 
-    clearInterval(timerInterval);
+  clearInterval(timerInterval);
 
-    let score = 0;
-    let wrong = 0;
-    let unanswered = 0;
+  let score = 0;
 
-    QUESTIONS.forEach((q, index) => {
-        if (userAnswers[index] === q.answer) {
-            score++;
-        } else if (userAnswers[index] === undefined) {
-            unanswered++;
-        } else {
-            wrong++;
-        }
-    });
+  QUESTIONS.forEach((q, index) => {
+    if (userAnswers[index] === q.answer) {
+      score++;
+    }
+  });
 
-    // ✅ Percentage Calculate
-    let percentage = ((score / QUESTIONS.length) * 100).toFixed(2);
-
-    // ✅ Student Name
-    let studentName = document.getElementById("studentName").value;
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-    const container = document.getElementById("examMain");
-
-    container.innerHTML = `
-        <div class="scoreboard-card">
-            <h2>📊 Scoreboard</h2>
-            <h3>${document.getElementById("examTitle").innerText}</h3>
-
-            <p><strong>নাম:</strong> ${studentName}</p>
-            <p><strong>পারসেন্টেজ:</strong> ${percentage}%</p>
-            <p><strong>সঠিক:</strong> ${score}</p>
-            <p><strong>ভুল:</strong> ${wrong}</p>
-            <p><strong>Unanswered:</strong> ${unanswered}</p>
-        </div>
-
-        <div id="reviewSection"></div>
-    `;
-
-    const reviewSection = document.getElementById("reviewSection");
-
-    QUESTIONS.forEach((q, index) => {
-
-        const userAns = userAnswers[index];
-        const correctAns = q.answer;
-
-        let statusColor = "#999";
-
-        if (userAns === correctAns) {
-            statusColor = "green";
-        } else if (userAns === undefined) {
-            statusColor = "orange";
-        } else {
-            statusColor = "red";
-        }
-
-        const div = document.createElement("div");
-        div.className = "review-card";
-
-        div.innerHTML = `
-            <h4>Q${index + 1}: ${q.question}</h4>
-            <p><strong>আপনার উত্তর:</strong>
-                <span style="color:${statusColor}">
-                    ${userAns !== undefined ? q.options[userAns] : "উত্তর দেননি"}
-                </span>
-            </p>
-            <p><strong>সঠিক উত্তর:</strong> ${q.options[correctAns]}</p>
-            <p><strong>ব্যাখ্যা:</strong> ${q.explanation ? q.explanation : "ব্যাখ্যা নেই"}</p>
-        `;
-
-        reviewSection.appendChild(div);
-
-    });
-
+  document.getElementById("examMain").innerHTML =
+    `<h2>পরীক্ষা শেষ</h2>
+     <h3>আপনার নম্বর: ${score} / ${QUESTIONS.length}</h3>`;
 }
-document.addEventListener("DOMContentLoaded", function() {
-  const btn = document.getElementById("startBtn");
-  if (btn) {
-    btn.addEventListener("click", validateAccess);
-  }
-});
