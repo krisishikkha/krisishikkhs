@@ -1,4 +1,3 @@
-alert("JS Loaded");
 let userAnswers = [];
 let timerInterval;
 
