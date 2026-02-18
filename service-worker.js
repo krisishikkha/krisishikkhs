@@ -1,58 +1,16 @@
-const CACHE_VERSION = "krisishikkha-v11";   // 🔥 প্রতি আপডেটে শুধু এটা বাড়াবে
-const STATIC_CACHE = CACHE_VERSION + "-static";
-const DYNAMIC_CACHE = CACHE_VERSION + "-dynamic";
-
-/* Static core files */
-
-/* INSTALL */
 self.addEventListener("install", event => {
-  self.skipWaiting(); // 🔥 নতুন SW সাথে সাথে activate হবে
-
-  event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then(cache => cache.addAll(STATIC_FILES))
-  );
+  self.skipWaiting();
 });
 
-/* ACTIVATE */
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.map(key => {
-          if (key !== STATIC_CACHE && key !== DYNAMIC_CACHE) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
+    caches.keys().then(keys =>
+      Promise.all(keys.map(key => caches.delete(key)))
+    )
   );
-
   return self.clients.claim();
 });
-/* FETCH */
+
 self.addEventListener("fetch", event => {
-
-  if (event.request.method !== "GET") return;
-
-  const requestURL = new URL(event.request.url);
-// questions.js cache করবে না
-
-// PDF cache করবে না
-if (requestURL.pathname.endsWith(".pdf")) {
-  return;
-}
-  // 🔥 EVERYTHING → Network First (instant update)
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        return caches.open(DYNAMIC_CACHE).then(cache => {
-          cache.put(event.request, response.clone());
-          return response;
-        });
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
-  );
+  event.respondWith(fetch(event.request));
 });
