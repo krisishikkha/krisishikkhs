@@ -53,6 +53,7 @@ function renderQuestions() {
   QUESTIONS.forEach((q, index) => {
 
     const div = document.createElement("div");
+    div.classList.add("question-card");   // 👈 এইখানে বসাবি
     div.innerHTML = `
       <h4>${index + 1}. ${q.question}</h4>
       ${q.options.map((opt, i) =>
