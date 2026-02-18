@@ -129,13 +129,69 @@ function submitExam() {
 
   clearInterval(timerInterval);
 
-  let score = 0;
+  const studentName = document.getElementById("studentName").value;
+
+  let correct = 0;
+  let wrong = 0;
+  let unanswered = 0;
 
   QUESTIONS.forEach((q, index) => {
-    if (userAnswers[index] === q.answer) {
-      score++;
+    if (userAnswers[index] === undefined) {
+      unanswered++;
+    } else if (userAnswers[index] === q.answer) {
+      correct++;
+    } else {
+      wrong++;
     }
   });
+
+  let percent = ((correct / QUESTIONS.length) * 100).toFixed(2);
+
+  const examMain = document.getElementById("examMain");
+
+  examMain.innerHTML = `
+    <div class="scoreboard-card">
+      <h2 style="font-size:22px; margin-bottom:10px;">${studentName}</h2>
+      <p>✅ সঠিক: ${correct}</p>
+      <p>❌ ভুল: ${wrong}</p>
+      <p>⚪ উত্তর দেয়নি: ${unanswered}</p>
+      <h3 style="margin-top:10px;">📊 পারসেন্ট: ${percent}%</h3>
+    </div>
+  `;
+
+  // Review Section
+  QUESTIONS.forEach((q, index) => {
+
+    const userAns = userAnswers[index];
+    const correctAns = q.answer;
+
+    let statusClass = "";
+    let statusText = "";
+
+    if (userAns === undefined) {
+      statusClass = "red";
+      statusText = "উত্তর দেয়নি";
+    } else if (userAns === correctAns) {
+      statusClass = "green";
+      statusText = "সঠিক";
+    } else {
+      statusClass = "red";
+      statusText = "ভুল";
+    }
+
+    examMain.innerHTML += `
+      <div class="review-card">
+        <h4>প্রশ্ন ${index + 1}: ${q.question}</h4>
+        <p class="${statusClass}">আপনার উত্তর: ${userAns !== undefined ? q.options[userAns] : "কিছু দেননি"}</p>
+        <p style="color:green;">সঠিক উত্তর: ${q.options[correctAns]}</p>
+        <strong>ফলাফল: ${statusText}</strong>
+      </div>
+    `;
+  });
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
   document.getElementById("examMain").innerHTML =
     `<h2>পরীক্ষা শেষ</h2>
