@@ -5,7 +5,6 @@ let timerInterval;
 // ================= LOGIN =================
 
 function validateAccess() {
-  alert("Login button working");
   const name = document.getElementById("studentName").value.trim();
   const code = document.getElementById("accessCode").value.trim();
   const warning = document.getElementById("warning");
@@ -22,8 +21,6 @@ function validateAccess() {
 
   document.getElementById("loginSection").style.display = "none";
   document.getElementById("examMain").style.display = "block";
-
-  alert(QUESTIONS.length);   // 👈 এইটা বসা এখানে
   
   initExam();
 }
@@ -34,8 +31,6 @@ function initExam() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const examId = urlParams.get("exam");
-  alert("Exam ID: " + examId);
-alert("Status Key: " + Object.keys(EXAM_STATUS));
 
   if (!examId || !EXAM_STATUS[examId]) {
     document.body.innerHTML = "<h2>Exam Not Found</h2>";
