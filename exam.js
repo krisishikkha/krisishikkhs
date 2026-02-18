@@ -1,5 +1,5 @@
 let userAnswers = [];
-let timeLeft = 25 * 60;
+let totalTime = 25 * 60;
 let timerInterval;
 
 function validateAccess() {
