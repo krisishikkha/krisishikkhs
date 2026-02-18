@@ -70,22 +70,22 @@ function renderQuestions() {
 
 function selectAnswer(qIndex, optIndex, btn) {
 
-  // যদি আগে উত্তর দেওয়া থাকে, কিছু করবে না
+  // আগে যদি ওই প্রশ্নের উত্তর দেওয়া থাকে, তাহলে আর কিছু করবে না
   if (userAnswers[qIndex] !== undefined) return;
 
+  // উত্তর সেভ কর
   userAnswers[qIndex] = optIndex;
 
-  // সব বাটন disable
+  // শুধু ওই প্রশ্নের বাটনগুলো নাও
   const buttons = btn.parentElement.querySelectorAll("button");
-  buttons.forEach(b => {
+
+  // সব বাটন disable কর
+  buttons.forEach(function(b) {
     b.disabled = true;
-    b.style.opacity = "0.7";
   });
 
-  // যে অপশন সিলেক্ট করেছে সেটার কালার চেঞ্জ
-  btn.style.background = "linear-gradient(45deg, #00c853, #64dd17)";
-  btn.style.color = "#fff";
-  btn.style.opacity = "1";
+  // যেটা ক্লিক করা হয়েছে সেটাতে selected class যোগ কর
+  btn.classList.add("selected");
 }
 
 let totalTime = 25 * 60;
