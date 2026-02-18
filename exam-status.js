@@ -5,12 +5,12 @@ const EXAM_STATUS = {
       codes: ["krisi"]
   },
   "exam-2": { 
-      title: "ডেমো পরীক্ষা ২", 
+      title: "HSC 1st Paper 1st Chapter", 
       status: "locked",
       codes: ["exam2code"]
   },
   "exam-3": { 
-      title: "ডেমো পরীক্ষা ৩", 
+      title: "HSC 1st Paper 2nd Chapter", 
       status: "locked",
       codes: ["exam3code"]
   }
