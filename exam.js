@@ -195,7 +195,6 @@ function submitExam() {
       <strong>ব্যাখ্যা:</strong> ${q.explanation}
     </p>
 
-    <strong>অবস্থা: ${statusText}</strong>
   </div>
 `;
   });
