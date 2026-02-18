@@ -192,8 +192,3 @@ function submitExam() {
   // Scroll to top
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
-  document.getElementById("examMain").innerHTML =
-    `<h2>পরীক্ষা শেষ</h2>
-     <h3>আপনার নম্বর: ${score} / ${QUESTIONS.length}</h3>`;
-}
