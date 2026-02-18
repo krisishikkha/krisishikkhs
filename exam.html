@@ -2,67 +2,47 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<title>Exam | Krisishikkha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam | Krishishikkha</title>
+
 <link rel="stylesheet" href="assets/css/style.css">
-  <!-- 1️⃣ exam-status.js আগে -->
-<script src="exam-status.js?v=7"></script>
-  <!-- 2️⃣ তারপর security script -->
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const examId = params.get("exam");
 
-  if (!examId || !EXAM_STATUS[examId]) {
-    document.addEventListener("DOMContentLoaded", function() {
-      document.body.innerHTML =
-        "<h2 style='text-align:center;margin-top:50px;'>Invalid Exam ID</h2>";
-    });
-    throw new Error("Invalid Exam ID");
-  }
-
-  if (EXAM_STATUS[examId].status !== "live") {
-    document.addEventListener("DOMContentLoaded", function() {
-      document.body.innerHTML =
-        "<h2 style='text-align:center;margin-top:50px;'>This Exam is Locked by Admin</h2>";
-    });
-    throw new Error("Exam Locked");
-  }
-</script>
+<script src="./exam-status.js"></script>
 </head>
 
 <body>
 
 <!-- LOGIN SECTION -->
-<div class="login-wrapper" id="loginSection">
-  <div class="login-box">
+<div id="loginSection">
     <h2>NTRCA Agriculture Online Model Test</h2>
 
     <div id="warning" style="color:red;"></div>
 
-    <input type="text" id="studentName" placeholder="পরীক্ষার্থীর নাম লিখুন"><br><br>
+    <input type="text" id="studentName" placeholder="আপনার নাম লিখুন"><br><br>
     <input type="password" id="accessCode" placeholder="এক্সেস কোড লিখুন"><br><br>
 
     <button onclick="validateAccess()">পরীক্ষা শুরু করুন</button>
-  </div>
 </div>
 
 <!-- EXAM SECTION -->
 <div id="examMain" style="display:none; padding:20px;">
-  <h2 id="examTitle"></h2>
 
-  <div class="timer-box">
-   ⏳ সময় বাকি: <span id="timeLeft">25:00</span>
-  </div>
-  <div id="examContainer"></div>
+    <h2 id="examTitle"></h2>
 
-  <br>
-  <button id="startBtn">পরীক্ষা শুরু করুন</button>
+    <div>
+        সময় বাকি: <span id="timeLeft">25:00</span>
+    </div>
+
+    <div id="examContainer"></div>
+
+    <br>
+    <button onclick="submitExam()">পরীক্ষা জমা করুন</button>
+
 </div>
-  <script src="./exam-corner/exam-1/questions.js"></script>
-<script src="exam.js?v=7"></script>
 
-<script>
-console.log("INLINE SCRIPT WORKING");
-</script>
+<!-- SCRIPTS -->
+<script src="./exam-corner/exam-1/questions.js"></script>
+<script src="./exam.js"></script>
+
 </body>
 </html>
