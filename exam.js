@@ -12,10 +12,15 @@ function validateAccess() {
     return;
   }
 
-  if (code !== "krisi1") {
-    warning.innerText = "ভুল এক্সেস কোড";
+  const params = new URLSearchParams(window.location.search);
+const examId = params.get("exam");
+
+const validCodes = EXAM_STATUS[examId].codes || [];
+
+if (!validCodes.includes(code)) {
+    warning.innerText = "❌ ভুল এক্সেস কোড";
     return;
-  }
+}
 
   document.getElementById("loginSection").style.display = "none";
   document.getElementById("examMain").style.display = "block";
