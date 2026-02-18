@@ -1,4 +1,4 @@
-const CACHE_VERSION = "krisishikkha-v10";   // 🔥 প্রতি আপডেটে শুধু এটা বাড়াবে
+const CACHE_VERSION = "krisishikkha-v11";   // 🔥 প্রতি আপডেটে শুধু এটা বাড়াবে
 const STATIC_CACHE = CACHE_VERSION + "-static";
 const DYNAMIC_CACHE = CACHE_VERSION + "-dynamic";
 
