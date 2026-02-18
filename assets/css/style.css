@@ -259,3 +259,17 @@ body {
     width: 60%;
     margin: 0 auto;
 }
+.green{
+  color: #0f9d58;
+  font-weight: bold;
+}
+
+.red{
+  color: #d93025;
+  font-weight: bold;
+}
+
+.scoreboard-card h2{
+  font-size:22px;
+  font-weight:bold;
+}
