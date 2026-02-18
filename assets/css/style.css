@@ -42,55 +42,42 @@
   font-size: clamp(16px, 4vw, 20px);
 }
 
-/* ===== PREMIUM TIMER DESIGN ===== */
-
-.timer-box {
-    position: fixed;
-    top: 0;
-    left: 50%;
+/* ===== TIMER WRAPPER ===== */
+.timer-wrapper {
+  position: fixed;
+  top: 15px;
+  left: 50%;
   transform: translateX(-50%);
-    max-width: 600px;
-    text-align: center;
-
-    padding: 15px;
-    font-size: clamp(16px, 4vw, 22px);
-    font-weight: bold;
-
-    background: linear-gradient(135deg, #00c853, #b2ff59);
-    color: #ffffff;
-
-    z-index: 9999;
-  pointer-events: none;   /* 👈 এটা যোগ করুন */
+  z-index: 9999;
 }
 
-/* Timer number style */
-#timer {
-    font-size: clamp(18px, 5vw, 24px);
-    font-weight: 900;
-    color: #ffffff;
+/* ===== TIMER BOX ===== */
+.timer-box {
+  background: linear-gradient(135deg, #00c853, #64dd17);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  min-width: 180px;
+  transition: 0.3s ease;
 }
 
-/* 5 min left */
+/* ===== WARNING (Last 5 Minutes) ===== */
 .timer-warning {
-    background: linear-gradient(135deg, #ffb300, #ff7043);
-    color: #ffffff !important;
+  background: linear-gradient(135deg, #ff9800, #ff5722);
 }
 
-/* Last minute */
+/* ===== DANGER (Last 2 Minutes) ===== */
 .timer-danger {
-    background: linear-gradient(135deg, #d50000, #ff1744);
-    color: #ffffff !important;
-    animation: blink 1s infinite;
+  background: linear-gradient(135deg, #d50000, #ff1744);
 }
 
-@keyframes blink {
-    50% { opacity: 0.6; }
-}
-body{
-  font-family:sans-serif;
-  margin:0;
-  padding:0px;
-  background:#f3f3f3;
+/* ===== BODY TOP SPACE ===== */
+#examMain {
+  padding-top: 80px;
 }
 
 /* ================= EXISTING DESIGN (UNCHANGED) ================= */
