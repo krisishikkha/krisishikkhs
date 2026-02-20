@@ -6,7 +6,7 @@ const EXAM_STATUS = {
   },
   "exam-2": { 
       title: "HSC 1st Paper 1st Chapter", 
-      status: "live",
+      status: "locked",
       codes: ["exam2code"]
   },
   "exam-3": { 
